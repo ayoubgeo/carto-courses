@@ -45,7 +45,7 @@ def load_topics():
 def call_claude(prompt):
     url = "https://api.anthropic.com/v1/messages"
     payload = json.dumps({
-        "model": "claude-sonnet-4-20250514",
+        "model": "claude-sonnet-4-5",
         "max_tokens": 4000,
         "messages": [{"role": "user", "content": prompt}]
     }).encode()
@@ -53,9 +53,13 @@ def call_claude(prompt):
     req.add_header("Content-Type", "application/json")
     req.add_header("x-api-key", ANTHROPIC_API_KEY)
     req.add_header("anthropic-version", "2023-06-01")
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        data = json.loads(resp.read().decode())
-        return data["content"][0]["text"]
+    try:
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            data = json.loads(resp.read().decode())
+            return data["content"][0]["text"]
+    except urllib.error.HTTPError as e:
+        body = e.read().decode()
+        raise RuntimeError(f"API error {e.code}: {body}")
 
 
 def build_prompt(topic, course_number):
