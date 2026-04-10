@@ -1,0 +1,34 @@
+# GeoAI Course Topics for carto.ma
+# One topic per line. The script reads the next unused line each day.
+# Lines starting with # are ignored.
+
+Urban Heat Island Mapping with Landsat and DeepSeek
+Drought Monitoring with MODIS NDVI and DeepSeek
+Coastal Erosion Detection with Sentinel-2 and DeepSeek
+Snow Cover Analysis with MODIS MOD10A1 and DeepSeek
+Cropland Mapping with Sentinel-2 and Dynamic World
+Wildfire Risk Mapping with MODIS and DeepSeek
+Water Quality Monitoring with Sentinel-2 and DeepSeek
+Solar Energy Potential Mapping with PVGIS and DeepSeek
+Air Quality Mapping with Sentinel-5P NO2 and DeepSeek
+Mangrove Loss Detection with Hansen GFC and DeepSeek
+Glacier Retreat Mapping with Landsat and DeepSeek
+Soil Moisture Analysis with Sentinel-1 SAR and DeepSeek
+Urban Green Space Analysis with NDVI and DeepSeek
+Dust Storm Detection with MODIS and DeepSeek
+Land Degradation Mapping with NDVI Trends and DeepSeek
+Informal Settlement Mapping with Sentinel-2 and DeepSeek
+River Flood Plain Mapping with SRTM DEM and DeepSeek
+Crop Stress Detection with Sentinel-2 Red Edge and DeepSeek
+Night Light Change Analysis with VIIRS and DeepSeek
+Burned Area Mapping with MODIS MCD64A1 and DeepSeek
+Wetland Change Detection with Sentinel-1 and DeepSeek
+Road Extraction from Satellite Imagery with DeepSeek
+Building Footprint Analysis with Sentinel-2 and DeepSeek
+Poverty Mapping with Night Lights and NDVI and DeepSeek
+Rangeland Degradation with MODIS and DeepSeek
+Landslide Susceptibility Mapping with DEM and DeepSeek
+Marine Heatwave Detection with SST and DeepSeek
+Plastic Pollution Hotspot Mapping with Sentinel-2 and DeepSeek
+Carbon Stock Mapping with GEDI and DeepSeek
+Phenology Analysis with MODIS EVI Time Series and DeepSeek
