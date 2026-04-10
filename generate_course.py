@@ -43,20 +43,21 @@ def load_topics():
 
 
 def call_claude(prompt):
-    url = "https://api.anthropic.com/v1/messages"
+    api_key = ANTHROPIC_API_KEY  # variable name kept same, holds Gemini key
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
     payload = json.dumps({
-        "model": "claude-sonnet-4-5",
-        "max_tokens": 4000,
-        "messages": [{"role": "user", "content": prompt}]
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "maxOutputTokens": 4000,
+            "temperature": 0.7
+        }
     }).encode()
     req = urllib.request.Request(url, data=payload, method="POST")
     req.add_header("Content-Type", "application/json")
-    req.add_header("x-api-key", ANTHROPIC_API_KEY)
-    req.add_header("anthropic-version", "2023-06-01")
     try:
         with urllib.request.urlopen(req, timeout=120) as resp:
             data = json.loads(resp.read().decode())
-            return data["content"][0]["text"]
+            return data["candidates"][0]["content"]["parts"][0]["text"]
     except urllib.error.HTTPError as e:
         body = e.read().decode()
         raise RuntimeError(f"API error {e.code}: {body}")
