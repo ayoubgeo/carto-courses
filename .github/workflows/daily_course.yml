@@ -1,0 +1,34 @@
+name: Daily GeoAI Course Generator
+
+on:
+  schedule:
+    - cron: '0 7 * * *'  # runs every day at 7:00 AM UTC
+  workflow_dispatch:       # allows manual trigger from GitHub UI
+
+jobs:
+  generate-course:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run course generator
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python generate_course.py
+
+      - name: Commit and push new course
+        run: |
+          git config user.name "ayoubgeo"
+          git config user.email "ayoubla3@gmail.com"
+          git add .
+          git diff --staged --quiet || git commit -m "Auto-generate course $(date '+%Y-%m-%d')"
+          git push origin main
