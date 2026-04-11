@@ -1,5 +1,5 @@
 {
-  "next_index": 1,
+  "next_index": 2,
   "generated": [
     {
       "index": 0,
@@ -7,6 +7,13 @@
       "filename": "Course05_urban_heat_island_mapping_with_landsat_a.html",
       "title": "Urban Heat Island Mapping with Landsat and DeepSeek",
       "date": "2026-04-10T13:01:27.247702"
+    },
+    {
+      "index": 1,
+      "topic": "Drought Monitoring with MODIS NDVI and DeepSeek",
+      "filename": "Course06_drought_monitoring_with_modis_ndvi_and_d.html",
+      "title": "Drought Monitoring with MODIS NDVI and DeepSeek",
+      "date": "2026-04-11T07:50:32.050142"
     }
   ]
 }
