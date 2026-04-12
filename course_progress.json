@@ -1,5 +1,5 @@
 {
-  "next_index": 2,
+  "next_index": 3,
   "generated": [
     {
       "index": 0,
@@ -14,6 +14,13 @@
       "filename": "Course06_drought_monitoring_with_modis_ndvi_and_d.html",
       "title": "Drought Monitoring with MODIS NDVI and DeepSeek",
       "date": "2026-04-11T07:50:32.050142"
+    },
+    {
+      "index": 2,
+      "topic": "Coastal Erosion Detection with Sentinel-2 and DeepSeek",
+      "filename": "Course07_coastal_erosion_detection_with_sentinel_.html",
+      "title": "Coastal Erosion Detection with Sentinel-2 and DeepSeek",
+      "date": "2026-04-12T08:03:26.433339"
     }
   ]
 }
