@@ -174,14 +174,14 @@ def build_card(content, t, filename, course_number):
     )
     delay = 0.1 + (course_number % 6) * 0.15
     ds = content.get("gee_dataset", "...")[:35]
+    title_short = content['title'][:28].lower().replace(' ','-')
     return f"""
-            <!-- Course {course_number}: {content['title']} -->
-            <a href="https://carto.ma/courses/{filename}" class="course-card {t['cls']} animate-in" style="animation-delay:{delay:.2f}s">
+            <a href="https://carto.ma/{filename}" class="course-card {t['cls']} animate-in">
                 <div class="card-visual">
-                    <div class="card-visual-bg" style="position:absolute;inset:0;background:{t['bg']}"></div>
+                    <div class="card-visual-bg"></div>
                     <div class="card-decoration">
                         <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                        <div class="code-line"><span class="comment">// {content['title'][:28].lower().replace(' ','-')}</span></div>
+                        <div class="code-line"><span class="comment">// {title_short}</span></div>
                         <div class="code-line"><span class="keyword">var</span> ds = <span class="func">ee.Image</span>(<span class="string">'{ds}'</span>)</div>
                         <div class="code-line"><span class="func">Map.addLayer</span>(ds, vis, <span class="string">'{content['title'][:18]}'</span>)</div>
                         <div class="code-line"><span class="comment">// DeepSeek generated</span></div>
