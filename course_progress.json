@@ -1,5 +1,5 @@
 {
-  "next_index": 3,
+  "next_index": 4,
   "generated": [
     {
       "index": 0,
@@ -21,6 +21,13 @@
       "filename": "Course07_coastal_erosion_detection_with_sentinel_.html",
       "title": "Coastal Erosion Detection with Sentinel-2 and DeepSeek",
       "date": "2026-04-12T08:03:26.433339"
+    },
+    {
+      "index": 3,
+      "topic": "Snow Cover Analysis with MODIS MOD10A1 and DeepSeek",
+      "filename": "Course08_snow_cover_analysis_with_modis_mod10a1_a.html",
+      "title": "Snow Cover Dynamics with MODIS and DeepSeek",
+      "date": "2026-04-13T09:01:26.087200"
     }
   ]
 }
