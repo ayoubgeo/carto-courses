@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course 9 - Cropland Mapping with Sentinel-2 and Dynamic World</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#1B4332;
+    --accent:#52B788;
+    --lime:#B7E4C7;
+    --cream:#F8FAF7;
+    --dark:#1A1F1C;
+    --gray:#6B7280;
+    --lg:#E5E7EB;
+    --cbg:#141A1F;
+    --cfg:#E2F0E8;
+    --ok:#10B981;
+    --info:#3B82F6;
+    --warn:#F59E0B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);line-height:1.7;font-size:16px}
+
+  /* HEADER */
+  .hd{background:var(--primary);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hd::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--lime))}
+  .hd::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0,40 Q100,10 200,35 Q300,55 400,20 Q500,0 600,30 Q700,55 800,25 Q900,5 1000,35 Q1100,55 1200,30 L1200,60 L0,60 Z' fill='%23F8FAF7'/%3E%3C/svg%3E") no-repeat bottom;background-size:cover}
+  .hi{max-width:860px;margin:0 auto;position:relative;z-index:1}
+  .hd .tg{display:inline-block;background:rgba(255,255,255,.12);color:var(--lime);font-size:.78rem;font-weight:700;padding:.3rem .9rem;border-radius:4px;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;border:1px solid rgba(255,255,255,.2)}
+  .hd h1{font-family:'Source Serif 4',serif;font-size:2.4rem;color:#fff;font-weight:700;line-height:1.2;margin-bottom:.5rem}
+  .hd .sb{font-size:1.05rem;color:rgba(255,255,255,.75);font-style:italic;margin-bottom:1.2rem}
+  .hd .mt{font-size:.82rem;color:rgba(255,255,255,.45)}
+  .hd .mt span{margin-right:1.5rem;padding-right:1.5rem;border-right:1px solid rgba(255,255,255,.15)}
+  .hd .mt span:last-child{border-right:none}
+
+  /* DATASET STRIP */
+  .db-strip{background:#fff;border-bottom:2px solid var(--lg);padding:.7rem 1.5rem}
+  .db-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:1rem;font-size:.82rem;flex-wrap:wrap}
+  .db-badge{background:rgba(0,0,0,.06);border:1px solid var(--lg);border-radius:6px;padding:.25rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--dark);font-weight:600}
+
+  /* LAYOUT */
+  .mn{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+  /* KEY TERMS BOX */
+  .kt{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .kt h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+
+  /* TABLE OF CONTENTS */
+  .tc{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .tc h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+  .tc ol{padding-left:1.2rem;column-count:2;column-gap:2rem}
+  .tc li{font-size:.9rem;margin-bottom:.4rem;color:var(--primary);break-inside:avoid}
+
+  /* DATASET CARD */
+  .dc{background:linear-gradient(135deg,#F8FFF8,#F0FDF4);border:1px solid #86EFAC;border-radius:10px;padding:1.3rem 1.5rem;margin:1.2rem 0;display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .dc-item .dl{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);font-weight:700;margin-bottom:.2rem}
+  .dc-item .dv{color:var(--dark);font-weight:500;font-size:.88rem}
+
+  /* SECTIONS */
+  .st{margin-bottom:3rem}
+  .sh{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.1rem}
+  .sn{flex-shrink:0;width:44px;height:44px;background:var(--primary);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+  .sl{font-family:'Source Serif 4',serif;font-size:1.42rem;font-weight:700;color:var(--primary)}
+  .sd{font-size:.77rem;color:var(--accent);font-weight:700;letter-spacing:.5px}
+  .st p{margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st ul,.st ol{margin-left:1.5rem;margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st li{margin-bottom:.35rem}
+
+  /* CODE BLOCKS */
+  .cb{background:var(--cbg);border-radius:10px;margin:1.2rem 0;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.2)}
+  .cr{background:rgba(255,255,255,.05);padding:.55rem 1rem;font-size:.73rem;color:var(--lime);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  .cb pre{padding:1.1rem 1.3rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.81rem;line-height:1.75;color:var(--cfg);white-space:pre;margin:0}
+  .cp{background:rgba(255,255,255,.08);color:var(--lime);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:.22rem .6rem;font-size:.68rem;font-weight:700;cursor:pointer;transition:all .2s}
+  .cp:hover{background:rgba(255,255,255,.15)}
+  .cp.ok{background:rgba(16,185,129,.2);border-color:var(--ok);color:var(--ok)}
+
+  /* NOTES */
+  .nt{border-radius:8px;padding:1rem 1.2rem;margin:1.2rem 0;font-size:.92rem;display:flex;gap:.9rem;align-items:flex-start}
+  .ni{background:#EFF6FF;border-left:4px solid var(--info);color:#1E3A5F}
+  .np{background:#F0FDF4;border-left:4px solid var(--ok);color:#064E3B}
+  .nw{background:#FFFBEB;border-left:4px solid var(--warn);color:#78350F}
+  .nk{background:#F0FDF4;border-left:4px solid var(--accent);color:var(--primary)}
+  .nt strong{font-weight:700}
+  .nt .ic{flex-shrink:0;font-size:1.25rem;margin-top:.05rem}
+
+  /* PROMPT CARD */
+  .prompt-card{background:#FAFFF5;border:1.5px solid #86EFAC;border-radius:10px;padding:1.2rem 1.4rem;margin:1.3rem 0}
+  .prompt-card .pl{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:700;margin-bottom:.6rem;font-family:'DM Sans',sans-serif}
+  .prompt-card .pt{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#1A2E1F;background:#F0FDF4;border-radius:6px;padding:1rem 1.1rem;white-space:pre-wrap;line-height:1.7;border:1px solid #BBF7D0}
+
+  /* EXERCISES */
+  .xr{background:linear-gradient(135deg,#FEFCE8,#FEF9C3);border:1px solid #FDE047;border-radius:10px;padding:1.2rem 1.5rem;margin:1rem 0}
+  .xr h4{color:#854D0E;font-size:.82rem;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.7rem;font-weight:700}
+  .xr ol{padding-left:1.2rem;font-size:.92rem;color:#713F12}
+  .xr li{margin-bottom:.4rem}
+
+  /* TABLES */
+  .tb{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.87rem;border-radius:8px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  .tb th{background:var(--primary);color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600;font-size:.81rem}
+  .tb td{padding:.55rem 1rem;border-bottom:1px solid var(--lg);background:#fff;vertical-align:top}
+  .tb tr:last-child td{border-bottom:none}
+  .tb tr:hover td{background:#F8FFF8}
+
+  /* DIVIDER */
+  .dv{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--lg),transparent);margin:2.5rem 0}
+
+  /* INLINE CODE */
+  code{font-family:'JetBrains Mono',monospace;font-size:.83em;background:rgba(0,0,0,.06);color:var(--accent);padding:.15em .42em;border-radius:4px}
+
+  /* FOOTER */
+  .ft{text-align:center;padding:2rem;color:var(--gray);font-size:.82rem;border-top:1px solid var(--lg);margin-top:2rem}
+  .ft strong{color:var(--accent)}
+
+  @media(max-width:700px){
+    .hd h1{font-size:1.6rem}
+    .tc ol{column-count:1}
+    .sl{font-size:1.2rem}
+    .dc{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="hi">
+    <div class="tg">Practical Course 9</div>
+    <h1>Cropland Mapping with Sentinel-2 and Dynamic World</h1>
+    <div class="sb">Learn to map cropland in North Morocco using Sentinel-2 imagery and Google's Dynamic World dataset for efficient land cover classification.</div>
+    <div class="mt">
+      <span>North Morocco</span>
+      <span>~2 hours</span>
+      <span>Master - Climate Change and GeoAI</span>
+    </div>
+  </div>
+</div>
+
+<!-- DATASET STRIP -->
+<div class="db-strip">
+  <div class="db-inner">
+    <strong style="font-size:.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:1px;">Dataset:</strong>
+    <span class="db-badge">COPERNICUS/S2_SR</span>
+    <span style="font-size:.82rem;color:#6B7280;">Sentinel-2 Surface Reflectance</span>
+  </div>
+</div>
+
+<div class="mn">
+
+  <!-- KEY TERMS -->
+  <div class="kt">
+    <h3>📖 Key Terms for Beginners</h3>
+    <p style="font-size:.85rem;color:#374151;margin-bottom:1rem;">Before starting, make sure you understand these terms. They appear throughout all code blocks in this course.</p>
+    <table class="tb">
+      <tr><th>Term</th><th>Full Name</th><th>What it means in simple words</th></tr>
+      <tr><td><strong>NDVI</strong></td><td>Normalized Difference Vegetation Index</td><td>A simple graphical indicator that can be used to analyze remote sensing observations, often from a satellite, and assess whether the target being observed contains live green vegetation.</td></tr><tr><td><strong>EVI</strong></td><td>Enhanced Vegetation Index</td><td>An optimized vegetation index designed to enhance the vegetation signal with improved sensitivity in high biomass regions and improved vegetation monitoring through a de-coupling of the canopy background signal and a reduction in atmosphere influences.</td></tr><tr><td><strong>Sentinel-2</strong></td><td>Sentinel-2 Mission</td><td>An Earth observation mission from the Copernicus Programme that systematically acquires optical imagery at high spatial resolution over land and coastal waters.</td></tr><tr><td><strong>Dynamic World</strong></td><td>Google's Dynamic World</td><td>A near real-time global land cover dataset at 10m resolution, derived from Sentinel-2 imagery.</td></tr><tr><td><strong>GEE</strong></td><td>Google Earth Engine</td><td>A cloud-based platform for planetary-scale geospatial analysis.</td></tr><tr><td><strong>Classification</strong></td><td>Image Classification</td><td>The process of sorting pixels into a finite number of individual classes, or categories, of data based on their data file values.</td></tr><tr><td><strong>ROI</strong></td><td>Region of Interest</td><td>A specific area selected for analysis.</td></tr><tr><td><strong>Surface Reflectance</strong></td><td>Surface Reflectance</td><td>The fraction of incoming solar radiation that is reflected from the Earth's surface.</td></tr><tr><td><strong>Spectral Bands</strong></td><td>Spectral Bands</td><td>Specific ranges of the electromagnetic spectrum that are measured by a sensor.</td></tr><tr><td><strong>Cloud Masking</strong></td><td>Cloud Masking</td><td>The process of identifying and removing clouds from satellite imagery.</td></tr><tr><td><strong>Pixel</strong></td><td>Pixel</td><td>The smallest unit of an image, representing a single measurement of reflectance or other data.</td></tr><tr><td><strong>Time Series</strong></td><td>Time Series Analysis</td><td>Analyzing data points indexed in time order.</td></tr><tr><td><strong>Land Cover</strong></td><td>Land Cover</td><td>The physical material at the surface of the earth.</td></tr><tr><td><strong>Composite</strong></td><td>Image Composite</td><td>A combination of multiple images into a single image, often used to reduce cloud cover or create a more representative view of an area.</td></tr>
+    </table>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="tc">
+    <h3>Contents</h3>
+    <ol><li>Introduction to Cropland Mapping</li><li>Sentinel-2 Data Acquisition</li><li>Dynamic World Data Acquisition</li><li>Data Preprocessing</li><li>Vegetation Index Calculation</li><li>Cropland Classification</li><li>Accuracy Assessment</li><li>Visualization</li><li>Exporting Results</li><li>Advanced Analysis</li></ol>
+  </div>
+
+  <!-- S1: INTRODUCTION -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">1</div>
+      <div><div class="sl">Introduction</div><div class="sd">10 min</div></div>
+    </div>
+    <p>This course introduces the fundamentals of cropland mapping using remote sensing data. We will leverage Sentinel-2 imagery and Google's Dynamic World dataset within the Google Earth Engine (GEE) platform. By the end of this course, you'll be able to map cropland in North Morocco, even with limited prior experience in GEE or remote sensing.</p>
+    <div class="dc">
+      <div class="dc-item"><div class="dl">GEE Asset ID</div><div class="dv"><code>COPERNICUS/S2_SR</code></div></div>
+      <div class="dc-item"><div class="dl">Dataset Name</div><div class="dv">Sentinel-2 Surface Reflectance</div></div>
+      <div class="dc-item"><div class="dl">Study Area</div><div class="dv">North Morocco</div></div>
+      <div class="dc-item"><div class="dl">AI Tool</div><div class="dv">DeepSeek (free, no API key needed)</div></div>
+    </div>
+    <div class="nt np"><div class="ic">🌍</div><div><strong>What you will build:</strong> By the end of this course you will have a working GEE script that analyzes Cropland Mapping with Sentinel-2 and Dynamic World, computes statistics, visualizes results on an interactive map, and exports data to Google Drive.</div></div>
+  </div><hr class="dv">
+
+  <!-- S2: SETUP -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">2</div>
+      <div><div class="sl">Setup: GEE + DeepSeek</div><div class="sd">5 min</div></div>
+    </div>
+    <p>You need two browser tabs open side by side throughout this course.</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem;margin:1rem 0">
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">1</div>
+        Open <a href="https://chat.deepseek.com" target="_blank">chat.deepseek.com</a> -- free account, no API key needed
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">2</div>
+        Open <a href="https://code.earthengine.google.com" target="_blank">code.earthengine.google.com</a> in a second tab
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">3</div>
+        Create a new GEE script named <code>Course9_Cropland Mapping with Sentinel-2 and Dynamic World</code>
+      </div>
+    </div>
+    <div class="nt ni"><div class="ic">💡</div><div><strong>Workflow:</strong> Write a prompt in DeepSeek describing your task with exact dataset IDs and requirements. Copy the generated GEE JavaScript. Paste into GEE code editor. Click Run. Inspect results. Iterate.</div></div>
+  </div><hr class="dv">
+
+  <!-- S3: DEEPSEEK PROMPT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">3</div>
+      <div><div class="sl">Crafting the DeepSeek Prompt</div><div class="sd">15 min</div></div>
+    </div>
+    <p>The prompt is the core skill of this course. A good prompt includes the exact dataset ID, band names, study area coordinates, dates, preprocessing steps, and desired outputs.</p>
+    <div class="prompt-card">
+      <div class="pl">📋 Main Prompt -- copy and paste this into DeepSeek</div>
+      <div class="pt">Using Google Earth Engine, create a cropland map of the Rif Mountains and Middle Atlas regions of North Morocco for the year 2023. Use Sentinel-2 surface reflectance data (COPERNICUS/S2_SR) and Google's Dynamic World dataset (GOOGLE/DYNAMIC_WORLD/V1). Filter Sentinel-2 data for images between January 1, 2023, and December 31, 2023. Apply cloud masking using the QA60 band. Calculate NDVI and EVI. Use Dynamic World to identify cropland areas. Refine the cropland classification using a supervised classification approach with manually selected training data. Calculate the overall accuracy of the cropland map. Visualize the cropland map with a custom color palette. Export the final cropland map as a GeoTIFF file.</div>
+    </div>
+    <div class="nt ni"><div class="ic">✨</div><div><strong>After pasting the prompt:</strong> Wait 20-30 seconds for DeepSeek to generate the full GEE script. Copy the entire code block it produces. If the output is cut short, type "Continue the code" to get the rest.</div></div>
+  </div><hr class="dv">
+
+  <!-- S4: CODE BLOCK 1 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">4</div>
+      <div><div class="sl">Sentinel-2 Data Acquisition and Cloud Masking</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Paste the following code into your GEE code editor and click Run. Read the beginner notes below to understand what each line does.</p>
+    <div class="cb">
+      <div class="cr"><span>Sentinel-2 Data Acquisition and Cloud Masking</span><button class="cp">COPY</button></div>
+      <pre>// Define region of interest (Rif Mountains and Middle Atlas, Morocco)
+var roi = ee.Geometry.Rectangle([-6, 32, -2, 35]);
+
+// Function to mask clouds using the QA60 band
+var maskS2clouds = function(image) {
+  var qa = image.select('QA60');
+  // Bits 10 and 11 are clouds and cirrus, respectively.
+  var cloudBitMask = 1 << 10;
+  var cirrusBitMask = 1 << 11;
+  // Both flags should be set to zero, indicating clear conditions.
+  var mask = qa.bitwiseAnd(cloudBitMask).eq(0)
+      .and(qa.bitwiseAnd(cirrusBitMask).eq(0));
+  return image.updateMask(mask).divide(10000);
+};
+
+// Load Sentinel-2 SR data and filter by date and region
+var s2 = ee.ImageCollection('COPERNICUS/S2_SR')
+    .filterDate('2023-01-01', '2023-12-31')
+    .filterBounds(roi)
+    .map(maskS2clouds);</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This code block first defines the region of interest (ROI) in North Morocco. Then, it defines a function `maskS2clouds` to mask out clouds from Sentinel-2 images using the QA60 band. Finally, it loads the Sentinel-2 Surface Reflectance dataset, filters it by date and region, and applies the cloud masking function to each image in the collection. The values are divided by 10000 to convert to reflectance values.</div></div>
+  </div><hr class="dv">
+
+  <!-- S5: CODE BLOCK 2 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">5</div>
+      <div><div class="sl">Vegetation Index Calculation and Dynamic World Integration</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Add this block after the previous code. It continues the analysis with additional processing and visualization.</p>
+    <div class="cb">
+      <div class="cr"><span>Vegetation Index Calculation and Dynamic World Integration</span><button class="cp">COPY</button></div>
+      <pre>// Function to calculate NDVI
+var addNDVI = function(image) {
+  var ndvi = image.normalizedDifference(['B8', 'B4']).rename('NDVI');
+  return image.addBands(ndvi);
+};
+
+// Function to calculate EVI
+var addEVI = function(image) {
+  var evi = image.expression(
+      '2.5 * (NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1)', {
+        'NIR': image.select('B8'),
+        'RED': image.select('B4'),
+        'BLUE': image.select('B2')
+      }).rename('EVI');
+  return image.addBands(evi);
+};
+
+// Apply NDVI and EVI calculations
+var s2_ndvi_evi = s2.map(addNDVI).map(addEVI);
+
+// Load Dynamic World data
+var dw = ee.ImageCollection('GOOGLE/DYNAMIC_WORLD/V1')
+    .filterDate('2023-01-01', '2023-12-31')
+    .filterBounds(roi);
+
+// Get the most frequent land cover class from Dynamic World
+var dw_mode = dw.select('label').reduce(ee.Reducer.mode());</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This code block defines functions to calculate NDVI and EVI from Sentinel-2 imagery. It then applies these functions to the Sentinel-2 image collection. It also loads the Dynamic World dataset, filters it by date and region, and calculates the most frequent land cover class for each pixel using the `reduce(ee.Reducer.mode())` function.</div></div>
+  </div><hr class="dv">
+
+  <!-- S6: EXPORT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">6</div>
+      <div><div class="sl">Export Results to Google Drive</div><div class="sd">5 min</div></div>
+    </div>
+    <p>Add this block at the end of your script to export the final map as a GeoTIFF to your Google Drive. After clicking Run, go to the <strong>Tasks</strong> tab in GEE and click <strong>Run</strong> next to each export task.</p>
+    <div class="cb">
+      <div class="cr"><span>Export to Google Drive</span><button class="cp">COPY</button></div>
+      <pre>// Export the cropland map to Google Drive
+Export.image.toDrive({
+  image: dw_mode,
+  description: 'Cropland_Map_Morocco_2023',
+  folder: 'GEE_Exports',
+  scale: 10,
+  region: roi,
+  maxPixels: 1e13
+});</pre>
+    </div>
+    <div class="nt ni"><div class="ic">🔑</div><div><strong>Beginner note -- Export.image.toDrive():</strong> This function does not export immediately. It creates a task in the GEE Tasks tab that you must manually start by clicking Run. The file will appear in your Google Drive folder (GEE_Courses) as a GeoTIFF that you can open in QGIS or ArcGIS.</div></div>
+  </div><hr class="dv">
+
+  <!-- S7: EXERCISES -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">7</div>
+      <div><div class="sl">Exercises Using DeepSeek Prompts</div><div class="sd">Homework</div></div>
+    </div>
+    <p>Use DeepSeek to extend the script for each exercise below. Write a follow-up prompt describing what you want to add, then copy the generated code and paste it into your GEE script.</p>
+    <div class="xr"><h4>Exploring Sentinel-2 Bands</h4><ol><li>Load a single Sentinel-2 image.</li><li>Display different spectral bands (e.g., Red, Green, Blue, NIR).</li></ol></div><div class="xr"><h4>Cloud Cover Visualization</h4><ol><li>Visualize the QA60 band.</li><li>Identify areas with cloud cover based on the QA60 band values.</li></ol></div><div class="xr"><h4>NDVI Thresholding</h4><ol><li>Experiment with different NDVI thresholds to identify vegetation.</li><li>Compare the results with visual interpretation.</li></ol></div><div class="xr"><h4>Dynamic World Land Cover Types</h4><ol><li>Visualize the Dynamic World land cover classification.</li><li>Identify the distribution of different land cover types in your ROI.</li></ol></div>
+  </div><hr class="dv">
+
+  <!-- S8: PROMPT ENGINEERING TIPS -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">8</div>
+      <div><div class="sl">Prompt Engineering Tips</div><div class="sd">Reference</div></div>
+    </div>
+    <p>To get the best results from DeepSeek for GEE tasks, always include these elements in your prompts:</p>
+    <table class="tb">
+      <tr><th>Element</th><th>Example</th></tr>
+      <tr><td>Exact dataset ID</td><td><code>COPERNICUS/S2_SR</code></td></tr>
+      <tr><td>Band names</td><td>"select band 'B4' for red, 'B8' for NIR"</td></tr>
+      <tr><td>Study area</td><td>"rectangle [-6.5, 33.0, -1.5, 36.0] North Morocco"</td></tr>
+      <tr><td>Date range</td><td>"filter from 2020-01-01 to 2023-12-31"</td></tr>
+      <tr><td>Output format</td><td>"print area in hectares, add a legend, export to Drive"</td></tr>
+      <tr><td>Error fixing</td><td>"The code gives error X. Please fix it."</td></tr>
+      <tr><td>Iteration</td><td>"Add a time series chart for each year 2018-2023"</td></tr>
+    </table>
+    <div class="nt np"><div class="ic">🧠</div><div><strong>Best practice:</strong> Start with the main prompt, run the code, then send follow-up prompts to add features one at a time. This gives you cleaner, more reliable code than asking for everything at once.</div></div>
+  </div>
+
+</div><!-- end .mn -->
+
+<div class="ft">
+  <strong>Course 9</strong> - Cropland Mapping with Sentinel-2 and Dynamic World | GeoAI for Climate Change | Dr. Ayoub Lahlouh | UM6P/CUS | 2025/2026
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cb').forEach(function(b) {
+    var pre = b.querySelector('pre');
+    if (!pre) return;
+    var btns = b.querySelectorAll('.cp');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var t = (pre.textContent || pre.innerText).replace(/^\n/, '');
+        navigator.clipboard.writeText(t).then(function() {
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        }).catch(function() {
+          var a = document.createElement('textarea');
+          a.value = t; a.style.position = 'fixed'; a.style.left = '-9999px';
+          document.body.appendChild(a); a.select();
+          document.execCommand('copy'); document.body.removeChild(a);
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        });
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>

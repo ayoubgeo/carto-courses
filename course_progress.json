@@ -1,5 +1,5 @@
 {
-  "next_index": 4,
+  "next_index": 5,
   "generated": [
     {
       "index": 0,
@@ -28,6 +28,13 @@
       "filename": "Course08_snow_cover_analysis_with_modis_mod10a1_a.html",
       "title": "Snow Cover Dynamics with MODIS and DeepSeek",
       "date": "2026-04-13T09:01:26.087200"
+    },
+    {
+      "index": 4,
+      "topic": "Cropland Mapping with Sentinel-2 and Dynamic World",
+      "filename": "Course09_cropland_mapping_with_sentinel_2_and_dyn.html",
+      "title": "Cropland Mapping with Sentinel-2 and Dynamic World",
+      "date": "2026-04-14T08:28:13.432948"
     }
   ]
 }
