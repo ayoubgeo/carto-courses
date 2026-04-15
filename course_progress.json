@@ -1,5 +1,5 @@
 {
-  "next_index": 5,
+  "next_index": 6,
   "generated": [
     {
       "index": 0,
@@ -35,6 +35,13 @@
       "filename": "Course09_cropland_mapping_with_sentinel_2_and_dyn.html",
       "title": "Cropland Mapping with Sentinel-2 and Dynamic World",
       "date": "2026-04-14T08:28:13.432948"
+    },
+    {
+      "index": 5,
+      "topic": "Wildfire Risk Mapping with MODIS and DeepSeek",
+      "filename": "Course10_wildfire_risk_mapping_with_modis_and_dee.html",
+      "title": "Wildfire Risk Mapping with MODIS and DeepSeek",
+      "date": "2026-04-15T08:27:56.855801"
     }
   ]
 }
