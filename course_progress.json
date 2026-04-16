@@ -1,5 +1,5 @@
 {
-  "next_index": 6,
+  "next_index": 7,
   "generated": [
     {
       "index": 0,
@@ -42,6 +42,13 @@
       "filename": "Course10_wildfire_risk_mapping_with_modis_and_dee.html",
       "title": "Wildfire Risk Mapping with MODIS and DeepSeek",
       "date": "2026-04-15T08:27:56.855801"
+    },
+    {
+      "index": 6,
+      "topic": "Water Quality Monitoring with Sentinel-2 and DeepSeek",
+      "filename": "Course11_water_quality_monitoring_with_sentinel_2.html",
+      "title": "Water Quality Monitoring with Sentinel-2 and DeepSeek",
+      "date": "2026-04-16T08:27:07.343227"
     }
   ]
 }
