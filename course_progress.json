@@ -1,5 +1,5 @@
 {
-  "next_index": 8,
+  "next_index": 9,
   "generated": [
     {
       "index": 0,
@@ -56,6 +56,13 @@
       "filename": "Course12_solar_energy_potential_mapping_with_pvgi.html",
       "title": "Solar Potential Mapping",
       "date": "2026-04-17T08:26:34.976327"
+    },
+    {
+      "index": 8,
+      "topic": "Air Quality Mapping with Sentinel-5P NO2 and DeepSeek",
+      "filename": "Course13_air_quality_mapping_with_sentinel_5p_no2.html",
+      "title": "Air Quality Mapping with Sentinel-5P NO2 and DeepSeek",
+      "date": "2026-04-18T07:59:50.311372"
     }
   ]
 }
