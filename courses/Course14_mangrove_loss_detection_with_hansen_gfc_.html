@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course 14 - Mangrove Loss Detection with GFC and DeepSeek</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#1B4332;
+    --accent:#52B788;
+    --lime:#B7E4C7;
+    --cream:#F8FAF7;
+    --dark:#1A1F1C;
+    --gray:#6B7280;
+    --lg:#E5E7EB;
+    --cbg:#141A1F;
+    --cfg:#E2F0E8;
+    --ok:#10B981;
+    --info:#3B82F6;
+    --warn:#F59E0B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);line-height:1.7;font-size:16px}
+
+  /* HEADER */
+  .hd{background:var(--primary);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hd::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--lime))}
+  .hd::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0,40 Q100,10 200,35 Q300,55 400,20 Q500,0 600,30 Q700,55 800,25 Q900,5 1000,35 Q1100,55 1200,30 L1200,60 L0,60 Z' fill='%23F8FAF7'/%3E%3C/svg%3E") no-repeat bottom;background-size:cover}
+  .hi{max-width:860px;margin:0 auto;position:relative;z-index:1}
+  .hd .tg{display:inline-block;background:rgba(255,255,255,.12);color:var(--lime);font-size:.78rem;font-weight:700;padding:.3rem .9rem;border-radius:4px;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;border:1px solid rgba(255,255,255,.2)}
+  .hd h1{font-family:'Source Serif 4',serif;font-size:2.4rem;color:#fff;font-weight:700;line-height:1.2;margin-bottom:.5rem}
+  .hd .sb{font-size:1.05rem;color:rgba(255,255,255,.75);font-style:italic;margin-bottom:1.2rem}
+  .hd .mt{font-size:.82rem;color:rgba(255,255,255,.45)}
+  .hd .mt span{margin-right:1.5rem;padding-right:1.5rem;border-right:1px solid rgba(255,255,255,.15)}
+  .hd .mt span:last-child{border-right:none}
+
+  /* DATASET STRIP */
+  .db-strip{background:#fff;border-bottom:2px solid var(--lg);padding:.7rem 1.5rem}
+  .db-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:1rem;font-size:.82rem;flex-wrap:wrap}
+  .db-badge{background:rgba(0,0,0,.06);border:1px solid var(--lg);border-radius:6px;padding:.25rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--dark);font-weight:600}
+
+  /* LAYOUT */
+  .mn{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+  /* KEY TERMS BOX */
+  .kt{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .kt h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+
+  /* TABLE OF CONTENTS */
+  .tc{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .tc h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+  .tc ol{padding-left:1.2rem;column-count:2;column-gap:2rem}
+  .tc li{font-size:.9rem;margin-bottom:.4rem;color:var(--primary);break-inside:avoid}
+
+  /* DATASET CARD */
+  .dc{background:linear-gradient(135deg,#F8FFF8,#F0FDF4);border:1px solid #86EFAC;border-radius:10px;padding:1.3rem 1.5rem;margin:1.2rem 0;display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .dc-item .dl{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);font-weight:700;margin-bottom:.2rem}
+  .dc-item .dv{color:var(--dark);font-weight:500;font-size:.88rem}
+
+  /* SECTIONS */
+  .st{margin-bottom:3rem}
+  .sh{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.1rem}
+  .sn{flex-shrink:0;width:44px;height:44px;background:var(--primary);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+  .sl{font-family:'Source Serif 4',serif;font-size:1.42rem;font-weight:700;color:var(--primary)}
+  .sd{font-size:.77rem;color:var(--accent);font-weight:700;letter-spacing:.5px}
+  .st p{margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st ul,.st ol{margin-left:1.5rem;margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st li{margin-bottom:.35rem}
+
+  /* CODE BLOCKS */
+  .cb{background:var(--cbg);border-radius:10px;margin:1.2rem 0;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.2)}
+  .cr{background:rgba(255,255,255,.05);padding:.55rem 1rem;font-size:.73rem;color:var(--lime);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  .cb pre{padding:1.1rem 1.3rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.81rem;line-height:1.75;color:var(--cfg);white-space:pre;margin:0}
+  .cp{background:rgba(255,255,255,.08);color:var(--lime);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:.22rem .6rem;font-size:.68rem;font-weight:700;cursor:pointer;transition:all .2s}
+  .cp:hover{background:rgba(255,255,255,.15)}
+  .cp.ok{background:rgba(16,185,129,.2);border-color:var(--ok);color:var(--ok)}
+
+  /* NOTES */
+  .nt{border-radius:8px;padding:1rem 1.2rem;margin:1.2rem 0;font-size:.92rem;display:flex;gap:.9rem;align-items:flex-start}
+  .ni{background:#EFF6FF;border-left:4px solid var(--info);color:#1E3A5F}
+  .np{background:#F0FDF4;border-left:4px solid var(--ok);color:#064E3B}
+  .nw{background:#FFFBEB;border-left:4px solid var(--warn);color:#78350F}
+  .nk{background:#F0FDF4;border-left:4px solid var(--accent);color:var(--primary)}
+  .nt strong{font-weight:700}
+  .nt .ic{flex-shrink:0;font-size:1.25rem;margin-top:.05rem}
+
+  /* PROMPT CARD */
+  .prompt-card{background:#FAFFF5;border:1.5px solid #86EFAC;border-radius:10px;padding:1.2rem 1.4rem;margin:1.3rem 0}
+  .prompt-card .pl{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:700;margin-bottom:.6rem;font-family:'DM Sans',sans-serif}
+  .prompt-card .pt{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#1A2E1F;background:#F0FDF4;border-radius:6px;padding:1rem 1.1rem;white-space:pre-wrap;line-height:1.7;border:1px solid #BBF7D0}
+
+  /* EXERCISES */
+  .xr{background:linear-gradient(135deg,#FEFCE8,#FEF9C3);border:1px solid #FDE047;border-radius:10px;padding:1.2rem 1.5rem;margin:1rem 0}
+  .xr h4{color:#854D0E;font-size:.82rem;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.7rem;font-weight:700}
+  .xr ol{padding-left:1.2rem;font-size:.92rem;color:#713F12}
+  .xr li{margin-bottom:.4rem}
+
+  /* TABLES */
+  .tb{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.87rem;border-radius:8px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  .tb th{background:var(--primary);color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600;font-size:.81rem}
+  .tb td{padding:.55rem 1rem;border-bottom:1px solid var(--lg);background:#fff;vertical-align:top}
+  .tb tr:last-child td{border-bottom:none}
+  .tb tr:hover td{background:#F8FFF8}
+
+  /* DIVIDER */
+  .dv{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--lg),transparent);margin:2.5rem 0}
+
+  /* INLINE CODE */
+  code{font-family:'JetBrains Mono',monospace;font-size:.83em;background:rgba(0,0,0,.06);color:var(--accent);padding:.15em .42em;border-radius:4px}
+
+  /* FOOTER */
+  .ft{text-align:center;padding:2rem;color:var(--gray);font-size:.82rem;border-top:1px solid var(--lg);margin-top:2rem}
+  .ft strong{color:var(--accent)}
+
+  @media(max-width:700px){
+    .hd h1{font-size:1.6rem}
+    .tc ol{column-count:1}
+    .sl{font-size:1.2rem}
+    .dc{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="hi">
+    <div class="tg">Practical Course 14</div>
+    <h1>Mangrove Loss Detection with GFC and DeepSeek</h1>
+    <div class="sb">Learn to detect mangrove loss in North Morocco using the Hansen Global Forest Change dataset and DeepSeek AI for enhanced analysis.</div>
+    <div class="mt">
+      <span>North Morocco</span>
+      <span>~2 hours</span>
+      <span>Master - Climate Change and GeoAI</span>
+    </div>
+  </div>
+</div>
+
+<!-- DATASET STRIP -->
+<div class="db-strip">
+  <div class="db-inner">
+    <strong style="font-size:.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:1px;">Dataset:</strong>
+    <span class="db-badge">UMD/hansen/global_forest_change_2022_v1_10</span>
+    <span style="font-size:.82rem;color:#6B7280;">Hansen Global Forest Change v1.10 (2000-2022)</span>
+  </div>
+</div>
+
+<div class="mn">
+
+  <!-- KEY TERMS -->
+  <div class="kt">
+    <h3>📖 Key Terms for Beginners</h3>
+    <p style="font-size:.85rem;color:#374151;margin-bottom:1rem;">Before starting, make sure you understand these terms. They appear throughout all code blocks in this course.</p>
+    <table class="tb">
+      <tr><th>Term</th><th>Full Name</th><th>What it means in simple words</th></tr>
+      <tr><td><strong>Mangrove</strong></td><td>Mangrove Forest</td><td>Salt-tolerant coastal woodland ecosystems.</td></tr><tr><td><strong>Deforestation</strong></td><td>Deforestation</td><td>The clearing of forests for other land uses.</td></tr><tr><td><strong>Remote Sensing</strong></td><td>Remote Sensing</td><td>Acquiring information about an object or area from a distance.</td></tr><tr><td><strong>GEE</strong></td><td>Google Earth Engine</td><td>A cloud-based platform for geospatial analysis.</td></tr><tr><td><strong>GFC</strong></td><td>Global Forest Change</td><td>A dataset mapping global forest cover change from 2000 to present.</td></tr><tr><td><strong>Band</strong></td><td>Spectral Band</td><td>A specific range of wavelengths in the electromagnetic spectrum.</td></tr><tr><td><strong>Threshold</strong></td><td>Threshold</td><td>A value used to separate data into different categories.</td></tr><tr><td><strong>Classification</strong></td><td>Image Classification</td><td>The process of assigning pixels to different categories based on their spectral characteristics.</td></tr><tr><td><strong>Pixel</strong></td><td>Picture Element</td><td>The smallest addressable element in an image.</td></tr><tr><td><strong>Cloud Masking</strong></td><td>Cloud Masking</td><td>The process of removing clouds from satellite imagery.</td></tr><tr><td><strong>Time Series</strong></td><td>Time Series Analysis</td><td>A sequence of data points indexed in time order.</td></tr><tr><td><strong>DeepSeek</strong></td><td>DeepSeek LLM</td><td>Large Language Model for code generation and analysis.</td></tr><tr><td><strong>Image Collection</strong></td><td>Image Collection</td><td>A stack or time series of images in GEE.</td></tr><tr><td><strong>Region of Interest</strong></td><td>ROI</td><td>A specific geographic area selected for analysis.</td></tr>
+    </table>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="tc">
+    <h3>Contents</h3>
+    <ol><li>Introduction to Mangroves and Deforestation</li><li>Introduction to Hansen GFC Data</li><li>Setting up Google Earth Engine</li><li>Visualizing Forest Cover</li><li>Detecting Forest Loss</li><li>Using DeepSeek for Refinement</li><li>Analyzing Mangrove Loss in North Morocco</li><li>Validating Results</li><li>Exporting Results</li><li>Further Exploration</li></ol>
+  </div>
+
+  <!-- S1: INTRODUCTION -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">1</div>
+      <div><div class="sl">Introduction</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Mangrove forests are vital ecosystems that provide numerous benefits. This course will guide you through the process of detecting mangrove loss using the Hansen Global Forest Change dataset in Google Earth Engine. You will learn how to use DeepSeek AI to refine your analysis and gain deeper insights into deforestation patterns in North Morocco.</p>
+    <div class="dc">
+      <div class="dc-item"><div class="dl">GEE Asset ID</div><div class="dv"><code>UMD/hansen/global_forest_change_2022_v1_10</code></div></div>
+      <div class="dc-item"><div class="dl">Dataset Name</div><div class="dv">Hansen Global Forest Change v1.10 (2000-2022)</div></div>
+      <div class="dc-item"><div class="dl">Study Area</div><div class="dv">North Morocco</div></div>
+      <div class="dc-item"><div class="dl">AI Tool</div><div class="dv">DeepSeek (free, no API key needed)</div></div>
+    </div>
+    <div class="nt np"><div class="ic">🌍</div><div><strong>What you will build:</strong> By the end of this course you will have a working GEE script that analyzes Mangrove Loss Detection with GFC and DeepSeek, computes statistics, visualizes results on an interactive map, and exports data to Google Drive.</div></div>
+  </div><hr class="dv">
+
+  <!-- S2: SETUP -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">2</div>
+      <div><div class="sl">Setup: GEE + DeepSeek</div><div class="sd">5 min</div></div>
+    </div>
+    <p>You need two browser tabs open side by side throughout this course.</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem;margin:1rem 0">
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">1</div>
+        Open <a href="https://chat.deepseek.com" target="_blank">chat.deepseek.com</a> -- free account, no API key needed
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">2</div>
+        Open <a href="https://code.earthengine.google.com" target="_blank">code.earthengine.google.com</a> in a second tab
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">3</div>
+        Create a new GEE script named <code>Course14_Mangrove Loss Detection with GFC and DeepSeek</code>
+      </div>
+    </div>
+    <div class="nt ni"><div class="ic">💡</div><div><strong>Workflow:</strong> Write a prompt in DeepSeek describing your task with exact dataset IDs and requirements. Copy the generated GEE JavaScript. Paste into GEE code editor. Click Run. Inspect results. Iterate.</div></div>
+  </div><hr class="dv">
+
+  <!-- S3: DEEPSEEK PROMPT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">3</div>
+      <div><div class="sl">Crafting the DeepSeek Prompt</div><div class="sd">15 min</div></div>
+    </div>
+    <p>The prompt is the core skill of this course. A good prompt includes the exact dataset ID, band names, study area coordinates, dates, preprocessing steps, and desired outputs.</p>
+    <div class="prompt-card">
+      <div class="pl">📋 Main Prompt -- copy and paste this into DeepSeek</div>
+      <div class="pt">Generate a Google Earth Engine script to detect mangrove forest loss in the North Morocco region (Rif Mountains and Middle Atlas) between 2010 and 2020 using the 'UMD/hansen/global_forest_change_2022_v1_10' dataset. Focus on areas with treecover2000 greater than 30%. Calculate the total area of mangrove loss in hectares. Use the 'lossyear' band to identify the year of loss. Create a map visualization showing the location of mangrove loss. Use Landsat 8 imagery to validate the mangrove loss. Provide code comments explaining each step.</div>
+    </div>
+    <div class="nt ni"><div class="ic">✨</div><div><strong>After pasting the prompt:</strong> Wait 20-30 seconds for DeepSeek to generate the full GEE script. Copy the entire code block it produces. If the output is cut short, type "Continue the code" to get the rest.</div></div>
+  </div><hr class="dv">
+
+  <!-- S4: CODE BLOCK 1 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">4</div>
+      <div><div class="sl">Import and Filter Hansen GFC Data</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Paste the following code into your GEE code editor and click Run. Read the beginner notes below to understand what each line does.</p>
+    <div class="cb">
+      <div class="cr"><span>Import and Filter Hansen GFC Data</span><button class="cp">COPY</button></div>
+      <pre>// Define the region of interest (North Morocco).
+var roi = ee.Geometry.Rectangle([-5.5, 33.5, -2.0, 35.5]);
+
+// Import the Hansen Global Forest Change dataset.
+var gfc2022 = ee.Image('UMD/hansen/global_forest_change_2022_v1_10');
+
+// Select the tree cover, loss year, and gain bands.
+var treecover2000 = gfc2022.select('treecover2000');
+var lossyear = gfc2022.select('lossyear');
+var gain = gfc2022.select('gain');
+
+// Filter the data to areas with tree cover greater than 30% in 2000.
+var treecoverThreshold = 30;
+var initialCover = treecover2000.gte(treecoverThreshold);
+
+// Filter the lossyear data to the period between 2010 and 2020 (lossyear values are 0-indexed).
+var lossStartYear = 10; // Represents 2010
+var lossEndYear = 20;   // Represents 2020
+var loss = lossyear.gte(lossStartYear).and(lossyear.lte(lossEndYear)).and(initialCover);
+</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This code block imports the Hansen GFC dataset and filters it to focus on areas with significant tree cover in 2000 and loss between 2010 and 2020.  `ee.Geometry.Rectangle` defines the study area. `ee.Image` imports the GFC dataset. `select` chooses specific bands. `gte` and `lte` are used to filter data based on thresholds.  `and` combines the filters.</div></div>
+  </div><hr class="dv">
+
+  <!-- S5: CODE BLOCK 2 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">5</div>
+      <div><div class="sl">Visualize Forest Loss</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Add this block after the previous code. It continues the analysis with additional processing and visualization.</p>
+    <div class="cb">
+      <div class="cr"><span>Visualize Forest Loss</span><button class="cp">COPY</button></div>
+      <pre>// Create a visualization of the forest loss.
+var lossVisualization = {
+  palette: ['FF0000'], // Red color for loss
+  min: 0,
+  max: 1
+};
+
+// Add the loss layer to the map.
+Map.addLayer(loss.clip(roi), lossVisualization, 'Forest Loss 2010-2020');
+
+// Calculate the area of forest loss in hectares.
+var lossAreaImage = loss.multiply(ee.Image.pixelArea());
+var lossArea = lossAreaImage.reduceRegion({
+  reducer: ee.Reducer.sum(),
+  geometry: roi,
+  scale: 30, // Resolution of the Hansen GFC data
+  maxPixels: 1e13
+});
+
+// Print the area of forest loss to the console.
+print('Area of Forest Loss (Hectares):', lossArea.get('lossyear'));</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This block visualizes the detected forest loss and calculates the total area of loss.  `palette` sets the color for the visualization. `Map.addLayer` adds the loss layer to the Earth Engine map.  `ee.Image.pixelArea` calculates the area of each pixel. `reduceRegion` calculates the sum of the loss area within the ROI. `ee.Reducer.sum` specifies that we want the sum of the pixel areas.  `print` displays the result in the console.</div></div>
+  </div><hr class="dv">
+
+  <!-- S6: EXPORT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">6</div>
+      <div><div class="sl">Export Results to Google Drive</div><div class="sd">5 min</div></div>
+    </div>
+    <p>Add this block at the end of your script to export the final map as a GeoTIFF to your Google Drive. After clicking Run, go to the <strong>Tasks</strong> tab in GEE and click <strong>Run</strong> next to each export task.</p>
+    <div class="cb">
+      <div class="cr"><span>Export to Google Drive</span><button class="cp">COPY</button></div>
+      <pre>// Export the loss image to Google Drive.
+Export.image.toDrive({
+  image: loss.clip(roi),
+  description: 'forest_loss_2010_2020',
+  folder: 'GEE_Exports',
+  scale: 30,
+  region: roi,
+  maxPixels: 1e13
+});</pre>
+    </div>
+    <div class="nt ni"><div class="ic">🔑</div><div><strong>Beginner note -- Export.image.toDrive():</strong> This function does not export immediately. It creates a task in the GEE Tasks tab that you must manually start by clicking Run. The file will appear in your Google Drive folder (GEE_Courses) as a GeoTIFF that you can open in QGIS or ArcGIS.</div></div>
+  </div><hr class="dv">
+
+  <!-- S7: EXERCISES -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">7</div>
+      <div><div class="sl">Exercises Using DeepSeek Prompts</div><div class="sd">Homework</div></div>
+    </div>
+    <p>Use DeepSeek to extend the script for each exercise below. Write a follow-up prompt describing what you want to add, then copy the generated code and paste it into your GEE script.</p>
+    <div class="xr"><h4>Change the Time Period</h4><ol><li>Modify the `lossStartYear` and `lossEndYear` variables to analyze a different time period, such as 2005-2015.</li><li>Observe how the area of detected forest loss changes.</li></ol></div><div class="xr"><h4>Adjust the Tree Cover Threshold</h4><ol><li>Change the `treecoverThreshold` variable to a different value (e.g., 50 or 70).</li><li>Examine how this affects the amount of forest loss detected.</li></ol></div><div class="xr"><h4>Explore Different Visualization Palettes</h4><ol><li>Modify the `lossVisualization` palette to use different colors.</li><li>Experiment with different color combinations to highlight the forest loss more effectively.</li></ol></div><div class="xr"><h4>Calculate Loss by Year</h4><ol><li>Modify the code to calculate the area of forest loss for each individual year between 2010 and 2020.</li><li>Display the results in a chart or table.</li></ol></div>
+  </div><hr class="dv">
+
+  <!-- S8: PROMPT ENGINEERING TIPS -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">8</div>
+      <div><div class="sl">Prompt Engineering Tips</div><div class="sd">Reference</div></div>
+    </div>
+    <p>To get the best results from DeepSeek for GEE tasks, always include these elements in your prompts:</p>
+    <table class="tb">
+      <tr><th>Element</th><th>Example</th></tr>
+      <tr><td>Exact dataset ID</td><td><code>UMD/hansen/global_forest_change_2022_v1_10</code></td></tr>
+      <tr><td>Band names</td><td>"select band 'B4' for red, 'B8' for NIR"</td></tr>
+      <tr><td>Study area</td><td>"rectangle [-6.5, 33.0, -1.5, 36.0] North Morocco"</td></tr>
+      <tr><td>Date range</td><td>"filter from 2020-01-01 to 2023-12-31"</td></tr>
+      <tr><td>Output format</td><td>"print area in hectares, add a legend, export to Drive"</td></tr>
+      <tr><td>Error fixing</td><td>"The code gives error X. Please fix it."</td></tr>
+      <tr><td>Iteration</td><td>"Add a time series chart for each year 2018-2023"</td></tr>
+    </table>
+    <div class="nt np"><div class="ic">🧠</div><div><strong>Best practice:</strong> Start with the main prompt, run the code, then send follow-up prompts to add features one at a time. This gives you cleaner, more reliable code than asking for everything at once.</div></div>
+  </div>
+
+</div><!-- end .mn -->
+
+<div class="ft">
+  <strong>Course 14</strong> - Mangrove Loss Detection with GFC and DeepSeek | GeoAI for Climate Change | Dr. Ayoub Lahlouh | UM6P/CUS | 2025/2026
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cb').forEach(function(b) {
+    var pre = b.querySelector('pre');
+    if (!pre) return;
+    var btns = b.querySelectorAll('.cp');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var t = (pre.textContent || pre.innerText).replace(/^\n/, '');
+        navigator.clipboard.writeText(t).then(function() {
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        }).catch(function() {
+          var a = document.createElement('textarea');
+          a.value = t; a.style.position = 'fixed'; a.style.left = '-9999px';
+          document.body.appendChild(a); a.select();
+          document.execCommand('copy'); document.body.removeChild(a);
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        });
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>
