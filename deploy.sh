@@ -1,6 +1,5 @@
 #!/bin/bash
 # deploy.sh - runs on cPanel server via cron job at 8:00 AM daily
-# Pulls latest courses from GitHub and copies to public_html
 
 REPO="/home2/cartoma/courses-repo"
 PUBLIC="/home2/cartoma/public_html"
@@ -13,12 +12,12 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] Deploy started" >> $LOG
 cd $REPO
 git pull origin main >> $LOG 2>&1
 
-# Copy new course HTML files to public_html/courses/
-mkdir -p $PUBLIC/courses
-cp -u $REPO/courses/*.html $PUBLIC/courses/ 2>/dev/null && echo "Courses copied." >> $LOG
+# Copy course HTML files directly to public_html root
+cp -u $REPO/courses/*.html $PUBLIC/ 2>/dev/null && echo "Courses copied." >> $LOG
 
-# Copy updated index page
-cp -u $REPO/geoaicourses.html $PUBLIC/geoaicourses.html 2>/dev/null && echo "Index updated." >> $LOG
+# Copy updated index -- both with and without extension
+cp $REPO/geoaicourses.html $PUBLIC/geoaicourses.html 2>/dev/null && echo "geoaicourses.html updated." >> $LOG
+cp $REPO/geoaicourses.html $PUBLIC/geoaicourses 2>/dev/null && echo "geoaicourses (no ext) updated." >> $LOG
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Deploy done." >> $LOG
 echo "========================================" >> $LOG
