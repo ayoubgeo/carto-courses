@@ -1,5 +1,5 @@
 {
-  "next_index": 10,
+  "next_index": 11,
   "generated": [
     {
       "index": 0,
@@ -70,6 +70,13 @@
       "filename": "Course14_mangrove_loss_detection_with_hansen_gfc_.html",
       "title": "Mangrove Loss Detection with GFC and DeepSeek",
       "date": "2026-04-19T08:05:57.722517"
+    },
+    {
+      "index": 10,
+      "topic": "Glacier Retreat Mapping with Landsat and DeepSeek",
+      "filename": "Course15_glacier_retreat_mapping_with_landsat_and.html",
+      "title": "Glacier Retreat Mapping with Landsat and DeepSeek",
+      "date": "2026-05-07T09:42:11.119414"
     }
   ]
 }
