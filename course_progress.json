@@ -1,5 +1,5 @@
 {
-  "next_index": 11,
+  "next_index": 12,
   "generated": [
     {
       "index": 0,
@@ -77,6 +77,13 @@
       "filename": "Course15_glacier_retreat_mapping_with_landsat_and.html",
       "title": "Glacier Retreat Mapping with Landsat and DeepSeek",
       "date": "2026-05-07T09:42:11.119414"
+    },
+    {
+      "index": 11,
+      "topic": "Soil Moisture Analysis with Sentinel-1 SAR and DeepSeek",
+      "filename": "Course16_soil_moisture_analysis_with_sentinel_1_s.html",
+      "title": "Soil Moisture from Space",
+      "date": "2026-05-11T10:41:27.235284"
     }
   ]
 }
