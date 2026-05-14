@@ -1,5 +1,5 @@
 {
-  "next_index": 12,
+  "next_index": 13,
   "generated": [
     {
       "index": 0,
@@ -84,6 +84,13 @@
       "filename": "Course16_soil_moisture_analysis_with_sentinel_1_s.html",
       "title": "Soil Moisture from Space",
       "date": "2026-05-11T10:41:27.235284"
+    },
+    {
+      "index": 12,
+      "topic": "Urban Green Space Analysis with NDVI and DeepSeek",
+      "filename": "Course17_urban_green_space_analysis_with_ndvi_and.html",
+      "title": "Urban Green Space Analysis with NDVI and DeepSeek",
+      "date": "2026-05-14T09:38:22.689413"
     }
   ]
 }
