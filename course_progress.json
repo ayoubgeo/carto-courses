@@ -1,5 +1,5 @@
 {
-  "next_index": 13,
+  "next_index": 14,
   "generated": [
     {
       "index": 0,
@@ -91,6 +91,13 @@
       "filename": "Course17_urban_green_space_analysis_with_ndvi_and.html",
       "title": "Urban Green Space Analysis with NDVI and DeepSeek",
       "date": "2026-05-14T09:38:22.689413"
+    },
+    {
+      "index": 13,
+      "topic": "Dust Storm Detection with MODIS and DeepSeek",
+      "filename": "Course18_dust_storm_detection_with_modis_and_deep.html",
+      "title": "Dust Storm Detection with MODIS and DeepSeek",
+      "date": "2026-05-18T11:11:06.588426"
     }
   ]
 }
