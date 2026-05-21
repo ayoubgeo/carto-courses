@@ -1,5 +1,5 @@
 {
-  "next_index": 14,
+  "next_index": 15,
   "generated": [
     {
       "index": 0,
@@ -98,6 +98,13 @@
       "filename": "Course18_dust_storm_detection_with_modis_and_deep.html",
       "title": "Dust Storm Detection with MODIS and DeepSeek",
       "date": "2026-05-18T11:11:06.588426"
+    },
+    {
+      "index": 14,
+      "topic": "Land Degradation Mapping with NDVI Trends and DeepSeek",
+      "filename": "Course19_land_degradation_mapping_with_ndvi_trend.html",
+      "title": "Land Degradation Mapping with NDVI Trends and DeepSeek",
+      "date": "2026-05-21T10:45:17.075175"
     }
   ]
 }
