@@ -1,5 +1,5 @@
 {
-  "next_index": 15,
+  "next_index": 16,
   "generated": [
     {
       "index": 0,
@@ -105,6 +105,13 @@
       "filename": "Course19_land_degradation_mapping_with_ndvi_trend.html",
       "title": "Land Degradation Mapping with NDVI Trends and DeepSeek",
       "date": "2026-05-21T10:45:17.075175"
+    },
+    {
+      "index": 15,
+      "topic": "Informal Settlement Mapping with Sentinel-2 and DeepSeek",
+      "filename": "Course20_informal_settlement_mapping_with_sentine.html",
+      "title": "Informal Settlement Mapping with Sentinel-2 and DeepSeek",
+      "date": "2026-05-25T11:15:32.446073"
     }
   ]
 }
