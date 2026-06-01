@@ -1,5 +1,5 @@
 {
-  "next_index": 17,
+  "next_index": 18,
   "generated": [
     {
       "index": 0,
@@ -119,6 +119,13 @@
       "filename": "Course21_river_flood_plain_mapping_with_srtm_dem_.html",
       "title": "River Floodplain Mapping with SRTM and DeepSeek",
       "date": "2026-05-28T11:00:32.210112"
+    },
+    {
+      "index": 17,
+      "topic": "Crop Stress Detection with Sentinel-2 Red Edge and DeepSeek",
+      "filename": "Course22_crop_stress_detection_with_sentinel_2_re.html",
+      "title": "Crop Stress Detection with Sentinel-2 Red Edge and DeepSeek",
+      "date": "2026-06-01T12:44:54.590677"
     }
   ]
 }
