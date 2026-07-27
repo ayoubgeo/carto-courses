@@ -1,0 +1,37 @@
+[
+  {
+    "topic": "Night Light Change Analysis with VIIRS",
+    "region": "Global",
+    "domain": "GeoAI and Remote Sensing",
+    "method": "VIIRS Nighttime Lights + Time Series Analysis + AI",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Urban Health Surveillance",
+    "region": "Casablanca, Morocco",
+    "domain": "Public Health and Urban Health",
+    "method": "Remote Sensing + Environmental Data + GeoAI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Digital Epidemiology Using Google Trends",
+    "region": "Global",
+    "domain": "Digital Health and Digital Epidemiology",
+    "method": "Google Trends + Spatial Analysis + Machine Learning",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Dengue Risk Mapping",
+    "region": "Southeast Asia",
+    "domain": "Public Health and Spatial Epidemiology",
+    "method": "Remote Sensing + Climate Data + Machine Learning",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Healthcare Accessibility",
+    "region": "Sub-Saharan Africa",
+    "domain": "Public Health and Health Geography",
+    "method": "GIS + Population Data + Spatial Accessibility Analysis",
+    "difficulty": "Intermediate"
+  }
+]
