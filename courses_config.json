@@ -1,5 +1,131 @@
 [
   {
+    "topic": "Urban Heat Island Mapping with Landsat",
+    "region": "Global",
+    "domain": "Urban Science and GeoAI",
+    "method": "Landsat + Land Surface Temperature + Remote Sensing + GeoAI",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Drought Monitoring with MODIS NDVI",
+    "region": "Global",
+    "domain": "Climate and Environmental Monitoring",
+    "method": "MODIS NDVI + Time Series Analysis + Machine Learning",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Coastal Erosion Detection with Sentinel-2",
+    "region": "Global Coastal Regions",
+    "domain": "Coastal Management and Environmental Monitoring",
+    "method": "Sentinel-2 + Remote Sensing + Change Detection + GeoAI",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Snow Cover Dynamics with MODIS",
+    "region": "Global Mountain and Snow-Covered Regions",
+    "domain": "Climate Change and Cryosphere Monitoring",
+    "method": "MODIS MOD10A1 + Time Series Analysis + Remote Sensing",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Cropland Mapping with Sentinel-2 and Dynamic World",
+    "region": "Global Agricultural Regions",
+    "domain": "Agriculture and GeoAI",
+    "method": "Sentinel-2 + Dynamic World + Land Cover Classification + AI",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Wildfire Risk Mapping with MODIS",
+    "region": "Global Fire-Prone Regions",
+    "domain": "Disaster Risk and Environmental Monitoring",
+    "method": "MODIS + Climate Data + Vegetation Indices + Machine Learning",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Water Quality Monitoring with Sentinel-2",
+    "region": "Global Lakes and Inland Waters",
+    "domain": "Water Resources and Environmental Monitoring",
+    "method": "Sentinel-2 + Water Indices + Remote Sensing + GeoAI",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Solar Energy Potential Mapping",
+    "region": "Global",
+    "domain": "Renewable Energy and GeoAI",
+    "method": "Solar Radiation Data + GIS + Spatial Analysis + AI",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Air Quality Mapping with Sentinel-5P NO2",
+    "region": "Global Urban and Industrial Regions",
+    "domain": "Environmental Health and Air Quality",
+    "method": "Sentinel-5P + NO2 + Remote Sensing + Spatial Analysis",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Mangrove Loss Detection with Hansen Global Forest Change",
+    "region": "Global Tropical Coastal Regions",
+    "domain": "Ecosystem Monitoring and Climate Change",
+    "method": "Hansen Global Forest Change + Sentinel-2 + Change Detection + GeoAI",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Glacier Retreat Mapping with Landsat",
+    "region": "Global Glacier Regions",
+    "domain": "Climate Change and Cryosphere Monitoring",
+    "method": "Landsat + Multi-Temporal Remote Sensing + Change Detection",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Soil Moisture Analysis with Sentinel-1 SAR",
+    "region": "Global Agricultural and Semi-Arid Regions",
+    "domain": "Agriculture and Environmental Monitoring",
+    "method": "Sentinel-1 SAR + Radar Remote Sensing + Soil Moisture Analysis",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Urban Green Space Analysis with NDVI",
+    "region": "Global Cities",
+    "domain": "Urban Science and Environmental Health",
+    "method": "Sentinel-2 + NDVI + Urban GIS + Spatial Analysis",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Dust Storm Detection with MODIS",
+    "region": "Global Arid and Semi-Arid Regions",
+    "domain": "Climate and Environmental Monitoring",
+    "method": "MODIS + Aerosol Data + Time Series Analysis + AI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Land Degradation Mapping with NDVI Trends",
+    "region": "Global Drylands",
+    "domain": "Land Degradation and Environmental Monitoring",
+    "method": "NDVI Time Series + Remote Sensing + Trend Analysis + GeoAI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Informal Settlement Mapping with Sentinel-2",
+    "region": "Global Rapidly Urbanizing Regions",
+    "domain": "Urban Planning and GeoAI",
+    "method": "Sentinel-2 + Built-Up Indices + Land Cover Classification + AI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "River Floodplain Mapping with SRTM DEM",
+    "region": "Global River Basins",
+    "domain": "Disaster Risk and Hydrology",
+    "method": "SRTM DEM + Hydrological Analysis + GIS + Flood Risk Mapping",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Crop Stress Detection with Sentinel-2 Red Edge",
+    "region": "Global Agricultural Regions",
+    "domain": "Precision Agriculture and GeoAI",
+    "method": "Sentinel-2 Red Edge + Vegetation Indices + Machine Learning",
+    "difficulty": "Advanced"
+  },
+  {
     "topic": "Night Light Change Analysis with VIIRS",
     "region": "Global",
     "domain": "GeoAI and Remote Sensing",
@@ -7,31 +133,157 @@
     "difficulty": "Intermediate"
   },
   {
-    "topic": "Urban Health Surveillance",
-    "region": "Casablanca, Morocco",
+    "topic": "Urban Health Surveillance with Environmental and Geospatial Data",
+    "region": "Global Cities",
     "domain": "Public Health and Urban Health",
-    "method": "Remote Sensing + Environmental Data + GeoAI",
+    "method": "Remote Sensing + Environmental Data + GIS + GeoAI",
     "difficulty": "Advanced"
   },
   {
-    "topic": "Digital Epidemiology Using Google Trends",
+    "topic": "Digital Epidemiology Using Google Trends and GeoAI",
     "region": "Global",
     "domain": "Digital Health and Digital Epidemiology",
     "method": "Google Trends + Spatial Analysis + Machine Learning",
     "difficulty": "Advanced"
   },
   {
-    "topic": "Dengue Risk Mapping",
-    "region": "Southeast Asia",
+    "topic": "Dengue Risk Mapping with Climate Data and Remote Sensing",
+    "region": "Southeast Asia and Tropical Regions",
     "domain": "Public Health and Spatial Epidemiology",
-    "method": "Remote Sensing + Climate Data + Machine Learning",
+    "method": "Remote Sensing + Climate Data + Environmental Variables + Machine Learning",
     "difficulty": "Advanced"
   },
   {
-    "topic": "Healthcare Accessibility",
+    "topic": "Healthcare Accessibility Mapping with GIS and AI",
     "region": "Sub-Saharan Africa",
     "domain": "Public Health and Health Geography",
-    "method": "GIS + Population Data + Spatial Accessibility Analysis",
+    "method": "GIS + Population Data + Healthcare Facilities + Spatial Accessibility Analysis",
     "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Heat Exposure and Heat-Related Health Risk Mapping",
+    "region": "Global Cities",
+    "domain": "Public Health and Climate Health",
+    "method": "Landsat + Land Surface Temperature + Population Data + GeoAI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Air Pollution and Respiratory Health Risk Mapping",
+    "region": "Global Urban and Industrial Regions",
+    "domain": "Environmental Health and Public Health",
+    "method": "Sentinel-5P + Air Quality Data + Population Exposure + Machine Learning",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Flood Risk and Public Health Impact Assessment",
+    "region": "Global Flood-Prone Regions",
+    "domain": "Public Health and Disaster Risk",
+    "method": "Sentinel-1 SAR + Flood Mapping + Population Data + Health Risk Analysis",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Climate Change and Vector-Borne Disease Risk",
+    "region": "Global Tropical and Subtropical Regions",
+    "domain": "Global Health and Climate Change",
+    "method": "Climate Data + Remote Sensing + Environmental Suitability Modeling + AI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Disease Mapping and Spatial Epidemiology",
+    "region": "Global",
+    "domain": "Public Health and Spatial Epidemiology",
+    "method": "Health Data + GIS + Spatial Statistics + GeoAI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Population Vulnerability Mapping for Public Health",
+    "region": "Global",
+    "domain": "Public Health and Health Geography",
+    "method": "Population Data + Environmental Exposure + Socioeconomic Indicators + GIS",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "Digital Health and Environmental Exposure Monitoring",
+    "region": "Global Cities",
+    "domain": "Digital Health and Environmental Health",
+    "method": "IoT Sensors + Remote Sensing + Environmental Data + Geospatial AI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Google Trends for Global Health Surveillance",
+    "region": "Global",
+    "domain": "Digital Epidemiology and Global Health",
+    "method": "Google Trends + Time Series Analysis + Spatial Analysis + AI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Urban Air Quality and Population Exposure Analysis",
+    "region": "Global Cities",
+    "domain": "Urban Health and Environmental Health",
+    "method": "Sentinel-5P + Population Data + GIS + Spatial Exposure Analysis",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Remote Sensing for Public Health and Environmental Exposure",
+    "region": "Global",
+    "domain": "Public Health and Remote Sensing",
+    "method": "Satellite Remote Sensing + Environmental Indicators + Health Risk Analysis",
+    "difficulty": "Intermediate"
+  },
+  {
+    "topic": "AI-Based Health Risk Prediction with Geospatial Data",
+    "region": "Global",
+    "domain": "Public Health and GeoAI",
+    "method": "Geospatial Data + Machine Learning + Spatial Prediction",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Healthcare Facility Accessibility and Spatial Equity",
+    "region": "Sub-Saharan Africa",
+    "domain": "Health Geography and Public Health",
+    "method": "GIS + Population Data + Road Networks + Spatial Accessibility Modeling",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "One Health Risk Mapping with GeoAI",
+    "region": "Global",
+    "domain": "One Health and GeoAI",
+    "method": "Environmental Data + Animal Health + Human Health + Spatial AI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Urban Heat, Vulnerability, and Public Health",
+    "region": "Global Cities",
+    "domain": "Urban Health and Climate Change",
+    "method": "Landsat + Land Surface Temperature + Vulnerability Data + GeoAI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Climate-Sensitive Disease Risk Mapping",
+    "region": "Global",
+    "domain": "Global Health and Climate Change",
+    "method": "Climate Data + Remote Sensing + Health Data + Machine Learning",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Health Inequality Mapping with Geospatial AI",
+    "region": "Global",
+    "domain": "Public Health and Health Geography",
+    "method": "Health Indicators + Socioeconomic Data + GIS + Spatial AI",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Mobility Data and Disease Spread Analysis",
+    "region": "Global",
+    "domain": "Digital Epidemiology and Public Health",
+    "method": "Mobility Data + GIS + Time Series Analysis + Spatial Modeling",
+    "difficulty": "Advanced"
+  },
+  {
+    "topic": "Environmental Determinants of Health with GeoAI",
+    "region": "Global",
+    "domain": "Environmental Health and GeoAI",
+    "method": "Remote Sensing + Environmental Data + Population Data + Machine Learning",
+    "difficulty": "Advanced"
   }
 ]
