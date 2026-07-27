@@ -65,7 +65,7 @@ import urllib.error
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
 # Current Gemini model
-GEMINI_MODEL = "gemini-2.5-flash-lite"
+GEMINI_MODEL = "gemini-3.6-flash"
 
 TOPICS_FILE = "topics.txt"
 PROGRESS_FILE = "course_progress.json"
