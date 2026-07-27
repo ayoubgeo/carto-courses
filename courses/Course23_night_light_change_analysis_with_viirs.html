@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course 23 - Global Night Light Dynamics: VIIRS Time Series & Machine Learning</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#312e81;
+    --accent:#8b5cf6;
+    --lime:#ddd6fe;
+    --cream:#F8FAF7;
+    --dark:#1A1F1C;
+    --gray:#6B7280;
+    --lg:#E5E7EB;
+    --cbg:#141A1F;
+    --cfg:#E2F0E8;
+    --ok:#10B981;
+    --info:#3B82F6;
+    --warn:#F59E0B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);line-height:1.7;font-size:16px}
+
+  /* HEADER */
+  .hd{background:var(--primary);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hd::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--lime))}
+  .hd::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0,40 Q100,10 200,35 Q300,55 400,20 Q500,0 600,30 Q700,55 800,25 Q900,5 1000,35 Q1100,55 1200,30 L1200,60 L0,60 Z' fill='%23F8FAF7'/%3E%3C/svg%3E") no-repeat bottom;background-size:cover}
+  .hi{max-width:860px;margin:0 auto;position:relative;z-index:1}
+  .hd .tg{display:inline-block;background:rgba(255,255,255,.12);color:var(--lime);font-size:.78rem;font-weight:700;padding:.3rem .9rem;border-radius:4px;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;border:1px solid rgba(255,255,255,.2)}
+  .hd h1{font-family:'Source Serif 4',serif;font-size:2.4rem;color:#fff;font-weight:700;line-height:1.2;margin-bottom:.5rem}
+  .hd .sb{font-size:1.05rem;color:rgba(255,255,255,.75);font-style:italic;margin-bottom:1.2rem}
+  .hd .mt{font-size:.82rem;color:rgba(255,255,255,.45)}
+  .hd .mt span{margin-right:1.5rem;padding-right:1.5rem;border-right:1px solid rgba(255,255,255,.15)}
+  .hd .mt span:last-child{border-right:none}
+
+  /* DATASET STRIP */
+  .db-strip{background:#fff;border-bottom:2px solid var(--lg);padding:.7rem 1.5rem}
+  .db-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:1rem;font-size:.82rem;flex-wrap:wrap}
+  .db-badge{background:rgba(0,0,0,.06);border:1px solid var(--lg);border-radius:6px;padding:.25rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--dark);font-weight:600}
+
+  /* LAYOUT */
+  .mn{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+  /* KEY TERMS BOX */
+  .kt{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .kt h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+
+  /* TABLE OF CONTENTS */
+  .tc{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .tc h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+  .tc ol{padding-left:1.2rem;column-count:2;column-gap:2rem}
+  .tc li{font-size:.9rem;margin-bottom:.4rem;color:var(--primary);break-inside:avoid}
+
+  /* DATASET CARD */
+  .dc{background:linear-gradient(135deg,#F8FFF8,#F0FDF4);border:1px solid #86EFAC;border-radius:10px;padding:1.3rem 1.5rem;margin:1.2rem 0;display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .dc-item .dl{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);font-weight:700;margin-bottom:.2rem}
+  .dc-item .dv{color:var(--dark);font-weight:500;font-size:.88rem}
+
+  /* SECTIONS */
+  .st{margin-bottom:3rem}
+  .sh{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.1rem}
+  .sn{flex-shrink:0;width:44px;height:44px;background:var(--primary);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+  .sl{font-family:'Source Serif 4',serif;font-size:1.42rem;font-weight:700;color:var(--primary)}
+  .sd{font-size:.77rem;color:var(--accent);font-weight:700;letter-spacing:.5px}
+  .st p{margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st ul,.st ol{margin-left:1.5rem;margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st li{margin-bottom:.35rem}
+
+  /* CODE BLOCKS */
+  .cb{background:var(--cbg);border-radius:10px;margin:1.2rem 0;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.2)}
+  .cr{background:rgba(255,255,255,.05);padding:.55rem 1rem;font-size:.73rem;color:var(--lime);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  .cb pre{padding:1.1rem 1.3rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.81rem;line-height:1.75;color:var(--cfg);white-space:pre;margin:0}
+  .cp{background:rgba(255,255,255,.08);color:var(--lime);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:.22rem .6rem;font-size:.68rem;font-weight:700;cursor:pointer;transition:all .2s}
+  .cp:hover{background:rgba(255,255,255,.15)}
+  .cp.ok{background:rgba(16,185,129,.2);border-color:var(--ok);color:var(--ok)}
+
+  /* NOTES */
+  .nt{border-radius:8px;padding:1rem 1.2rem;margin:1.2rem 0;font-size:.92rem;display:flex;gap:.9rem;align-items:flex-start}
+  .ni{background:#EFF6FF;border-left:4px solid var(--info);color:#1E3A5F}
+  .np{background:#F0FDF4;border-left:4px solid var(--ok);color:#064E3B}
+  .nw{background:#FFFBEB;border-left:4px solid var(--warn);color:#78350F}
+  .nk{background:#F0FDF4;border-left:4px solid var(--accent);color:var(--primary)}
+  .nt strong{font-weight:700}
+  .nt .ic{flex-shrink:0;font-size:1.25rem;margin-top:.05rem}
+
+  /* PROMPT CARD */
+  .prompt-card{background:#FAFFF5;border:1.5px solid #86EFAC;border-radius:10px;padding:1.2rem 1.4rem;margin:1.3rem 0}
+  .prompt-card .pl{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:700;margin-bottom:.6rem;font-family:'DM Sans',sans-serif}
+  .prompt-card .pt{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#1A2E1F;background:#F0FDF4;border-radius:6px;padding:1rem 1.1rem;white-space:pre-wrap;line-height:1.7;border:1px solid #BBF7D0}
+
+  /* EXERCISES */
+  .xr{background:linear-gradient(135deg,#FEFCE8,#FEF9C3);border:1px solid #FDE047;border-radius:10px;padding:1.2rem 1.5rem;margin:1rem 0}
+  .xr h4{color:#854D0E;font-size:.82rem;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.7rem;font-weight:700}
+  .xr ol{padding-left:1.2rem;font-size:.92rem;color:#713F12}
+  .xr li{margin-bottom:.4rem}
+
+  /* TABLES */
+  .tb{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.87rem;border-radius:8px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  .tb th{background:var(--primary);color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600;font-size:.81rem}
+  .tb td{padding:.55rem 1rem;border-bottom:1px solid var(--lg);background:#fff;vertical-align:top}
+  .tb tr:last-child td{border-bottom:none}
+  .tb tr:hover td{background:#F8FFF8}
+
+  /* DIVIDER */
+  .dv{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--lg),transparent);margin:2.5rem 0}
+
+  /* INLINE CODE */
+  code{font-family:'JetBrains Mono',monospace;font-size:.83em;background:rgba(0,0,0,.06);color:var(--accent);padding:.15em .42em;border-radius:4px}
+
+  /* FOOTER */
+  .ft{text-align:center;padding:2rem;color:var(--gray);font-size:.82rem;border-top:1px solid var(--lg);margin-top:2rem}
+  .ft strong{color:var(--accent)}
+
+  @media(max-width:700px){
+    .hd h1{font-size:1.6rem}
+    .tc ol{column-count:1}
+    .sl{font-size:1.2rem}
+    .dc{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="hi">
+    <div class="tg">Practical Course 23</div>
+    <h1>Global Night Light Dynamics: VIIRS Time Series & Machine Learning</h1>
+    <div class="sb">Quantify human activity, urbanization, and economic trends globally using VIIRS nighttime lights and machine learning.</div>
+    <div class="mt">
+      <span>Global</span>
+      <span>~2 hours</span>
+      <span>Intermediate</span>
+    </div>
+  </div>
+</div>
+
+<!-- DATASET STRIP -->
+<div class="db-strip">
+  <div class="db-inner">
+    <strong style="font-size:.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:1px;">Dataset:</strong>
+    <span class="db-badge">NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG</span>
+    <span style="font-size:.82rem;color:#6B7280;">VIIRS Day/Night Band Monthly Composites V1 (Stray Light Corrected)</span>
+  </div>
+</div>
+
+<div class="mn">
+
+  <!-- KEY TERMS -->
+  <div class="kt">
+    <h3>📖 Key Terms for Beginners</h3>
+    <p style="font-size:.85rem;color:#374151;margin-bottom:1rem;">Before starting, make sure you understand these terms. They appear throughout all code blocks in this course.</p>
+    <table class="tb">
+      <tr><th>Term</th><th>Full Name</th><th>What it means in simple words</th></tr>
+      <tr><td><strong>VIIRS</strong></td><td>Visible Infrared Imaging Radiometer Suite</td><td>A sensor aboard Suomi NPP and NOAA weather satellites capturing visible and infrared imagery, including nighttime radiance.</td></tr><tr><td><strong>DNB</strong></td><td>Day/Night Band</td><td>A specialized spectral band on VIIRS capable of detecting faint visible lights at night, including city lights, fires, and ships.</td></tr><tr><td><strong>NTL</strong></td><td>Nighttime Lights</td><td>Remote sensing imagery measuring artificial light emissions visible at night, widely used as a proxy for human activity.</td></tr><tr><td><strong>Radiance</strong></td><td>Radiometric Light Intensity</td><td>The amount of light emitted from a surface unit, measured by VIIRS in nanoWatts per square centimeter per steradian (nW/cm^2/sr).</td></tr><tr><td><strong>Stray Light</strong></td><td>Stray Light Contamination</td><td>Solar glare contamination occurring near satellite orbital terminators, corrected in VCMSLCFG products.</td></tr><tr><td><strong>Linear Trend</strong></td><td>Temporal Linear Regression Slope</td><td>A parametric statistical measure quantifying the annual change rate in night light radiance over time.</td></tr><tr><td><strong>Cloud-Free Coverage</strong></td><td>Quality Control Coverage Index</td><td>A quality band (cf_cvg) indicating the number of cloud-free observations contributing to a monthly composite pixel.</td></tr><tr><td><strong>Urban Brightening</strong></td><td>Anthropogenic Light Growth</td><td>A statistically significant increase in nighttime radiance over time, often tied to urban expansion or infrastructure.</td></tr><tr><td><strong>Light Dimming</strong></td><td>Anthropogenic Light Reduction</td><td>A decline in nighttime radiance, indicating population displacement, economic shifts, or energy efficiency policies.</td></tr><tr><td><strong>Random Forest</strong></td><td>Random Forest Ensemble Machine Learning</td><td>A supervised machine learning algorithm using decision trees to classify intensity trajectories or predict socioeconomic variables.</td></tr><tr><td><strong>Spatial Aggregation</strong></td><td>Regional Summary Statistics</td><td>The process of computing regional mean or sum metrics over administrative boundaries to analyze geographic trends.</td></tr><tr><td><strong>Anomaly Detection</strong></td><td>Nightlight Deviation Analysis</td><td>Identifying temporal deviations from baseline night light patterns caused by major events, disasters, or power outages.</td></tr>
+    </table>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="tc">
+    <h3>Contents</h3>
+    <ol><li>Introduction to VIIRS Nighttime Light Sensors and Data Products</li><li>Filtering and Preprocessing VIIRS Monthly Stray Light Corrected Composites</li><li>Filtering Cloud-Free Quality Layers and Removing Background Noise</li><li>Building Multi-Year Annual Median Nightlight Composites</li><li>Computing Spatial Light Metrics across Global Regions</li><li>Executing Pixel-Wise Temporal Linear Regression across Global Datasets</li><li>Extracting Trend Slopes and Statistical Intercepts</li><li>Applying Random Forest to Classify Urban Dynamic Zones</li><li>Visualizing Brightening and Dimming Hotspots Globally</li><li>Exporting VIIRS Analysis Products to Cloud Storage</li></ol>
+  </div>
+
+  <!-- S1: INTRODUCTION -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">1</div>
+      <div><div class="sl">Introduction</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Nighttime satellite imagery provides an unprecedented global lens for monitoring human economic activity, urbanization dynamics, and electrification trends. This course utilizes the NOAA VIIRS Day/Night Band dataset to analyze multi-decadal night light changes across global scales using Google Earth Engine. Students will master time-series filtering, noise suppression, linear trend fitting, and machine learning to map expanding urban centers and changing light regimes.</p>
+    <div class="dc">
+      <div class="dc-item"><div class="dl">GEE Asset ID</div><div class="dv"><code>NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG</code></div></div>
+      <div class="dc-item"><div class="dl">Dataset Name</div><div class="dv">VIIRS Day/Night Band Monthly Composites V1 (Stray Light Corrected)</div></div>
+      <div class="dc-item"><div class="dl">Study Area</div><div class="dv">Global</div></div>
+      <div class="dc-item"><div class="dl">AI Tool</div><div class="dv">DeepSeek (free, no API key needed)</div></div>
+    </div>
+    <div class="nt np"><div class="ic">🌍</div><div><strong>What you will build:</strong> By the end of this course you will have a working GEE script that analyzes Global Night Light Dynamics: VIIRS Time Series & Machine Learning, computes statistics, visualizes results on an interactive map, and exports data to Google Drive.</div></div>
+  </div><hr class="dv">
+
+  <!-- S2: SETUP -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">2</div>
+      <div><div class="sl">Setup: GEE + DeepSeek</div><div class="sd">5 min</div></div>
+    </div>
+    <p>You need two browser tabs open side by side throughout this course.</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem;margin:1rem 0">
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">1</div>
+        Open <a href="https://chat.deepseek.com" target="_blank">chat.deepseek.com</a> -- free account, no API key needed
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">2</div>
+        Open <a href="https://code.earthengine.google.com" target="_blank">code.earthengine.google.com</a> in a second tab
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">3</div>
+        Create a new GEE script named <code>Course23_Global Night Light Dynamics: VIIRS Time Series & Machine Learning</code>
+      </div>
+    </div>
+    <div class="nt ni"><div class="ic">💡</div><div><strong>Workflow:</strong> Write a prompt in DeepSeek describing your task with exact dataset IDs and requirements. Copy the generated GEE JavaScript. Paste into GEE code editor. Click Run. Inspect results. Iterate.</div></div>
+  </div><hr class="dv">
+
+  <!-- S3: DEEPSEEK PROMPT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">3</div>
+      <div><div class="sl">Crafting the DeepSeek Prompt</div><div class="sd">15 min</div></div>
+    </div>
+    <p>The prompt is the core skill of this course. A good prompt includes the exact dataset ID, band names, study area coordinates, dates, preprocessing steps, and desired outputs.</p>
+    <div class="prompt-card">
+      <div class="pl">📋 Main Prompt -- copy and paste this into DeepSeek</div>
+      <div class="pt">Act as an expert remote sensing scientist and Google Earth Engine developer. Write a complete, optimized Earth Engine JavaScript script analyzing VIIRS nighttime lights (dataset ID 'NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG') for global light dynamics between 2014 and 2023. Filter the image collection using the 'avg_rad' band and apply quality filtering with 'cf_cvg' (> 2). Calculate annual median composites for 2014 and 2023, compute absolute radiance differences, and execute linear regression ('ee.Reducer.linearFit()') over the 10-year monthly sequence to measure trend slope. Include visualization parameters for radiance and slope values, add layer legends, and generate Export functions to Drive.</div>
+    </div>
+    <div class="nt ni"><div class="ic">✨</div><div><strong>After pasting the prompt:</strong> Wait 20-30 seconds for DeepSeek to generate the full GEE script. Copy the entire code block it produces. If the output is cut short, type "Continue the code" to get the rest.</div></div>
+  </div><hr class="dv">
+
+  <!-- S4: CODE BLOCK 1 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">4</div>
+      <div><div class="sl">VIIRS Collection Filtering, Noise Masking, and Annual Compositing</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Paste the following code into your GEE code editor and click Run. Read the beginner notes below to understand what each line does.</p>
+    <div class="cb">
+      <div class="cr"><span>VIIRS Collection Filtering, Noise Masking, and Annual Compositing</span><button class="cp">COPY</button></div>
+      <pre>var viirs = ee.ImageCollection('NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG');
+var countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017');
+
+// Preprocessing function to filter cloud-free observations and background noise
+function preprocessVIIRS(img) {
+  var cloudFree = img.select('cf_cvg').gte(2);
+  var radiance = img.select('avg_rad');
+  // Mask out noise and low-quality pixels (< 0.5 nW/cm^2/sr)
+  var maskedRadiance = radiance.updateMask(cloudFree).updateMask(radiance.gte(0.5));
+  return img.addBands(maskedRadiance.rename('cleaned_rad'), null, true);
+}
+
+var processedCollection = viirs.map(preprocessVIIRS);
+
+// Generate 2014 and 2023 annual medians
+var median2014 = processedCollection.filterDate('2014-01-01', '2014-12-31')
+                                    .select('cleaned_rad').median();
+var median2023 = processedCollection.filterDate('2023-01-01', '2023-12-31')
+                                    .select('cleaned_rad').median();
+
+// Calculate absolute change
+var absoluteChange = median2023.subtract(median2014).rename('radiance_change');
+
+// Visualization parameters
+var radVis = {min: 0.5, max: 30, palette: ['black', 'purple', 'cyan', 'lime', 'yellow', 'white']};
+var diffVis = {min: -10, max: 10, palette: ['blue', 'black', 'red']};
+
+Map.setCenter(15.0, 20.0, 3);
+Map.addLayer(median2014, radVis, '2014 Night Lights Median');
+Map.addLayer(median2023, radVis, '2023 Night Lights Median');
+Map.addLayer(absoluteChange, diffVis, 'Radiance Change (2023 - 2014)');</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This script loads the monthly stray light corrected VIIRS collection and applies quality control. The function screens out pixels with fewer than 2 cloud-free coverage days (cf_cvg) and removes background noise below 0.5 nW/cm^2/sr. Annual medians for 2014 and 2023 are generated to mitigate seasonal fluctuations, followed by a pixel difference calculation to reveal global light changes over a decade.</div></div>
+  </div><hr class="dv">
+
+  <!-- S5: CODE BLOCK 2 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">5</div>
+      <div><div class="sl">Time Series Trend Fitting and Machine Learning Classification</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Add this block after the previous code. It continues the analysis with additional processing and visualization.</p>
+    <div class="cb">
+      <div class="cr"><span>Time Series Trend Fitting and Machine Learning Classification</span><button class="cp">COPY</button></div>
+      <pre>var processedCollection = ee.ImageCollection('NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG')
+  .filterDate('2014-01-01', '2023-12-31')
+  .map(function(img) {
+    var date = img.date();
+    var years = date.difference(ee.Date('2014-01-01'), 'year');
+    var cleanRad = img.select('avg_rad').updateMask(img.select('cf_cvg').gte(2));
+    return cleanRad.addBands(ee.Image.constant(years).rename('time'))
+                   .addBands(ee.Image.constant(1).rename('constant'));
+  });
+
+// Calculate linear trend across time series
+var linearFit = processedCollection.select(['time', 'avg_rad']).reduce(ee.Reducer.linearFit());
+var slope = linearFit.select('scale').rename('annual_slope');
+
+// Define sample predictor metrics for Random Forest
+var meanRad = processedCollection.select('avg_rad').mean().rename('mean_rad');
+var maxRad = processedCollection.select('avg_rad').max().rename('max_rad');
+var features = ee.Image.cat([meanRad, maxRad, slope]);
+
+// Unsupervised KMeans clustering as target generator for ML training
+var clusterer = ee.Clusterer.wekaKMeans(4).train({
+  features: features.sample({region: Map.getBounds(true), scale: 5000, numPixels: 1000})
+});
+var clusters = features.cluster(clusterer);
+
+// Visualization parameters
+var slopeVis = {min: -0.5, max: 0.5, palette: ['darkblue', 'blue', 'white', 'orange', 'red']};
+Map.addLayer(slope, slopeVis, '10-Year Linear Slope (nW/cm^2/sr/yr)');
+Map.addLayer(clusters.randomVisualizer(), {}, 'Light Trajectory Clusters');</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This block implements pixel-wise linear regression over a 10-year VIIRS time series (2014-2023). It calculates a temporal scale band representing annual change rates. It then combines summary metrics (mean, max, slope) into a multi-band predictor image and applies spatial clustering to categorize global light change trajectories automatically.</div></div>
+  </div><hr class="dv">
+
+  <!-- S6: EXPORT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">6</div>
+      <div><div class="sl">Export Results to Google Drive</div><div class="sd">5 min</div></div>
+    </div>
+    <p>Add this block at the end of your script to export the final map as a GeoTIFF to your Google Drive. After clicking Run, go to the <strong>Tasks</strong> tab in GEE and click <strong>Run</strong> next to each export task.</p>
+    <div class="cb">
+      <div class="cr"><span>Export to Google Drive</span><button class="cp">COPY</button></div>
+      <pre>var exportSlope = linearFit.select('scale').rename('VIIRS_Slope_2014_2023');
+
+Export.image.toDrive({
+  image: exportSlope,
+  description: 'VIIRS_Nightlight_Linear_Slope_Global',
+  folder: 'GEE_Nightlights',
+  scale: 1000,
+  region: ee.Geometry.BBox(-180, -60, 180, 70),
+  maxPixels: 1e13,
+  fileFormat: 'GeoTIFF'
+});</pre>
+    </div>
+    <div class="nt ni"><div class="ic">🔑</div><div><strong>Beginner note -- Export.image.toDrive():</strong> This function does not export immediately. It creates a task in the GEE Tasks tab that you must manually start by clicking Run. The file will appear in your Google Drive folder (GEE_Courses) as a GeoTIFF that you can open in QGIS or ArcGIS.</div></div>
+  </div><hr class="dv">
+
+  <!-- S7: EXERCISES -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">7</div>
+      <div><div class="sl">Exercises Using DeepSeek Prompts</div><div class="sd">Homework</div></div>
+    </div>
+    <p>Use DeepSeek to extend the script for each exercise below. Write a follow-up prompt describing what you want to add, then copy the generated code and paste it into your GEE script.</p>
+    <div class="xr"><h4>Regional Urban Light Expansion Analysis</h4><ol><li>Select an urban metropolitan region of choice using an administrative geometry filter.</li><li>Modify the temporal range to compare 2017 versus 2023 median composites.</li><li>Calculate total sum of lights (SOL) for both years within the urban boundary.</li><li>Determine the percentage increase in total light radiance.</li></ol></div><div class="xr"><h4>Cloud-Free Mask Thresholding Impact Evaluation</h4><ol><li>Adjust the cloud-free coverage threshold (cf_cvg) from 2 to 5 in Code Block 1.</li><li>Observe the reduction in spatial coverage in high-cloud equatorial regions.</li><li>Compare mean monthly radiance stability with and without cloud masking.</li><li>Document how strict cloud thresholds affect continuous trend detection.</li></ol></div><div class="xr"><h4>Linear Regression vs. Annual Difference Comparison</h4><ol><li>Export the annual slope computed in Code Block 2 for a specific region.</li><li>Compare the slope values against simple 2014 to 2023 difference imagery.</li><li>Identify regions where episodic spikes skew simple difference images relative to linear trends.</li><li>Summarize why robust time series metrics are preferred over two-date comparisons.</li></ol></div><div class="xr"><h4>Cross-Analysis of Light Growth with WorldPop Data</h4><ol><li>Import the WorldPop global dataset ('WorldPop/GP/100m/pop') for 2020.</li><li>Overlay the annual slope image with high-density population clusters.</li><li>Identify regions experiencing population growth without proportional light increase.</li><li>Discuss potential drivers such as dark sky infrastructure or energy access gaps.</li></ol></div>
+  </div><hr class="dv">
+
+  <!-- S8: PROMPT ENGINEERING TIPS -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">8</div>
+      <div><div class="sl">Prompt Engineering Tips</div><div class="sd">Reference</div></div>
+    </div>
+    <p>To get the best results from DeepSeek for GEE tasks, always include these elements in your prompts:</p>
+    <table class="tb">
+      <tr><th>Element</th><th>Example</th></tr>
+      <tr><td>Exact dataset ID</td><td><code>NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG</code></td></tr>
+      <tr><td>Band names</td><td>"select band 'B4' for red, 'B8' for NIR"</td></tr>
+      <tr><td>Study area</td><td>"rectangle [-6.5, 33.0, -1.5, 36.0] North Morocco"</td></tr>
+      <tr><td>Date range</td><td>"filter from 2020-01-01 to 2023-12-31"</td></tr>
+      <tr><td>Output format</td><td>"print area in hectares, add a legend, export to Drive"</td></tr>
+      <tr><td>Error fixing</td><td>"The code gives error X. Please fix it."</td></tr>
+      <tr><td>Iteration</td><td>"Add a time series chart for each year 2018-2023"</td></tr>
+    </table>
+    <div class="nt np"><div class="ic">🧠</div><div><strong>Best practice:</strong> Start with the main prompt, run the code, then send follow-up prompts to add features one at a time. This gives you cleaner, more reliable code than asking for everything at once.</div></div>
+  </div>
+
+</div><!-- end .mn -->
+
+<div class="ft">
+  <strong>Course 23</strong> - Global Night Light Dynamics: VIIRS Time Series & Machine Learning | GeoAI for Climate Change | Dr. Ayoub Lahlouh | UM6P/CUS | 2025/2026
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cb').forEach(function(b) {
+    var pre = b.querySelector('pre');
+    if (!pre) return;
+    var btns = b.querySelectorAll('.cp');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var t = (pre.textContent || pre.innerText).replace(/^\n/, '');
+        navigator.clipboard.writeText(t).then(function() {
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        }).catch(function() {
+          var a = document.createElement('textarea');
+          a.value = t; a.style.position = 'fixed'; a.style.left = '-9999px';
+          document.body.appendChild(a); a.select();
+          document.execCommand('copy'); document.body.removeChild(a);
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        });
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
-  "next_index": 18,
+  "next_index": 19,
   "generated": [
     {
       "index": 0,
@@ -126,6 +126,15 @@
       "filename": "Course22_crop_stress_detection_with_sentinel_2_re.html",
       "title": "Crop Stress Detection with Sentinel-2 Red Edge and DeepSeek",
       "date": "2026-06-01T12:44:54.590677"
+    },
+    {
+      "index": 18,
+      "topic": "Night Light Change Analysis with VIIRS",
+      "filename": "Course23_night_light_change_analysis_with_viirs.html",
+      "title": "Global Night Light Dynamics: VIIRS Time Series & Machine Learning",
+      "date": "2026-07-27T13:23:36.670767",
+      "region": "Global",
+      "domain": "GeoAI and Remote Sensing"
     }
   ]
 }
