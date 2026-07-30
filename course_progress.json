@@ -1,5 +1,5 @@
 {
-  "next_index": 19,
+  "next_index": 20,
   "generated": [
     {
       "index": 0,
@@ -135,6 +135,15 @@
       "date": "2026-07-27T13:23:36.670767",
       "region": "Global",
       "domain": "GeoAI and Remote Sensing"
+    },
+    {
+      "index": 19,
+      "topic": "Urban Health Surveillance with Environmental and Geospatial Data",
+      "filename": "Course24_urban_health_surveillance_with_environme.html",
+      "title": "Urban Health Surveillance with Environmental and Geospatial Data",
+      "date": "2026-07-30T09:35:04.249262",
+      "region": "Global Cities",
+      "domain": "Public Health and Urban Health"
     }
   ]
 }
