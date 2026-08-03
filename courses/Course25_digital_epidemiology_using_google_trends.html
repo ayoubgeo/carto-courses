@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course 25 - Global Digital Epidemiology: Integrating Search Signals with GeoAI and Earth Observation</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#0F4C5C;
+    --accent:#14b8a6;
+    --lime:#99f6e4;
+    --cream:#F8FAF7;
+    --dark:#1A1F1C;
+    --gray:#6B7280;
+    --lg:#E5E7EB;
+    --cbg:#141A1F;
+    --cfg:#E2F0E8;
+    --ok:#10B981;
+    --info:#3B82F6;
+    --warn:#F59E0B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);line-height:1.7;font-size:16px}
+
+  /* HEADER */
+  .hd{background:var(--primary);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hd::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--lime))}
+  .hd::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0,40 Q100,10 200,35 Q300,55 400,20 Q500,0 600,30 Q700,55 800,25 Q900,5 1000,35 Q1100,55 1200,30 L1200,60 L0,60 Z' fill='%23F8FAF7'/%3E%3C/svg%3E") no-repeat bottom;background-size:cover}
+  .hi{max-width:860px;margin:0 auto;position:relative;z-index:1}
+  .hd .tg{display:inline-block;background:rgba(255,255,255,.12);color:var(--lime);font-size:.78rem;font-weight:700;padding:.3rem .9rem;border-radius:4px;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;border:1px solid rgba(255,255,255,.2)}
+  .hd h1{font-family:'Source Serif 4',serif;font-size:2.4rem;color:#fff;font-weight:700;line-height:1.2;margin-bottom:.5rem}
+  .hd .sb{font-size:1.05rem;color:rgba(255,255,255,.75);font-style:italic;margin-bottom:1.2rem}
+  .hd .mt{font-size:.82rem;color:rgba(255,255,255,.45)}
+  .hd .mt span{margin-right:1.5rem;padding-right:1.5rem;border-right:1px solid rgba(255,255,255,.15)}
+  .hd .mt span:last-child{border-right:none}
+
+  /* DATASET STRIP */
+  .db-strip{background:#fff;border-bottom:2px solid var(--lg);padding:.7rem 1.5rem}
+  .db-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:1rem;font-size:.82rem;flex-wrap:wrap}
+  .db-badge{background:rgba(0,0,0,.06);border:1px solid var(--lg);border-radius:6px;padding:.25rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--dark);font-weight:600}
+
+  /* LAYOUT */
+  .mn{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+  /* KEY TERMS BOX */
+  .kt{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .kt h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+
+  /* TABLE OF CONTENTS */
+  .tc{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .tc h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+  .tc ol{padding-left:1.2rem;column-count:2;column-gap:2rem}
+  .tc li{font-size:.9rem;margin-bottom:.4rem;color:var(--primary);break-inside:avoid}
+
+  /* DATASET CARD */
+  .dc{background:linear-gradient(135deg,#F8FFF8,#F0FDF4);border:1px solid #86EFAC;border-radius:10px;padding:1.3rem 1.5rem;margin:1.2rem 0;display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .dc-item .dl{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);font-weight:700;margin-bottom:.2rem}
+  .dc-item .dv{color:var(--dark);font-weight:500;font-size:.88rem}
+
+  /* SECTIONS */
+  .st{margin-bottom:3rem}
+  .sh{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.1rem}
+  .sn{flex-shrink:0;width:44px;height:44px;background:var(--primary);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+  .sl{font-family:'Source Serif 4',serif;font-size:1.42rem;font-weight:700;color:var(--primary)}
+  .sd{font-size:.77rem;color:var(--accent);font-weight:700;letter-spacing:.5px}
+  .st p{margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st ul,.st ol{margin-left:1.5rem;margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st li{margin-bottom:.35rem}
+
+  /* CODE BLOCKS */
+  .cb{background:var(--cbg);border-radius:10px;margin:1.2rem 0;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.2)}
+  .cr{background:rgba(255,255,255,.05);padding:.55rem 1rem;font-size:.73rem;color:var(--lime);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  .cb pre{padding:1.1rem 1.3rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.81rem;line-height:1.75;color:var(--cfg);white-space:pre;margin:0}
+  .cp{background:rgba(255,255,255,.08);color:var(--lime);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:.22rem .6rem;font-size:.68rem;font-weight:700;cursor:pointer;transition:all .2s}
+  .cp:hover{background:rgba(255,255,255,.15)}
+  .cp.ok{background:rgba(16,185,129,.2);border-color:var(--ok);color:var(--ok)}
+
+  /* NOTES */
+  .nt{border-radius:8px;padding:1rem 1.2rem;margin:1.2rem 0;font-size:.92rem;display:flex;gap:.9rem;align-items:flex-start}
+  .ni{background:#EFF6FF;border-left:4px solid var(--info);color:#1E3A5F}
+  .np{background:#F0FDF4;border-left:4px solid var(--ok);color:#064E3B}
+  .nw{background:#FFFBEB;border-left:4px solid var(--warn);color:#78350F}
+  .nk{background:#F0FDF4;border-left:4px solid var(--accent);color:var(--primary)}
+  .nt strong{font-weight:700}
+  .nt .ic{flex-shrink:0;font-size:1.25rem;margin-top:.05rem}
+
+  /* PROMPT CARD */
+  .prompt-card{background:#FAFFF5;border:1.5px solid #86EFAC;border-radius:10px;padding:1.2rem 1.4rem;margin:1.3rem 0}
+  .prompt-card .pl{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:700;margin-bottom:.6rem;font-family:'DM Sans',sans-serif}
+  .prompt-card .pt{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#1A2E1F;background:#F0FDF4;border-radius:6px;padding:1rem 1.1rem;white-space:pre-wrap;line-height:1.7;border:1px solid #BBF7D0}
+
+  /* EXERCISES */
+  .xr{background:linear-gradient(135deg,#FEFCE8,#FEF9C3);border:1px solid #FDE047;border-radius:10px;padding:1.2rem 1.5rem;margin:1rem 0}
+  .xr h4{color:#854D0E;font-size:.82rem;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.7rem;font-weight:700}
+  .xr ol{padding-left:1.2rem;font-size:.92rem;color:#713F12}
+  .xr li{margin-bottom:.4rem}
+
+  /* TABLES */
+  .tb{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.87rem;border-radius:8px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  .tb th{background:var(--primary);color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600;font-size:.81rem}
+  .tb td{padding:.55rem 1rem;border-bottom:1px solid var(--lg);background:#fff;vertical-align:top}
+  .tb tr:last-child td{border-bottom:none}
+  .tb tr:hover td{background:#F8FFF8}
+
+  /* DIVIDER */
+  .dv{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--lg),transparent);margin:2.5rem 0}
+
+  /* INLINE CODE */
+  code{font-family:'JetBrains Mono',monospace;font-size:.83em;background:rgba(0,0,0,.06);color:var(--accent);padding:.15em .42em;border-radius:4px}
+
+  /* FOOTER */
+  .ft{text-align:center;padding:2rem;color:var(--gray);font-size:.82rem;border-top:1px solid var(--lg);margin-top:2rem}
+  .ft strong{color:var(--accent)}
+
+  @media(max-width:700px){
+    .hd h1{font-size:1.6rem}
+    .tc ol{column-count:1}
+    .sl{font-size:1.2rem}
+    .dc{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="hi">
+    <div class="tg">Practical Course 25</div>
+    <h1>Global Digital Epidemiology: Integrating Search Signals with GeoAI and Earth Observation</h1>
+    <div class="sb">Leverage Google Trends search signals and Earth Engine environmental predictors to model global syndromic health dynamics with Machine Learning.</div>
+    <div class="mt">
+      <span>Global</span>
+      <span>~2 hours</span>
+      <span>Advanced</span>
+    </div>
+  </div>
+</div>
+
+<!-- DATASET STRIP -->
+<div class="db-strip">
+  <div class="db-inner">
+    <strong style="font-size:.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:1px;">Dataset:</strong>
+    <span class="db-badge">ECMWF/ERA5_LAND/DAILY_AGGR</span>
+    <span style="font-size:.82rem;color:#6B7280;">ERA5-Land Daily Aggregated Climate Reanalysis</span>
+  </div>
+</div>
+
+<div class="mn">
+
+  <!-- KEY TERMS -->
+  <div class="kt">
+    <h3>📖 Key Terms for Beginners</h3>
+    <p style="font-size:.85rem;color:#374151;margin-bottom:1rem;">Before starting, make sure you understand these terms. They appear throughout all code blocks in this course.</p>
+    <table class="tb">
+      <tr><th>Term</th><th>Full Name</th><th>What it means in simple words</th></tr>
+      <tr><td><strong>RSV</strong></td><td>Relative Search Volume</td><td>A normalized query metric provided by Google Trends representing search interest for a specific term relative to total searches.</td></tr><tr><td><strong>Digital Epidemiology</strong></td><td>Digital Epidemiology</td><td>The science that utilizes digital data sources, such as internet queries and social media, to study disease patterns and public health behaviors.</td></tr><tr><td><strong>Syndromic Surveillance</strong></td><td>Syndromic Surveillance</td><td>An epidemiological method monitoring real-time health data, including symptom queries, to provide early warnings of disease outbreaks.</td></tr><tr><td><strong>ERA5-Land</strong></td><td>ECMWF ERA5-Land Reanalysis</td><td>A global climate dataset offering hourly and daily atmospheric and land surface variables at high spatial resolution.</td></tr><tr><td><strong>Spatial Autocorrelation</strong></td><td>Spatial Autocorrelation</td><td>The degree to which health or environmental variables in neighboring spatial units are correlated with one another.</td></tr><tr><td><strong>MAUP</strong></td><td>Modifiable Areal Unit Problem</td><td>A statistical bias where spatial analysis outcomes change when point data are aggregated into different boundary shapes or sizes.</td></tr><tr><td><strong>Digital Divide</strong></td><td>Digital Divide</td><td>The socioeconomic gap between populations with consistent internet access and those without, impacting query representativeness.</td></tr><tr><td><strong>Random Forest Regression</strong></td><td>Random Forest Regression</td><td>An ensemble machine learning technique that trains multiple decision trees to predict continuous numerical targets.</td></tr><tr><td><strong>Environmental Determinants</strong></td><td>Environmental Determinants of Health</td><td>External ecological and climate parameters, such as temperature and humidity, that influence human health outcomes.</td></tr><tr><td><strong>Confounding Variable</strong></td><td>Confounding Variable</td><td>An extraneous factor that correlates with both the exposure and outcome, potentially masking true epidemiological relationships.</td></tr><tr><td><strong>Feature Importance</strong></td><td>Feature Importance</td><td>A metric in machine learning models that quantifies the relative contribution of each predictor variable.</td></tr><tr><td><strong>Representativeness Bias</strong></td><td>Representativeness Bias</td><td>A systemic sampling error where online digital search activity does not accurately reflect the demographics of the broader population.</td></tr>
+    </table>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="tc">
+    <h3>Contents</h3>
+    <ol><li>1. Introduction to Digital Epidemiology and Web Search Signals</li><li>2. Methodological Framework: Merging Search Volatility with GeoAI</li><li>3. Defining Spatial Units and Global Administrative Boundaries</li><li>4. Extraction of Atmospheric and Surface Climate Determinants</li><li>5. Integrating Population Exposure via WorldPop</li><li>6. Harmonizing Tabular Search Signals with Earth Engine Features</li><li>7. Machine Learning Predictive Modeling with Random Forest</li><li>8. Model Evaluation and Feature Importance Analysis</li><li>9. Global Risk Proxy Mapping and Uncertainty Visualizations</li><li>10. Ethical Considerations, Bias Mitigation, and Export Workflows</li></ol>
+  </div>
+
+  <!-- S1: INTRODUCTION -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">1</div>
+      <div><div class="sl">Introduction</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Digital epidemiology leverages global web search behavior to monitor public health trends, bridging the gap between delayed clinical surveillance and real-time early warnings. This course explores how to harmonize spatial Google Trends search volume signals with global Earth observation datasets using Google Earth Engine. By combining atmospheric covariates from ERA5-Land, surface temperature from MODIS, and population density from WorldPop, participants will build robust machine learning models to predict spatial disease proxies while explicitly accounting for spatial bias and digital infrastructure disparities.</p>
+    <div class="dc">
+      <div class="dc-item"><div class="dl">GEE Asset ID</div><div class="dv"><code>ECMWF/ERA5_LAND/DAILY_AGGR</code></div></div>
+      <div class="dc-item"><div class="dl">Dataset Name</div><div class="dv">ERA5-Land Daily Aggregated Climate Reanalysis</div></div>
+      <div class="dc-item"><div class="dl">Study Area</div><div class="dv">Global</div></div>
+      <div class="dc-item"><div class="dl">AI Tool</div><div class="dv">DeepSeek (free, no API key needed)</div></div>
+    </div>
+    <div class="nt np"><div class="ic">🌍</div><div><strong>What you will build:</strong> By the end of this course you will have a working GEE script that analyzes Global Digital Epidemiology: Integrating Search Signals with GeoAI and Earth Observation, computes statistics, visualizes results on an interactive map, and exports data to Google Drive.</div></div>
+  </div><hr class="dv">
+
+  <!-- S2: SETUP -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">2</div>
+      <div><div class="sl">Setup: GEE + DeepSeek</div><div class="sd">5 min</div></div>
+    </div>
+    <p>You need two browser tabs open side by side throughout this course.</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem;margin:1rem 0">
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">1</div>
+        Open <a href="https://chat.deepseek.com" target="_blank">chat.deepseek.com</a> -- free account, no API key needed
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">2</div>
+        Open <a href="https://code.earthengine.google.com" target="_blank">code.earthengine.google.com</a> in a second tab
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">3</div>
+        Create a new GEE script named <code>Course25_Global Digital Epidemiology: Integrating Search Signals with GeoAI and Earth Observation</code>
+      </div>
+    </div>
+    <div class="nt ni"><div class="ic">💡</div><div><strong>Workflow:</strong> Write a prompt in DeepSeek describing your task with exact dataset IDs and requirements. Copy the generated GEE JavaScript. Paste into GEE code editor. Click Run. Inspect results. Iterate.</div></div>
+  </div><hr class="dv">
+
+  <!-- S3: DEEPSEEK PROMPT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">3</div>
+      <div><div class="sl">Crafting the DeepSeek Prompt</div><div class="sd">15 min</div></div>
+    </div>
+    <p>The prompt is the core skill of this course. A good prompt includes the exact dataset ID, band names, study area coordinates, dates, preprocessing steps, and desired outputs.</p>
+    <div class="prompt-card">
+      <div class="pl">📋 Main Prompt -- copy and paste this into DeepSeek</div>
+      <div class="pt">Act as an expert GeoAI educator and digital epidemiologist. Write a complete, execution-ready Google Earth Engine JavaScript script that demonstrates digital epidemiological modeling at a global scale. Use USDOS/LSIB_SIMPLE/2017 for administrative boundaries, ECMWF/ERA5_LAND/DAILY_AGGR for daily air temperature ('temperature_2m'), MODIS/061/MOD11A1 for land surface temperature ('LST_Day_1km'), and WorldPop/GP/100m/pop for population density. Construct a global FeatureCollection where environmental averages (mean temperature, surface thermal exposure, population density) are computed per country. Simulate a normalized Relative Search Volume (RSV) health proxy attribute for syndromic interest based on climate dependencies. Train a Random Forest regressor (ee.Classifier.smileRandomForest) on these spatial features to model digital health risk proxies. Include detailed inline code comments explaining spatial reduction, model training, feature importance extraction, and visual mapping. Provide step-by-step instructions and explicitly highlight ethical considerations regarding internet representativeness and health data privacy.</div>
+    </div>
+    <div class="nt ni"><div class="ic">✨</div><div><strong>After pasting the prompt:</strong> Wait 20-30 seconds for DeepSeek to generate the full GEE script. Copy the entire code block it produces. If the output is cut short, type "Continue the code" to get the rest.</div></div>
+  </div><hr class="dv">
+
+  <!-- S4: CODE BLOCK 1 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">4</div>
+      <div><div class="sl">Spatial Feature Aggregation and Environmental Determinant Extraction</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Paste the following code into your GEE code editor and click Run. Read the beginner notes below to understand what each line does.</p>
+    <div class="cb">
+      <div class="cr"><span>Spatial Feature Aggregation and Environmental Determinant Extraction</span><button class="cp">COPY</button></div>
+      <pre>// Load global administrative boundaries
+var countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017');
+
+// Define temporal range for environmental reduction
+var startDate = '2023-01-01';
+var endDate = '2023-12-31';
+
+// Load air temperature from ERA5-Land Daily (Convert Kelvin to Celsius)
+var era5 = ee.ImageCollection('ECMWF/ERA5_LAND/DAILY_AGGR')
+  .filterDate(startDate, endDate)
+  .select('temperature_2m')
+  .mean()
+  .subtract(273.15)
+  .rename('mean_air_temp');
+
+// Load Land Surface Temperature from MODIS
+var modisLST = ee.ImageCollection('MODIS/061/MOD11A1')
+  .filterDate(startDate, endDate)
+  .select('LST_Day_1km')
+  .mean()
+  .multiply(0.02)
+  .subtract(273.15)
+  .rename('mean_lst');
+
+// Load Population Density from WorldPop
+var population = ee.Image('WorldPop/GP/100m/pop')
+  .rename('pop_density');
+
+// Combine environmental layers into a single multi-band image
+var predictors = era5.addBands(modisLST).addBands(population);
+
+// Aggregate environmental mean values across each country boundary
+var countryFeatures = predictors.reduceRegions({
+  collection: countries,
+  reducer: ee.Reducer.mean(),
+  scale: 10000
+});
+
+// Attach synthetic Google Trends Relative Search Volume (RSV) health proxy
+// (Simulating search interest correlated with climate exposure for demonstration)
+var healthDataset = countryFeatures.map(function(f) {
+  var temp = ee.Number(f.get('mean_air_temp'));
+  var pop = ee.Number(f.get('pop_density'));
+  // Synthetic expression representing fever/influenza search volume proxy
+  var rsvProxy = temp.multiply(-0.8).add(pop.log().multiply(2.5)).add(50);
+  return f.set('RSV_Proxy', rsvProxy);
+}).filter(ee.Filter.notNull(['mean_air_temp', 'mean_lst', 'pop_density', 'RSV_Proxy']));
+
+// Print feature sample to Console
+print('Processed Global Health Features:', healthDataset.limit(5));
+
+// Visualization setup
+Map.setCenter(0, 20, 2);
+Map.addLayer(era5, {min: -10, max: 35, palette: ['blue', 'yellow', 'red']}, 'Mean Air Temp (C)');
+Map.addLayer(countries, {color: '888888'}, 'Global Boundaries', false);</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This script loads global country vector boundaries and integrates key atmospheric and demographic datasets. It calculates annual mean values for ERA5-Land air temperature, MODIS daily land surface temperature, and WorldPop population density. The `reduceRegions` function aggregates these raster predictor variables to country level features. Finally, a synthetic Google Trends Relative Search Volume (RSV) proxy is assigned to demonstrate how external digital health query indicators integrate with geospatial variables in Earth Engine.</div></div>
+  </div><hr class="dv">
+
+  <!-- S5: CODE BLOCK 2 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">5</div>
+      <div><div class="sl">GeoAI Machine Learning Predictive Modeling and Health Proxy Mapping</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Add this block after the previous code. It continues the analysis with additional processing and visualization.</p>
+    <div class="cb">
+      <div class="cr"><span>GeoAI Machine Learning Predictive Modeling and Health Proxy Mapping</span><button class="cp">COPY</button></div>
+      <pre>// Prepare Machine Learning training attributes
+var predictorNames = ['mean_air_temp', 'mean_lst', 'pop_density'];
+var targetProperty = 'RSV_Proxy';
+
+// Train a Random Forest Regressor inside Earth Engine
+var rfRegressor = ee.Classifier.smileRandomForest(100)
+  .setOutputMode('REGRESSION')
+  .train({
+    features: healthDataset,
+    classProperty: targetProperty,
+    inputProperties: predictorNames
+  });
+
+// Evaluate model resubstitution error
+var trainedModel = healthDataset.classify(rfRegressor, 'Predicted_RSV');
+print('Model Training Diagnostics:', rfRegressor.explain());
+
+// Predict spatial health query risk raster continuously across global land masses
+var spatialRiskMap = predictors.select(predictorNames).classify(rfRegressor);
+
+// Apply population mask to exclude uninhabited zones
+var maskedRiskMap = spatialRiskMap.updateMask(population.gt(1));
+
+// Display predicted digital epidemiological risk map
+var riskVis = {
+  min: 20,
+  max: 80,
+  palette: ['#2b83ba', '#abdda4', '#ffffbf', '#fdae61', '#d7191c']
+};
+
+Map.addLayer(maskedRiskMap, riskVis, 'Predicted Health Search Risk Index');
+
+// Export predicted spatial risk map as geotiff
+Export.image.toDrive({
+  image: maskedRiskMap,
+  description: 'Global_Digital_Epidemiology_Risk_Map',
+  scale: 10000,
+  region: ee.Geometry.BBox(-180, -60, 180, 85),
+  maxPixels: 1e13
+});</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This second code block configures and executes a Random Forest regression model (`ee.Classifier.smileRandomForest`). The regressor learns spatial patterns between environmental predictors (air temperature, land surface temperature, population density) and the digital search interest target variable. The trained model is then applied directly to global raster grids, outputting a continuous spatial risk map that highlights areas of high syndromic search potential based on climate and population exposures.</div></div>
+  </div><hr class="dv">
+
+  <!-- S6: EXPORT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">6</div>
+      <div><div class="sl">Export Results to Google Drive</div><div class="sd">5 min</div></div>
+    </div>
+    <p>Add this block at the end of your script to export the final map as a GeoTIFF to your Google Drive. After clicking Run, go to the <strong>Tasks</strong> tab in GEE and click <strong>Run</strong> next to each export task.</p>
+    <div class="cb">
+      <div class="cr"><span>Export to Google Drive</span><button class="cp">COPY</button></div>
+      <pre>// Export summarized country-level table including actual and predicted search proxies
+Export.table.toDrive({
+  collection: trainedModel,
+  description: 'Global_Digital_Epidemiology_Country_Metrics',
+  fileFormat: 'CSV',
+  selectors: ['COUNTRY_NA', 'mean_air_temp', 'mean_lst', 'pop_density', 'RSV_Proxy', 'Predicted_RSV']
+});</pre>
+    </div>
+    <div class="nt ni"><div class="ic">🔑</div><div><strong>Beginner note -- Export.image.toDrive():</strong> This function does not export immediately. It creates a task in the GEE Tasks tab that you must manually start by clicking Run. The file will appear in your Google Drive folder (GEE_Courses) as a GeoTIFF that you can open in QGIS or ArcGIS.</div></div>
+  </div><hr class="dv">
+
+  <!-- S7: EXERCISES -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">7</div>
+      <div><div class="sl">Exercises Using DeepSeek Prompts</div><div class="sd">Homework</div></div>
+    </div>
+    <p>Use DeepSeek to extend the script for each exercise below. Write a follow-up prompt describing what you want to add, then copy the generated code and paste it into your GEE script.</p>
+    <div class="xr"><h4>A. Temporal Alignment of Search Queries with Climate Extremes</h4><ol><li>Modify the date filter to compare summer and winter seasons separately for both hemispheres.</li><li>Recalculate country-level mean temperatures for both temporal windows.</li><li>Analyze how seasonal shifts affect predicted digital search indices across continental zones.</li></ol></div><div class="xr"><h4>B. Integrating Atmospheric Pollution as a Respiratory Health Predictor</h4><ol><li>Import the Sentinel-5P TROPOMI Nitrogen Dioxide dataset ('COPERNICUS/S5P/OFFL/L3_NO2').</li><li>Select the 'NO2_column_number_density' band and calculate annual global averages.</li><li>Add NO2 as an additional predictor band in the multi-band raster image and retrain the Random Forest model.</li></ol></div><div class="xr"><h4>C. Evaluating Digital Divide Bias via Connectivity Masks</h4><ol><li>Load nightlights data from VIIRS ('NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG') to serve as a proxy for infrastructure development.</li><li>Filter out regions with low nightlight radiance where internet search availability is minimal.</li><li>Compare model accuracy before and after masking unrepresented low-connectivity regions.</li></ol></div><div class="xr"><h4>D. Sensitivity Analysis of Spatial Aggregation Units</h4><ol><li>Replace country boundaries ('USDOS/LSIB_SIMPLE/2017') with a global grid mesh or administrative Level 1 boundaries.</li><li>Re-aggregate climate and population variables at this finer spatial scale.</li><li>Document how changing spatial scale impacts model feature importance scores and variance.</li></ol></div>
+  </div><hr class="dv">
+
+  <!-- S8: PROMPT ENGINEERING TIPS -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">8</div>
+      <div><div class="sl">Prompt Engineering Tips</div><div class="sd">Reference</div></div>
+    </div>
+    <p>To get the best results from DeepSeek for GEE tasks, always include these elements in your prompts:</p>
+    <table class="tb">
+      <tr><th>Element</th><th>Example</th></tr>
+      <tr><td>Exact dataset ID</td><td><code>ECMWF/ERA5_LAND/DAILY_AGGR</code></td></tr>
+      <tr><td>Band names</td><td>"select band 'B4' for red, 'B8' for NIR"</td></tr>
+      <tr><td>Study area</td><td>"rectangle [-6.5, 33.0, -1.5, 36.0] North Morocco"</td></tr>
+      <tr><td>Date range</td><td>"filter from 2020-01-01 to 2023-12-31"</td></tr>
+      <tr><td>Output format</td><td>"print area in hectares, add a legend, export to Drive"</td></tr>
+      <tr><td>Error fixing</td><td>"The code gives error X. Please fix it."</td></tr>
+      <tr><td>Iteration</td><td>"Add a time series chart for each year 2018-2023"</td></tr>
+    </table>
+    <div class="nt np"><div class="ic">🧠</div><div><strong>Best practice:</strong> Start with the main prompt, run the code, then send follow-up prompts to add features one at a time. This gives you cleaner, more reliable code than asking for everything at once.</div></div>
+  </div>
+
+</div><!-- end .mn -->
+
+<div class="ft">
+  <strong>Course 25</strong> - Global Digital Epidemiology: Integrating Search Signals with GeoAI and Earth Observation | GeoAI for Climate Change | Dr. Ayoub Lahlouh | UM6P/CUS | 2025/2026
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cb').forEach(function(b) {
+    var pre = b.querySelector('pre');
+    if (!pre) return;
+    var btns = b.querySelectorAll('.cp');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var t = (pre.textContent || pre.innerText).replace(/^\n/, '');
+        navigator.clipboard.writeText(t).then(function() {
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        }).catch(function() {
+          var a = document.createElement('textarea');
+          a.value = t; a.style.position = 'fixed'; a.style.left = '-9999px';
+          document.body.appendChild(a); a.select();
+          document.execCommand('copy'); document.body.removeChild(a);
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        });
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>

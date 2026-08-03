@@ -1,5 +1,5 @@
 {
-  "next_index": 20,
+  "next_index": 21,
   "generated": [
     {
       "index": 0,
@@ -144,6 +144,15 @@
       "date": "2026-07-30T09:35:04.249262",
       "region": "Global Cities",
       "domain": "Public Health and Urban Health"
+    },
+    {
+      "index": 20,
+      "topic": "Digital Epidemiology Using Google Trends and GeoAI",
+      "filename": "Course25_digital_epidemiology_using_google_trends.html",
+      "title": "Global Digital Epidemiology: Integrating Search Signals with GeoAI and Earth Observation",
+      "date": "2026-08-03T10:49:59.259743",
+      "region": "Global",
+      "domain": "Digital Health and Digital Epidemiology"
     }
   ]
 }
