@@ -1,5 +1,5 @@
 {
-  "next_index": 21,
+  "next_index": 22,
   "generated": [
     {
       "index": 0,
@@ -153,6 +153,15 @@
       "date": "2026-08-03T10:49:59.259743",
       "region": "Global",
       "domain": "Digital Health and Digital Epidemiology"
+    },
+    {
+      "index": 21,
+      "topic": "Dengue Risk Mapping with Climate Data and Remote Sensing",
+      "filename": "Course26_dengue_risk_mapping_with_climate_data_an.html",
+      "title": "Dengue Risk Mapping with Climate Data and Remote Sensing",
+      "date": "2026-08-13T08:26:53.721644",
+      "region": "Southeast Asia and Tropical Regions",
+      "domain": "Public Health and Spatial Epidemiology"
     }
   ]
 }
