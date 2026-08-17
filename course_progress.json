@@ -1,5 +1,5 @@
 {
-  "next_index": 22,
+  "next_index": 23,
   "generated": [
     {
       "index": 0,
@@ -162,6 +162,15 @@
       "date": "2026-08-13T08:26:53.721644",
       "region": "Southeast Asia and Tropical Regions",
       "domain": "Public Health and Spatial Epidemiology"
+    },
+    {
+      "index": 22,
+      "topic": "Healthcare Accessibility Mapping with GIS and AI",
+      "filename": "Course27_healthcare_accessibility_mapping_with_gi.html",
+      "title": "Healthcare Accessibility Mapping with GIS and AI in Sub-Saharan Africa",
+      "date": "2026-08-17T07:56:50.030662",
+      "region": "Sub-Saharan Africa",
+      "domain": "Public Health and Health Geography"
     }
   ]
 }
