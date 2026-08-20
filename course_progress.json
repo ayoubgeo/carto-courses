@@ -1,5 +1,5 @@
 {
-  "next_index": 23,
+  "next_index": 24,
   "generated": [
     {
       "index": 0,
@@ -171,6 +171,15 @@
       "date": "2026-08-17T07:56:50.030662",
       "region": "Sub-Saharan Africa",
       "domain": "Public Health and Health Geography"
+    },
+    {
+      "index": 23,
+      "topic": "Heat Exposure and Heat-Related Health Risk Mapping",
+      "filename": "Course28_heat_exposure_and_heat_related_health_ri.html",
+      "title": "Global Urban Heat Exposure and Health Risk Mapping with GeoAI",
+      "date": "2026-08-20T07:48:20.225587",
+      "region": "Global Cities",
+      "domain": "Public Health and Climate Health"
     }
   ]
 }
