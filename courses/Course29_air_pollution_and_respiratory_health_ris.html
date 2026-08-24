@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course 29 - Global Air Pollution and Respiratory Health Risk Mapping via GeoAI</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#312e81;
+    --accent:#8b5cf6;
+    --lime:#ddd6fe;
+    --cream:#F8FAF7;
+    --dark:#1A1F1C;
+    --gray:#6B7280;
+    --lg:#E5E7EB;
+    --cbg:#141A1F;
+    --cfg:#E2F0E8;
+    --ok:#10B981;
+    --info:#3B82F6;
+    --warn:#F59E0B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);line-height:1.7;font-size:16px}
+
+  /* HEADER */
+  .hd{background:var(--primary);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hd::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--lime))}
+  .hd::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0,40 Q100,10 200,35 Q300,55 400,20 Q500,0 600,30 Q700,55 800,25 Q900,5 1000,35 Q1100,55 1200,30 L1200,60 L0,60 Z' fill='%23F8FAF7'/%3E%3C/svg%3E") no-repeat bottom;background-size:cover}
+  .hi{max-width:860px;margin:0 auto;position:relative;z-index:1}
+  .hd .tg{display:inline-block;background:rgba(255,255,255,.12);color:var(--lime);font-size:.78rem;font-weight:700;padding:.3rem .9rem;border-radius:4px;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;border:1px solid rgba(255,255,255,.2)}
+  .hd h1{font-family:'Source Serif 4',serif;font-size:2.4rem;color:#fff;font-weight:700;line-height:1.2;margin-bottom:.5rem}
+  .hd .sb{font-size:1.05rem;color:rgba(255,255,255,.75);font-style:italic;margin-bottom:1.2rem}
+  .hd .mt{font-size:.82rem;color:rgba(255,255,255,.45)}
+  .hd .mt span{margin-right:1.5rem;padding-right:1.5rem;border-right:1px solid rgba(255,255,255,.15)}
+  .hd .mt span:last-child{border-right:none}
+
+  /* DATASET STRIP */
+  .db-strip{background:#fff;border-bottom:2px solid var(--lg);padding:.7rem 1.5rem}
+  .db-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:1rem;font-size:.82rem;flex-wrap:wrap}
+  .db-badge{background:rgba(0,0,0,.06);border:1px solid var(--lg);border-radius:6px;padding:.25rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--dark);font-weight:600}
+
+  /* LAYOUT */
+  .mn{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+  /* KEY TERMS BOX */
+  .kt{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .kt h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+
+  /* TABLE OF CONTENTS */
+  .tc{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .tc h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+  .tc ol{padding-left:1.2rem;column-count:2;column-gap:2rem}
+  .tc li{font-size:.9rem;margin-bottom:.4rem;color:var(--primary);break-inside:avoid}
+
+  /* DATASET CARD */
+  .dc{background:linear-gradient(135deg,#F8FFF8,#F0FDF4);border:1px solid #86EFAC;border-radius:10px;padding:1.3rem 1.5rem;margin:1.2rem 0;display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .dc-item .dl{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);font-weight:700;margin-bottom:.2rem}
+  .dc-item .dv{color:var(--dark);font-weight:500;font-size:.88rem}
+
+  /* SECTIONS */
+  .st{margin-bottom:3rem}
+  .sh{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.1rem}
+  .sn{flex-shrink:0;width:44px;height:44px;background:var(--primary);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+  .sl{font-family:'Source Serif 4',serif;font-size:1.42rem;font-weight:700;color:var(--primary)}
+  .sd{font-size:.77rem;color:var(--accent);font-weight:700;letter-spacing:.5px}
+  .st p{margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st ul,.st ol{margin-left:1.5rem;margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st li{margin-bottom:.35rem}
+
+  /* CODE BLOCKS */
+  .cb{background:var(--cbg);border-radius:10px;margin:1.2rem 0;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.2)}
+  .cr{background:rgba(255,255,255,.05);padding:.55rem 1rem;font-size:.73rem;color:var(--lime);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  .cb pre{padding:1.1rem 1.3rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.81rem;line-height:1.75;color:var(--cfg);white-space:pre;margin:0}
+  .cp{background:rgba(255,255,255,.08);color:var(--lime);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:.22rem .6rem;font-size:.68rem;font-weight:700;cursor:pointer;transition:all .2s}
+  .cp:hover{background:rgba(255,255,255,.15)}
+  .cp.ok{background:rgba(16,185,129,.2);border-color:var(--ok);color:var(--ok)}
+
+  /* NOTES */
+  .nt{border-radius:8px;padding:1rem 1.2rem;margin:1.2rem 0;font-size:.92rem;display:flex;gap:.9rem;align-items:flex-start}
+  .ni{background:#EFF6FF;border-left:4px solid var(--info);color:#1E3A5F}
+  .np{background:#F0FDF4;border-left:4px solid var(--ok);color:#064E3B}
+  .nw{background:#FFFBEB;border-left:4px solid var(--warn);color:#78350F}
+  .nk{background:#F0FDF4;border-left:4px solid var(--accent);color:var(--primary)}
+  .nt strong{font-weight:700}
+  .nt .ic{flex-shrink:0;font-size:1.25rem;margin-top:.05rem}
+
+  /* PROMPT CARD */
+  .prompt-card{background:#FAFFF5;border:1.5px solid #86EFAC;border-radius:10px;padding:1.2rem 1.4rem;margin:1.3rem 0}
+  .prompt-card .pl{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:700;margin-bottom:.6rem;font-family:'DM Sans',sans-serif}
+  .prompt-card .pt{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#1A2E1F;background:#F0FDF4;border-radius:6px;padding:1rem 1.1rem;white-space:pre-wrap;line-height:1.7;border:1px solid #BBF7D0}
+
+  /* EXERCISES */
+  .xr{background:linear-gradient(135deg,#FEFCE8,#FEF9C3);border:1px solid #FDE047;border-radius:10px;padding:1.2rem 1.5rem;margin:1rem 0}
+  .xr h4{color:#854D0E;font-size:.82rem;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.7rem;font-weight:700}
+  .xr ol{padding-left:1.2rem;font-size:.92rem;color:#713F12}
+  .xr li{margin-bottom:.4rem}
+
+  /* TABLES */
+  .tb{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.87rem;border-radius:8px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  .tb th{background:var(--primary);color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600;font-size:.81rem}
+  .tb td{padding:.55rem 1rem;border-bottom:1px solid var(--lg);background:#fff;vertical-align:top}
+  .tb tr:last-child td{border-bottom:none}
+  .tb tr:hover td{background:#F8FFF8}
+
+  /* DIVIDER */
+  .dv{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--lg),transparent);margin:2.5rem 0}
+
+  /* INLINE CODE */
+  code{font-family:'JetBrains Mono',monospace;font-size:.83em;background:rgba(0,0,0,.06);color:var(--accent);padding:.15em .42em;border-radius:4px}
+
+  /* FOOTER */
+  .ft{text-align:center;padding:2rem;color:var(--gray);font-size:.82rem;border-top:1px solid var(--lg);margin-top:2rem}
+  .ft strong{color:var(--accent)}
+
+  @media(max-width:700px){
+    .hd h1{font-size:1.6rem}
+    .tc ol{column-count:1}
+    .sl{font-size:1.2rem}
+    .dc{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="hi">
+    <div class="tg">Practical Course 29</div>
+    <h1>Global Air Pollution and Respiratory Health Risk Mapping via GeoAI</h1>
+    <div class="sb">Quantify urban NO2 exposure and predict respiratory health risk using Sentinel-5P, ERA5, GHSL, and Machine Learning</div>
+    <div class="mt">
+      <span>Global Urban and Industrial Regions</span>
+      <span>~2 hours</span>
+      <span>Advanced</span>
+    </div>
+  </div>
+</div>
+
+<!-- DATASET STRIP -->
+<div class="db-strip">
+  <div class="db-inner">
+    <strong style="font-size:.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:1px;">Dataset:</strong>
+    <span class="db-badge">COPERNICUS/S5P/OFFL/L3_NO2</span>
+    <span style="font-size:.82rem;color:#6B7280;">Sentinel-5P OFFL NO2: Offline Nitrogen Dioxide Tropo Column Density</span>
+  </div>
+</div>
+
+<div class="mn">
+
+  <!-- KEY TERMS -->
+  <div class="kt">
+    <h3>📖 Key Terms for Beginners</h3>
+    <p style="font-size:.85rem;color:#374151;margin-bottom:1rem;">Before starting, make sure you understand these terms. They appear throughout all code blocks in this course.</p>
+    <table class="tb">
+      <tr><th>Term</th><th>Full Name</th><th>What it means in simple words</th></tr>
+      <tr><td><strong>S5P</strong></td><td>Sentinel-5 Precursor</td><td>Earth observation satellite launched by ESA dedicated to monitoring atmospheric chemistry and air quality.</td></tr><tr><td><strong>NO2</strong></td><td>Nitrogen Dioxide</td><td>A respiratory irritant trace gas primarily emitted by fossil fuel combustion and industrial processes.</td></tr><tr><td><strong>AOD</strong></td><td>Aerosol Optical Depth</td><td>A measure of atmospheric light extinction caused by airborne particulate matter and aerosol particles.</td></tr><tr><td><strong>GeoAI</strong></td><td>Geospatial Artificial Intelligence</td><td>Integration of spatial data science with machine learning algorithms to model geographic phenomena.</td></tr><tr><td><strong>Exposure Assessment</strong></td><td>Environmental Exposure Assessment</td><td>Quantitative estimation of population contact intensity with environmental hazards across space and time.</td></tr><tr><td><strong>Vulnerability Index</strong></td><td>Socio-Environmental Vulnerability Index</td><td>A composite score reflecting population susceptibility and lack of adaptive capacity to environmental stressors.</td></tr><tr><td><strong>GHSL</strong></td><td>Global Human Settlement Layer</td><td>Spatial raster datasets mapping human presence, built-up surfaces, and population density globally.</td></tr><tr><td><strong>Random Forest</strong></td><td>Random Forest Ensemble Classifier/Regressor</td><td>An ensemble machine learning method that constructs multiple decision trees to predict complex nonlinear targets.</td></tr><tr><td><strong>Tropospheric Column Density</strong></td><td>Tropospheric Column Density</td><td>Total vertically integrated molecular count of a trace gas per unit horizontal surface area in the troposphere.</td></tr><tr><td><strong>Spatial Autocorrelation</strong></td><td>Spatial Autocorrelation</td><td>The formal measurement of spatial dependency where geographic proximity implies similarity in feature values.</td></tr><tr><td><strong>Ecological Fallacy</strong></td><td>Ecological Fallacy</td><td>A logical error in interpretation occurring when individual health outcomes are inappropriately deduced from aggregate spatial data.</td></tr><tr><td><strong>Risk Proxy</strong></td><td>Environmental Health Risk Proxy</td><td>An indirect, spatially continuous indicator used to estimate potential health threats when direct epidemiological surveillance is absent.</td></tr><tr><td><strong>Confounding Variable</strong></td><td>Confounding Factor</td><td>An unmeasured or unmodeled variable that influences both environmental exposure and health outcomes simultaneously.</td></tr>
+    </table>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="tc">
+    <h3>Contents</h3>
+    <ol><li>1. Introduction to Ambient Air Pollution and Health</li><li>2. Satellite Remote Sensing of Atmospheric Trace Gases</li><li>3. Dataset Selection and Multi-Source Harmonization</li><li>4. Defining Urban and Industrial Regions of Interest</li><li>5. Preprocessing Sentinel-5P NO2 Tropospheric Columns</li><li>6. Integrating ERA5-Land Meteorology and GHSL Population</li><li>7. Quantifying Spatial Exposure and Population Weighted Indices</li><li>8. Machine Learning Modelling of Integrated Respiratory Health Risk</li><li>9. Model Validation, Uncertainty, and Ethics</li><li>10. Exporting GeoAI Deliverables for Public Health Policy</li></ol>
+  </div>
+
+  <!-- S1: INTRODUCTION -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">1</div>
+      <div><div class="sl">Introduction</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Ambient nitrogen dioxide (NO2) and aerosol pollution from urban transport and heavy industrial activity present critical global public health risks, strongly linked to acute and chronic respiratory disorders. Satellite remote sensing from TROPOMI aboard Sentinel-5P provides unprecedented daily global observations of atmospheric chemistry, yet translating raw column densities into actionable health risk metrics requires integrating meteorology, population density, and machine learning. This course demonstrates how to harmonize multi-sensor satellite imagery and population grids within Google Earth Engine to map respiratory health risk indicators across major global urban regions.</p>
+    <div class="dc">
+      <div class="dc-item"><div class="dl">GEE Asset ID</div><div class="dv"><code>COPERNICUS/S5P/OFFL/L3_NO2</code></div></div>
+      <div class="dc-item"><div class="dl">Dataset Name</div><div class="dv">Sentinel-5P OFFL NO2: Offline Nitrogen Dioxide Tropo Column Density</div></div>
+      <div class="dc-item"><div class="dl">Study Area</div><div class="dv">Global Urban and Industrial Regions</div></div>
+      <div class="dc-item"><div class="dl">AI Tool</div><div class="dv">DeepSeek (free, no API key needed)</div></div>
+    </div>
+    <div class="nt np"><div class="ic">🌍</div><div><strong>What you will build:</strong> By the end of this course you will have a working GEE script that analyzes Global Air Pollution and Respiratory Health Risk Mapping via GeoAI, computes statistics, visualizes results on an interactive map, and exports data to Google Drive.</div></div>
+  </div><hr class="dv">
+
+  <!-- S2: SETUP -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">2</div>
+      <div><div class="sl">Setup: GEE + DeepSeek</div><div class="sd">5 min</div></div>
+    </div>
+    <p>You need two browser tabs open side by side throughout this course.</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem;margin:1rem 0">
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">1</div>
+        Open <a href="https://chat.deepseek.com" target="_blank">chat.deepseek.com</a> -- free account, no API key needed
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">2</div>
+        Open <a href="https://code.earthengine.google.com" target="_blank">code.earthengine.google.com</a> in a second tab
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">3</div>
+        Create a new GEE script named <code>Course29_Global Air Pollution and Respiratory Health Risk Mapping via GeoAI</code>
+      </div>
+    </div>
+    <div class="nt ni"><div class="ic">💡</div><div><strong>Workflow:</strong> Write a prompt in DeepSeek describing your task with exact dataset IDs and requirements. Copy the generated GEE JavaScript. Paste into GEE code editor. Click Run. Inspect results. Iterate.</div></div>
+  </div><hr class="dv">
+
+  <!-- S3: DEEPSEEK PROMPT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">3</div>
+      <div><div class="sl">Crafting the DeepSeek Prompt</div><div class="sd">15 min</div></div>
+    </div>
+    <p>The prompt is the core skill of this course. A good prompt includes the exact dataset ID, band names, study area coordinates, dates, preprocessing steps, and desired outputs.</p>
+    <div class="prompt-card">
+      <div class="pl">📋 Main Prompt -- copy and paste this into DeepSeek</div>
+      <div class="pt">Act as an expert GeoAI developer and environmental health scientist. Write a complete, executable Google Earth Engine JavaScript script that quantifies atmospheric NO2 pollution exposure and predicts a respiratory risk proxy across major global urban hubs (e.g., the Pearl River Delta, Indo-Gangetic Plain, or Western Europe). Use 'COPERNICUS/S5P/OFFL/L3_NO2' band 'tropospheric_NO2_column_number_density' filtered for summer 2023. Combine this with 'JRC/GHSL/P2023A/GHS_POP/2020' band 'population_count', 'MODIS/061/MCD19A2_GRANULES' band 'Optical_Depth_047', and 'ECMWF/ERA5_LAND/MONTHLY_AGGR' bands 'temperature_2m' and 'u_component_of_wind_10m'. Compute population-weighted exposure, construct a training sample across urban grids, fit an ee.Classifier.smileRandomForest model to predict an integrated respiratory health risk index, and display the result using a custom health risk palette (blue to red). Provide inline comments explaining spatial resolution differences and potential ecological fallacy limitations.</div>
+    </div>
+    <div class="nt ni"><div class="ic">✨</div><div><strong>After pasting the prompt:</strong> Wait 20-30 seconds for DeepSeek to generate the full GEE script. Copy the entire code block it produces. If the output is cut short, type "Continue the code" to get the rest.</div></div>
+  </div><hr class="dv">
+
+  <!-- S4: CODE BLOCK 1 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">4</div>
+      <div><div class="sl">Data filtering, preprocessing, and spatial harmonization</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Paste the following code into your GEE code editor and click Run. Read the beginner notes below to understand what each line does.</p>
+    <div class="cb">
+      <div class="cr"><span>Data filtering, preprocessing, and spatial harmonization</span><button class="cp">COPY</button></div>
+      <pre>// 1. Define Urban Study Area (Example: Northern Italy Industrial Hub / Po Valley)
+var roi = ee.Geometry.Polygon([
+  [[7.5, 44.5], [12.5, 44.5], [12.5, 46.5], [7.5, 46.5]]
+]);
+
+// 2. Load and Filter Sentinel-5P Tropospheric NO2
+var startPeriod = '2023-05-01';
+var endPeriod = '2023-09-30';
+
+var s5p_no2 = ee.ImageCollection('COPERNICUS/S5P/OFFL/L3_NO2')
+  .filterBounds(roi)
+  .filterDate(startPeriod, endPeriod)
+  .select('tropospheric_NO2_column_number_density')
+  .mean()
+  .clip(roi);
+
+// 3. Load Population Density from GHSL 2020
+var pop = ee.Image('JRC/GHSL/P2023A/GHS_POP/2020')
+  .select('population_count')
+  .clip(roi);
+
+// 4. Load Meteorological Covariates (ERA5-Land Monthly)
+var era5 = ee.ImageCollection('ECMWF/ERA5_LAND/MONTHLY_AGGR')
+  .filterBounds(roi)
+  .filterDate(startPeriod, endPeriod)
+  .select(['temperature_2m', 'u_component_of_wind_10m', 'v_component_of_wind_10m'])
+  .mean()
+  .clip(roi);
+
+// 5. Load MODIS AOD (Aerosol Optical Depth at 0.47um)
+var aod = ee.ImageCollection('MODIS/061/MCD19A2_GRANULES')
+  .filterBounds(roi)
+  .filterDate(startPeriod, endPeriod)
+  .select('Optical_Depth_047')
+  .mean()
+  .multiply(0.001)
+  .rename('AOD_470')
+  .clip(roi);
+
+// 6. Calculate Population-Weighted Exposure Raster
+// Exposure = NO2 Concentration * Log(Population Count + 1)
+var popExposure = s5p_no2.multiply(pop.add(1).log()).rename('Pop_Weighted_Exposure');
+
+// 7. Visualization Setup
+Map.centerObject(roi, 7);
+Map.addLayer(pop, {min: 0, max: 1000, palette: ['white', 'yellow', 'red']}, 'GHSL Population Count');
+Map.addLayer(s5p_no2, {min: 0.00002, max: 0.00015, palette: ['black', 'blue', 'purple', 'orange', 'red']}, 'Sentinel-5P NO2 Mol/m2');
+Map.addLayer(popExposure, {min: 0, max: 0.001, palette: ['green', 'yellow', 'orange', 'red', 'purple']}, 'Population Weighted Exposure');</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This code block filters Sentinel-5P atmospheric NO2, GHSL human population grids, ERA5-Land monthly meteorology, and MODIS Aerosol Optical Depth (AOD) over a high-density industrial region. It harmonizes these multi-source data streams temporally and spatially across the summer period and computes a population-weighted exposure index combining gas concentration with population scale.</div></div>
+  </div><hr class="dv">
+
+  <!-- S5: CODE BLOCK 2 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">5</div>
+      <div><div class="sl">GeoAI Machine Learning modeling for respiratory health risk prediction</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Add this block after the previous code. It continues the analysis with additional processing and visualization.</p>
+    <div class="cb">
+      <div class="cr"><span>GeoAI Machine Learning modeling for respiratory health risk prediction</span><button class="cp">COPY</button></div>
+      <pre>// 1. Stack All Predictors into a Multi-Band Composite Image
+var composite = ee.Image.cat([
+  s5p_no2.rename('NO2'),
+  aod,
+  pop.rename('Population'),
+  era5.select('temperature_2m').rename('Temp'),
+  era5.select('u_component_of_wind_10m').rename('U_Wind'),
+  era5.select('v_component_of_wind_10m').rename('V_Wind')
+]);
+
+// 2. Define Proxy Target Variable: Integrated Respiratory Risk Score (0-100 Normalized)
+// Target combines normalized NO2 exposure, aerosol load, and population vulnerability
+var normalizedNO2 = s5p_no2.unitScale(0.00001, 0.00020).clamp(0, 1);
+var normalizedAOD = aod.unitScale(0.05, 0.8).clamp(0, 1);
+var normalizedPop = pop.log().unitScale(0, 8).clamp(0, 1);
+
+var targetRisk = normalizedNO2.multiply(0.5)
+  .add(normalizedAOD.multiply(0.3))
+  .add(normalizedPop.multiply(0.2))
+  .multiply(100)
+  .rename('Respiratory_Risk_Index');
+
+// 3. Sample Training Points across the Region of Interest
+var trainingData = composite.addBands(targetRisk).sample({
+  region: roi,
+  scale: 1000,
+  numPixels: 2000,
+  seed: 42,
+  geometries: true
+});
+
+// 4. Train a Random Forest Regression Model
+var rfRegressor = ee.Classifier.smileRandomForest(100)
+  .setOutputMode('REGRESSION')
+  .train({
+    features: trainingData,
+    classProperty: 'Respiratory_Risk_Index',
+    inputProperties: ['NO2', 'AOD_470', 'Population', 'Temp', 'U_Wind', 'V_Wind']
+  });
+
+// 5. Predict Respiratory Health Risk across the Entire Spatial Domain
+var predictedRiskMap = composite.classify(rfRegressor, 'Predicted_Respiratory_Risk');
+
+// 6. Visualization of Machine Learning Risk Prediction
+var riskPalette = ['#1a9641', '#a6d96a', '#ffffbf', '#fdae61', '#d7191c'];
+Map.addLayer(predictedRiskMap, {min: 10, max: 80, palette: riskPalette}, 'Predicted Respiratory Risk Index');
+
+// 7. Model Feature Importance Verification
+var explanation = rfRegressor.explain();
+print('Random Forest Model Details:', explanation);</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This script stacks atmospheric, meteorological, and demographic predictors to construct a GeoAI machine learning workflow. A Random Forest regression model is trained on spatial samples to predict an integrated continuous Respiratory Health Risk Index, demonstrating how satellite measurements can be synthesized into actionable environmental health spatial intelligence.</div></div>
+  </div><hr class="dv">
+
+  <!-- S6: EXPORT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">6</div>
+      <div><div class="sl">Export Results to Google Drive</div><div class="sd">5 min</div></div>
+    </div>
+    <p>Add this block at the end of your script to export the final map as a GeoTIFF to your Google Drive. After clicking Run, go to the <strong>Tasks</strong> tab in GEE and click <strong>Run</strong> next to each export task.</p>
+    <div class="cb">
+      <div class="cr"><span>Export to Google Drive</span><button class="cp">COPY</button></div>
+      <pre>// Export Predicted Respiratory Risk Map as a GeoTIFF to Google Drive
+Export.image.toDrive({
+  image: predictedRiskMap,
+  description: 'Global_Urban_Respiratory_Health_Risk_2023',
+  folder: 'GEE_Health_GeoAI',
+  scale: 1000,
+  region: roi,
+  maxPixels: 1e9,
+  fileFormat: 'GeoTIFF'
+});
+
+// Export Sampled Health Exposure Table as CSV
+Export.table.toDrive({
+  collection: trainingData,
+  description: 'Respiratory_Risk_Sample_Points_2023',
+  folder: 'GEE_Health_GeoAI',
+  fileFormat: 'CSV'
+});</pre>
+    </div>
+    <div class="nt ni"><div class="ic">🔑</div><div><strong>Beginner note -- Export.image.toDrive():</strong> This function does not export immediately. It creates a task in the GEE Tasks tab that you must manually start by clicking Run. The file will appear in your Google Drive folder (GEE_Courses) as a GeoTIFF that you can open in QGIS or ArcGIS.</div></div>
+  </div><hr class="dv">
+
+  <!-- S7: EXERCISES -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">7</div>
+      <div><div class="sl">Exercises Using DeepSeek Prompts</div><div class="sd">Homework</div></div>
+    </div>
+    <p>Use DeepSeek to extend the script for each exercise below. Write a follow-up prompt describing what you want to add, then copy the generated code and paste it into your GEE script.</p>
+    <div class="xr"><h4>Temporal Trend Analysis of NO2 Exposure</h4><ol><li>Modify the date filter to compare winter (December to February) versus summer (June to August) NO2 column densities.</li><li>Compute the mean exposure difference raster between winter and summer over the study region.</li><li>Identify urban zones where seasonal atmospheric stagnant conditions exacerbate air quality hazards.</li></ol></div><div class="xr"><h4>Aerosol and Trace Gas Correlation Mapping</h4><ol><li>Extract pixel values for both Sentinel-5P NO2 and MODIS AOD across 500 random sample points.</li><li>Export the feature collection as a CSV file to evaluate linear correlation statistics.</li><li>Interpret spatial locations where high AOD occurs independently of local urban industrial NO2 emissions.</li></ol></div><div class="xr"><h4>Sensitivity Assessment of Random Forest Feature Inputs</h4><ol><li>Re-train the Random Forest model excluding meteorological predictors (ERA5 temperature and wind).</li><li>Calculate the mean absolute error between the full model prediction and the reduced covariate model.</li><li>Evaluate the role of wind dispersion parameters in controlling spatial health risk misclassification.</li></ol></div><div class="xr"><h4>Cross-City Comparative Risk Analysis</h4><ol><li>Shift the region of interest bounding box to a major megacity in East or South Asia (e.g., Delhi or Beijing).</li><li>Re-run the spatial aggregation and population weighting routines without changing parameter thresholds.</li><li>Compare the proportion of total population exposed to extreme risk categories across differing global urban structures.</li></ol></div>
+  </div><hr class="dv">
+
+  <!-- S8: PROMPT ENGINEERING TIPS -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">8</div>
+      <div><div class="sl">Prompt Engineering Tips</div><div class="sd">Reference</div></div>
+    </div>
+    <p>To get the best results from DeepSeek for GEE tasks, always include these elements in your prompts:</p>
+    <table class="tb">
+      <tr><th>Element</th><th>Example</th></tr>
+      <tr><td>Exact dataset ID</td><td><code>COPERNICUS/S5P/OFFL/L3_NO2</code></td></tr>
+      <tr><td>Band names</td><td>"select band 'B4' for red, 'B8' for NIR"</td></tr>
+      <tr><td>Study area</td><td>"rectangle [-6.5, 33.0, -1.5, 36.0] North Morocco"</td></tr>
+      <tr><td>Date range</td><td>"filter from 2020-01-01 to 2023-12-31"</td></tr>
+      <tr><td>Output format</td><td>"print area in hectares, add a legend, export to Drive"</td></tr>
+      <tr><td>Error fixing</td><td>"The code gives error X. Please fix it."</td></tr>
+      <tr><td>Iteration</td><td>"Add a time series chart for each year 2018-2023"</td></tr>
+    </table>
+    <div class="nt np"><div class="ic">🧠</div><div><strong>Best practice:</strong> Start with the main prompt, run the code, then send follow-up prompts to add features one at a time. This gives you cleaner, more reliable code than asking for everything at once.</div></div>
+  </div>
+
+</div><!-- end .mn -->
+
+<div class="ft">
+  <strong>Course 29</strong> - Global Air Pollution and Respiratory Health Risk Mapping via GeoAI | GeoAI for Climate Change | Dr. Ayoub Lahlouh | UM6P/CUS | 2025/2026
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cb').forEach(function(b) {
+    var pre = b.querySelector('pre');
+    if (!pre) return;
+    var btns = b.querySelectorAll('.cp');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var t = (pre.textContent || pre.innerText).replace(/^\n/, '');
+        navigator.clipboard.writeText(t).then(function() {
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        }).catch(function() {
+          var a = document.createElement('textarea');
+          a.value = t; a.style.position = 'fixed'; a.style.left = '-9999px';
+          document.body.appendChild(a); a.select();
+          document.execCommand('copy'); document.body.removeChild(a);
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        });
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>

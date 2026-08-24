@@ -1,5 +1,5 @@
 {
-  "next_index": 24,
+  "next_index": 25,
   "generated": [
     {
       "index": 0,
@@ -180,6 +180,15 @@
       "date": "2026-08-20T07:48:20.225587",
       "region": "Global Cities",
       "domain": "Public Health and Climate Health"
+    },
+    {
+      "index": 24,
+      "topic": "Air Pollution and Respiratory Health Risk Mapping",
+      "filename": "Course29_air_pollution_and_respiratory_health_ris.html",
+      "title": "Global Air Pollution and Respiratory Health Risk Mapping via GeoAI",
+      "date": "2026-08-24T08:01:08.885931",
+      "region": "Global Urban and Industrial Regions",
+      "domain": "Environmental Health and Public Health"
     }
   ]
 }
