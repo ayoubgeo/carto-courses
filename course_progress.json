@@ -1,5 +1,5 @@
 {
-  "next_index": 25,
+  "next_index": 26,
   "generated": [
     {
       "index": 0,
@@ -189,6 +189,15 @@
       "date": "2026-08-24T08:01:08.885931",
       "region": "Global Urban and Industrial Regions",
       "domain": "Environmental Health and Public Health"
+    },
+    {
+      "index": 25,
+      "topic": "Flood Risk and Public Health Impact Assessment",
+      "filename": "Course30_flood_risk_and_public_health_impact_asse.html",
+      "title": "Global Flood Risk and Public Health Impact Assessment",
+      "date": "2026-08-27T18:13:42.424670",
+      "region": "Global Flood-Prone Regions",
+      "domain": "Public Health and Disaster Risk"
     }
   ]
 }
