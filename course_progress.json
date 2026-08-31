@@ -1,5 +1,5 @@
 {
-  "next_index": 26,
+  "next_index": 27,
   "generated": [
     {
       "index": 0,
@@ -198,6 +198,15 @@
       "date": "2026-08-27T18:13:42.424670",
       "region": "Global Flood-Prone Regions",
       "domain": "Public Health and Disaster Risk"
+    },
+    {
+      "index": 26,
+      "topic": "Climate Change and Vector-Borne Disease Risk",
+      "filename": "Course31_climate_change_and_vector_borne_disease_.html",
+      "title": "Global Climate Change and Vector-Borne Disease Risk Modeling",
+      "date": "2026-08-31T15:01:11.065290",
+      "region": "Global Tropical and Subtropical Regions",
+      "domain": "Global Health and Climate Change"
     }
   ]
 }

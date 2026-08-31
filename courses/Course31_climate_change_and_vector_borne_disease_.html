@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course 31 - Global Climate Change and Vector-Borne Disease Risk Modeling</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#0F4C5C;
+    --accent:#14b8a6;
+    --lime:#99f6e4;
+    --cream:#F8FAF7;
+    --dark:#1A1F1C;
+    --gray:#6B7280;
+    --lg:#E5E7EB;
+    --cbg:#141A1F;
+    --cfg:#E2F0E8;
+    --ok:#10B981;
+    --info:#3B82F6;
+    --warn:#F59E0B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);line-height:1.7;font-size:16px}
+
+  /* HEADER */
+  .hd{background:var(--primary);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hd::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--lime))}
+  .hd::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0,40 Q100,10 200,35 Q300,55 400,20 Q500,0 600,30 Q700,55 800,25 Q900,5 1000,35 Q1100,55 1200,30 L1200,60 L0,60 Z' fill='%23F8FAF7'/%3E%3C/svg%3E") no-repeat bottom;background-size:cover}
+  .hi{max-width:860px;margin:0 auto;position:relative;z-index:1}
+  .hd .tg{display:inline-block;background:rgba(255,255,255,.12);color:var(--lime);font-size:.78rem;font-weight:700;padding:.3rem .9rem;border-radius:4px;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;border:1px solid rgba(255,255,255,.2)}
+  .hd h1{font-family:'Source Serif 4',serif;font-size:2.4rem;color:#fff;font-weight:700;line-height:1.2;margin-bottom:.5rem}
+  .hd .sb{font-size:1.05rem;color:rgba(255,255,255,.75);font-style:italic;margin-bottom:1.2rem}
+  .hd .mt{font-size:.82rem;color:rgba(255,255,255,.45)}
+  .hd .mt span{margin-right:1.5rem;padding-right:1.5rem;border-right:1px solid rgba(255,255,255,.15)}
+  .hd .mt span:last-child{border-right:none}
+
+  /* DATASET STRIP */
+  .db-strip{background:#fff;border-bottom:2px solid var(--lg);padding:.7rem 1.5rem}
+  .db-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:1rem;font-size:.82rem;flex-wrap:wrap}
+  .db-badge{background:rgba(0,0,0,.06);border:1px solid var(--lg);border-radius:6px;padding:.25rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--dark);font-weight:600}
+
+  /* LAYOUT */
+  .mn{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+  /* KEY TERMS BOX */
+  .kt{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .kt h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+
+  /* TABLE OF CONTENTS */
+  .tc{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .tc h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+  .tc ol{padding-left:1.2rem;column-count:2;column-gap:2rem}
+  .tc li{font-size:.9rem;margin-bottom:.4rem;color:var(--primary);break-inside:avoid}
+
+  /* DATASET CARD */
+  .dc{background:linear-gradient(135deg,#F8FFF8,#F0FDF4);border:1px solid #86EFAC;border-radius:10px;padding:1.3rem 1.5rem;margin:1.2rem 0;display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .dc-item .dl{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);font-weight:700;margin-bottom:.2rem}
+  .dc-item .dv{color:var(--dark);font-weight:500;font-size:.88rem}
+
+  /* SECTIONS */
+  .st{margin-bottom:3rem}
+  .sh{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.1rem}
+  .sn{flex-shrink:0;width:44px;height:44px;background:var(--primary);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+  .sl{font-family:'Source Serif 4',serif;font-size:1.42rem;font-weight:700;color:var(--primary)}
+  .sd{font-size:.77rem;color:var(--accent);font-weight:700;letter-spacing:.5px}
+  .st p{margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st ul,.st ol{margin-left:1.5rem;margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st li{margin-bottom:.35rem}
+
+  /* CODE BLOCKS */
+  .cb{background:var(--cbg);border-radius:10px;margin:1.2rem 0;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.2)}
+  .cr{background:rgba(255,255,255,.05);padding:.55rem 1rem;font-size:.73rem;color:var(--lime);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  .cb pre{padding:1.1rem 1.3rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.81rem;line-height:1.75;color:var(--cfg);white-space:pre;margin:0}
+  .cp{background:rgba(255,255,255,.08);color:var(--lime);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:.22rem .6rem;font-size:.68rem;font-weight:700;cursor:pointer;transition:all .2s}
+  .cp:hover{background:rgba(255,255,255,.15)}
+  .cp.ok{background:rgba(16,185,129,.2);border-color:var(--ok);color:var(--ok)}
+
+  /* NOTES */
+  .nt{border-radius:8px;padding:1rem 1.2rem;margin:1.2rem 0;font-size:.92rem;display:flex;gap:.9rem;align-items:flex-start}
+  .ni{background:#EFF6FF;border-left:4px solid var(--info);color:#1E3A5F}
+  .np{background:#F0FDF4;border-left:4px solid var(--ok);color:#064E3B}
+  .nw{background:#FFFBEB;border-left:4px solid var(--warn);color:#78350F}
+  .nk{background:#F0FDF4;border-left:4px solid var(--accent);color:var(--primary)}
+  .nt strong{font-weight:700}
+  .nt .ic{flex-shrink:0;font-size:1.25rem;margin-top:.05rem}
+
+  /* PROMPT CARD */
+  .prompt-card{background:#FAFFF5;border:1.5px solid #86EFAC;border-radius:10px;padding:1.2rem 1.4rem;margin:1.3rem 0}
+  .prompt-card .pl{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:700;margin-bottom:.6rem;font-family:'DM Sans',sans-serif}
+  .prompt-card .pt{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#1A2E1F;background:#F0FDF4;border-radius:6px;padding:1rem 1.1rem;white-space:pre-wrap;line-height:1.7;border:1px solid #BBF7D0}
+
+  /* EXERCISES */
+  .xr{background:linear-gradient(135deg,#FEFCE8,#FEF9C3);border:1px solid #FDE047;border-radius:10px;padding:1.2rem 1.5rem;margin:1rem 0}
+  .xr h4{color:#854D0E;font-size:.82rem;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.7rem;font-weight:700}
+  .xr ol{padding-left:1.2rem;font-size:.92rem;color:#713F12}
+  .xr li{margin-bottom:.4rem}
+
+  /* TABLES */
+  .tb{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.87rem;border-radius:8px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  .tb th{background:var(--primary);color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600;font-size:.81rem}
+  .tb td{padding:.55rem 1rem;border-bottom:1px solid var(--lg);background:#fff;vertical-align:top}
+  .tb tr:last-child td{border-bottom:none}
+  .tb tr:hover td{background:#F8FFF8}
+
+  /* DIVIDER */
+  .dv{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--lg),transparent);margin:2.5rem 0}
+
+  /* INLINE CODE */
+  code{font-family:'JetBrains Mono',monospace;font-size:.83em;background:rgba(0,0,0,.06);color:var(--accent);padding:.15em .42em;border-radius:4px}
+
+  /* FOOTER */
+  .ft{text-align:center;padding:2rem;color:var(--gray);font-size:.82rem;border-top:1px solid var(--lg);margin-top:2rem}
+  .ft strong{color:var(--accent)}
+
+  @media(max-width:700px){
+    .hd h1{font-size:1.6rem}
+    .tc ol{column-count:1}
+    .sl{font-size:1.2rem}
+    .dc{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="hi">
+    <div class="tg">Practical Course 31</div>
+    <h1>Global Climate Change and Vector-Borne Disease Risk Modeling</h1>
+    <div class="sb">Model environmental suitability for disease vectors using multi-source satellite climate data and Random Forest in Google Earth Engine.</div>
+    <div class="mt">
+      <span>Global Tropical and Subtropical Regions</span>
+      <span>~2 hours</span>
+      <span>Advanced</span>
+    </div>
+  </div>
+</div>
+
+<!-- DATASET STRIP -->
+<div class="db-strip">
+  <div class="db-inner">
+    <strong style="font-size:.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:1px;">Dataset:</strong>
+    <span class="db-badge">ECMWF/ERA5_LAND/MONTHLY_AGGR</span>
+    <span style="font-size:.82rem;color:#6B7280;">ERA5-Land Monthly Aggregated Climate Reanalysis</span>
+  </div>
+</div>
+
+<div class="mn">
+
+  <!-- KEY TERMS -->
+  <div class="kt">
+    <h3>📖 Key Terms for Beginners</h3>
+    <p style="font-size:.85rem;color:#374151;margin-bottom:1rem;">Before starting, make sure you understand these terms. They appear throughout all code blocks in this course.</p>
+    <table class="tb">
+      <tr><th>Term</th><th>Full Name</th><th>What it means in simple words</th></tr>
+      <tr><td><strong>Vector-Borne Disease</strong></td><td>Vector-Borne Disease (VBD)</td><td>Infectious diseases transmitted by arthropods such as mosquitoes, ticks, and sandflies.</td></tr><tr><td><strong>Environmental Suitability</strong></td><td>Environmental Habitat Suitability</td><td>The degree to which environmental conditions satisfy the ecological requirements for vector survival and reproduction.</td></tr><tr><td><strong>Thermal Performance Curve</strong></td><td>Thermal Performance Curve (TPC)</td><td>The non-linear relationship between ambient temperature and vector biological traits like biting rate or pathogen incubation.</td></tr><tr><td><strong>Extrinsic Incubation Period</strong></td><td>Extrinsic Incubation Period (EIP)</td><td>The time required for a pathogen to develop inside a vector before becoming transmissible to a human host.</td></tr><tr><td><strong>Environmental Exposure</strong></td><td>Environmental Health Exposure Proxy</td><td>Satellite-derived measures of environmental conditions that favor vector habitat, distinct from direct disease occurrence.</td></tr><tr><td><strong>Random Forest</strong></td><td>Random Forest Classifier</td><td>An ensemble machine learning technique combining multiple decision trees to predict suitability from environmental covariates.</td></tr><tr><td><strong>Spatial Autocorrelation</strong></td><td>Spatial Autocorrelation</td><td>The tendency for geographical observations close to each other to have similar environmental or epidemiological values.</td></tr><tr><td><strong>ERA5-Land</strong></td><td>ECMWF ERA5-Land Reanalysis</td><td>A high-resolution global atmospheric dataset providing continuous climate estimates over land.</td></tr><tr><td><strong>CHIRPS</strong></td><td>Climate Hazards Group InfraRed Precipitation with Station data</td><td>A quasi-global rainfall dataset designed for monitoring precipitation extremes and climate trends.</td></tr><tr><td><strong>LST</strong></td><td>Land Surface Temperature</td><td>The radiative skin temperature of the Earth surface measured by infrared satellite sensors.</td></tr><tr><td><strong>Ecological Niche Model</strong></td><td>Ecological Niche Modeling (ENM)</td><td>A computational method mapping environmental conditions that correspond to species presence or suitability.</td></tr><tr><td><strong>Confounding Variable</strong></td><td>Confounding Variable</td><td>An unmeasured factor such as vector control measures or healthcare infrastructure that alters observed health relationships.</td></tr>
+    </table>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="tc">
+    <h3>Contents</h3>
+    <ol><li>Introduction to GeoAI in Climate-Sensitive Health Modeling</li><li>Understanding Vector Biology and Thermal Performance Bounds</li><li>Multi-Sensor Climate Data Ingestion in Earth Engine</li><li>Preprocessing Temperature and Precipitation Covariates</li><li>Constructing Vector Physiological Suitability Proxies</li><li>Generating Pseudo-Presence and Background Samples</li><li>Training a Random Forest Environmental Suitability Model</li><li>Population Exposure Analysis with WorldPop Integration</li><li>Model Evaluation and Spatial Uncertainty Assessment</li><li>Ethical Communication and Limitations in Health GeoAI</li></ol>
+  </div>
+
+  <!-- S1: INTRODUCTION -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">1</div>
+      <div><div class="sl">Introduction</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Global climate change is altering the geographic range and seasonal transmission dynamics of vector-borne diseases such as dengue, malaria, and chikungunya. This course introduces an advanced GeoAI framework that integrates ERA5-Land climate reanalysis, MODIS land surface temperature, and CHIRPS precipitation data to evaluate vector habitat suitability across tropical and subtropical regions. Students will combine remote sensing climate proxies with Random Forest classification in Google Earth Engine to predict environmental suitability and assess human population exposure.</p>
+    <div class="dc">
+      <div class="dc-item"><div class="dl">GEE Asset ID</div><div class="dv"><code>ECMWF/ERA5_LAND/MONTHLY_AGGR</code></div></div>
+      <div class="dc-item"><div class="dl">Dataset Name</div><div class="dv">ERA5-Land Monthly Aggregated Climate Reanalysis</div></div>
+      <div class="dc-item"><div class="dl">Study Area</div><div class="dv">Global Tropical and Subtropical Regions</div></div>
+      <div class="dc-item"><div class="dl">AI Tool</div><div class="dv">DeepSeek (free, no API key needed)</div></div>
+    </div>
+    <div class="nt np"><div class="ic">🌍</div><div><strong>What you will build:</strong> By the end of this course you will have a working GEE script that analyzes Global Climate Change and Vector-Borne Disease Risk Modeling, computes statistics, visualizes results on an interactive map, and exports data to Google Drive.</div></div>
+  </div><hr class="dv">
+
+  <!-- S2: SETUP -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">2</div>
+      <div><div class="sl">Setup: GEE + DeepSeek</div><div class="sd">5 min</div></div>
+    </div>
+    <p>You need two browser tabs open side by side throughout this course.</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem;margin:1rem 0">
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">1</div>
+        Open <a href="https://chat.deepseek.com" target="_blank">chat.deepseek.com</a> -- free account, no API key needed
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">2</div>
+        Open <a href="https://code.earthengine.google.com" target="_blank">code.earthengine.google.com</a> in a second tab
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">3</div>
+        Create a new GEE script named <code>Course31_Global Climate Change and Vector-Borne Disease Risk Modeling</code>
+      </div>
+    </div>
+    <div class="nt ni"><div class="ic">💡</div><div><strong>Workflow:</strong> Write a prompt in DeepSeek describing your task with exact dataset IDs and requirements. Copy the generated GEE JavaScript. Paste into GEE code editor. Click Run. Inspect results. Iterate.</div></div>
+  </div><hr class="dv">
+
+  <!-- S3: DEEPSEEK PROMPT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">3</div>
+      <div><div class="sl">Crafting the DeepSeek Prompt</div><div class="sd">15 min</div></div>
+    </div>
+    <p>The prompt is the core skill of this course. A good prompt includes the exact dataset ID, band names, study area coordinates, dates, preprocessing steps, and desired outputs.</p>
+    <div class="prompt-card">
+      <div class="pl">📋 Main Prompt -- copy and paste this into DeepSeek</div>
+      <div class="pt">Act as an expert geospatial data scientist and spatial epidemiologist. Write a Google Earth Engine JavaScript script for modeling environmental suitability for disease vectors across global tropical and subtropical regions. Use ERA5-Land monthly reanalysis ('ECMWF/ERA5_LAND/MONTHLY_AGGR') for air temperature ('temperature_2m'), MODIS LST ('MODIS/061/MOD11A2') for land surface temperature ('LST_Day_1km'), and CHIRPS ('UCSB-CHG/CHIRPS/PENTAD') for precipitation ('precipitation'). Filter the data for the year 2022. Define a bounding box for tropical/subtropical regions between latitudes -30 and 30. Calculate annual mean temperature and total precipitation. Create rule-based physiological suitability thresholds for vector survival (e.g., temperature between 20C and 32C, annual precipitation > 500mm). Sample training points for pseudo-presence and absence, train a Random Forest classifier using ee.Classifier.smileRandomForest(100), and produce a continuously scaled suitability map. Include clear visualization layers and code comments explaining the epidemiological context and limitations.</div>
+    </div>
+    <div class="nt ni"><div class="ic">✨</div><div><strong>After pasting the prompt:</strong> Wait 20-30 seconds for DeepSeek to generate the full GEE script. Copy the entire code block it produces. If the output is cut short, type "Continue the code" to get the rest.</div></div>
+  </div><hr class="dv">
+
+  <!-- S4: CODE BLOCK 1 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">4</div>
+      <div><div class="sl">Ingesting and Preprocessing Multi-Sensor Climate Covariates</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Paste the following code into your GEE code editor and click Run. Read the beginner notes below to understand what each line does.</p>
+    <div class="cb">
+      <div class="cr"><span>Ingesting and Preprocessing Multi-Sensor Climate Covariates</span><button class="cp">COPY</button></div>
+      <pre>var roi = ee.Geometry.Polygon([
+  [[-120, 30], [-120, -30], [150, -30], [150, 30]]
+], null, false);
+
+var startDate = '2022-01-01';
+var endDate = '2022-12-31';
+
+var era5 = ee.ImageCollection('ECMWF/ERA5_LAND/MONTHLY_AGGR')
+  .filterDate(startDate, endDate)
+  .select('temperature_2m');
+var meanAirTempC = era5.mean().subtract(273.15).rename('air_temp_c');
+
+var modisLST = ee.ImageCollection('MODIS/061/MOD11A2')
+  .filterDate(startDate, endDate)
+  .select(['LST_Day_1km', 'LST_Night_1km']);
+var meanLST = modisLST.mean().multiply(0.02).subtract(273.15).rename(['lst_day_c', 'lst_night_c']);
+
+var chirps = ee.ImageCollection('UCSB-CHG/CHIRPS/PENTAD')
+  .filterDate(startDate, endDate)
+  .select('precipitation');
+var totalPrecip = chirps.sum().rename('annual_precip_mm');
+
+var predictorStack = meanAirTempC
+  .addBands(meanLST.select('lst_day_c'))
+  .addBands(totalPrecip)
+  .clip(roi);
+
+Map.centerObject(roi, 3);
+Map.addLayer(predictorStack.select('air_temp_c'), {min: 10, max: 35, palette: ['blue', 'yellow', 'red']}, 'Mean Air Temp (C)');
+Map.addLayer(predictorStack.select('annual_precip_mm'), {min: 100, max: 3000, palette: ['white', 'cyan', 'darkblue']}, 'Annual Precip (mm)');</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This script defines a study region covering tropical and subtropical belts (-30 to +30 latitude). It extracts monthly mean air temperature from ERA5-Land, converts Kelvin to Celsius, calculates 8-day MODIS day land surface temperature, and sums pentad CHIRPS precipitation for 2022. The layers are combined into a single multi-band image stack for downstream environmental suitability modeling.</div></div>
+  </div><hr class="dv">
+
+  <!-- S5: CODE BLOCK 2 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">5</div>
+      <div><div class="sl">Machine Learning Suitability Modeling and Risk Stratification</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Add this block after the previous code. It continues the analysis with additional processing and visualization.</p>
+    <div class="cb">
+      <div class="cr"><span>Machine Learning Suitability Modeling and Risk Stratification</span><button class="cp">COPY</button></div>
+      <pre>var tempSuitability = predictorStack.select('air_temp_c').gte(20).and(predictorStack.select('air_temp_c').lte(32));
+var precipSuitability = predictorStack.select('annual_precip_mm').gte(500);
+var pseudoSuitability = tempSuitability.and(precipSuitability).rename('suitability');
+
+var presencePoints = pseudoSuitability.selfMask().stratifiedSample({
+  numPoints: 400,
+  classBand: 'suitability',
+  region: roi,
+  scale: 20000,
+  geometries: true
+}).map(function(f) { return f.set('label', 1); });
+
+var absencePoints = pseudoSuitability.not().selfMask().stratifiedSample({
+  numPoints: 400,
+  classBand: 'suitability',
+  region: roi,
+  scale: 20000,
+  geometries: true
+}).map(function(f) { return f.set('label', 0); });
+
+var trainingData = presencePoints.merge(absencePoints);
+
+var trainingSamples = predictorStack.sampleRegions({
+  collection: trainingData,
+  properties: ['label'],
+  scale: 20000,
+  tileScale: 4
+});
+
+var classifier = ee.Classifier.smileRandomForest(100)
+  .train({
+    features: trainingSamples,
+    classProperty: 'label',
+    inputProperties: predictorStack.bandNames()
+  });
+
+var suitabilityMap = predictorStack.classify(classifier);
+
+Map.addLayer(suitabilityMap, {min: 0, max: 1, palette: ['lightgray', 'orange', 'red']}, 'RF Environmental Suitability Proxy');</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This script defines biological heuristic rules (temperatures between 20C and 32C and rainfall exceeding 500mm) to generate pseudo-presence and absence training locations. A Random Forest classifier with 100 decision trees is trained on the multi-sensor climate stack. The model classifies global environmental suitability into a continuous spatial indicator.</div></div>
+  </div><hr class="dv">
+
+  <!-- S6: EXPORT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">6</div>
+      <div><div class="sl">Export Results to Google Drive</div><div class="sd">5 min</div></div>
+    </div>
+    <p>Add this block at the end of your script to export the final map as a GeoTIFF to your Google Drive. After clicking Run, go to the <strong>Tasks</strong> tab in GEE and click <strong>Run</strong> next to each export task.</p>
+    <div class="cb">
+      <div class="cr"><span>Export to Google Drive</span><button class="cp">COPY</button></div>
+      <pre>Export.image.toDrive({
+  image: suitabilityMap,
+  description: 'Global_Tropical_Vector_Suitability_2022',
+  folder: 'GEE_Vector_Health_Exports',
+  fileNamePrefix: 'vector_suitability_rf_2022',
+  region: roi,
+  scale: 10000,
+  crs: 'EPSG:4326',
+  maxPixels: 1e9
+});</pre>
+    </div>
+    <div class="nt ni"><div class="ic">🔑</div><div><strong>Beginner note -- Export.image.toDrive():</strong> This function does not export immediately. It creates a task in the GEE Tasks tab that you must manually start by clicking Run. The file will appear in your Google Drive folder (GEE_Courses) as a GeoTIFF that you can open in QGIS or ArcGIS.</div></div>
+  </div><hr class="dv">
+
+  <!-- S7: EXERCISES -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">7</div>
+      <div><div class="sl">Exercises Using DeepSeek Prompts</div><div class="sd">Homework</div></div>
+    </div>
+    <p>Use DeepSeek to extend the script for each exercise below. Write a follow-up prompt describing what you want to add, then copy the generated code and paste it into your GEE script.</p>
+    <div class="xr"><h4>Sensitivity Analysis of Thermal Bounds</h4><ol><li>Modify the temperature lower threshold from 20C to 16C in the suitability rule script.</li><li>Re-run the Random Forest classification to generate an updated suitability map.</li><li>Compare the change in total high-suitability surface area across subtropical margins.</li></ol></div><div class="xr"><h4>Seasonal Dynamic Analysis</h4><ol><li>Select quarterly time intervals (Q1: Jan-Mar, Q3: Jul-Sep) for ERA5-Land and CHIRPS.</li><li>Compute quarterly mean temperature and precipitation stacks.</li><li>Map seasonal shift in suitability boundaries across the Sahel and South Asia.</li></ol></div><div class="xr"><h4>Human Exposure Overlay with WorldPop</h4><ol><li>Load the WorldPop global unconstrained population count image collection for 2020.</li><li>Mask the population layer using high suitability zones (suitability equal to 1).</li><li>Calculate the estimated population living within highly suitable vector environments.</li></ol></div><div class="xr"><h4>Spatial Autocorrelation and Model Validation</h4><ol><li>Perform a spatial split on training and test samples using geographical grid blocks.</li><li>Evaluate model accuracy metrics on geographically hold-out validation points.</li><li>Document how spatial autocorrelation might overestimate model performance.</li></ol></div>
+  </div><hr class="dv">
+
+  <!-- S8: PROMPT ENGINEERING TIPS -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">8</div>
+      <div><div class="sl">Prompt Engineering Tips</div><div class="sd">Reference</div></div>
+    </div>
+    <p>To get the best results from DeepSeek for GEE tasks, always include these elements in your prompts:</p>
+    <table class="tb">
+      <tr><th>Element</th><th>Example</th></tr>
+      <tr><td>Exact dataset ID</td><td><code>ECMWF/ERA5_LAND/MONTHLY_AGGR</code></td></tr>
+      <tr><td>Band names</td><td>"select band 'B4' for red, 'B8' for NIR"</td></tr>
+      <tr><td>Study area</td><td>"rectangle [-6.5, 33.0, -1.5, 36.0] North Morocco"</td></tr>
+      <tr><td>Date range</td><td>"filter from 2020-01-01 to 2023-12-31"</td></tr>
+      <tr><td>Output format</td><td>"print area in hectares, add a legend, export to Drive"</td></tr>
+      <tr><td>Error fixing</td><td>"The code gives error X. Please fix it."</td></tr>
+      <tr><td>Iteration</td><td>"Add a time series chart for each year 2018-2023"</td></tr>
+    </table>
+    <div class="nt np"><div class="ic">🧠</div><div><strong>Best practice:</strong> Start with the main prompt, run the code, then send follow-up prompts to add features one at a time. This gives you cleaner, more reliable code than asking for everything at once.</div></div>
+  </div>
+
+</div><!-- end .mn -->
+
+<div class="ft">
+  <strong>Course 31</strong> - Global Climate Change and Vector-Borne Disease Risk Modeling | GeoAI for Climate Change | Dr. Ayoub Lahlouh | UM6P/CUS | 2025/2026
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cb').forEach(function(b) {
+    var pre = b.querySelector('pre');
+    if (!pre) return;
+    var btns = b.querySelectorAll('.cp');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var t = (pre.textContent || pre.innerText).replace(/^\n/, '');
+        navigator.clipboard.writeText(t).then(function() {
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        }).catch(function() {
+          var a = document.createElement('textarea');
+          a.value = t; a.style.position = 'fixed'; a.style.left = '-9999px';
+          document.body.appendChild(a); a.select();
+          document.execCommand('copy'); document.body.removeChild(a);
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        });
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>
