@@ -1,5 +1,5 @@
 {
-  "next_index": 27,
+  "next_index": 28,
   "generated": [
     {
       "index": 0,
@@ -207,6 +207,15 @@
       "date": "2026-08-31T15:01:11.065290",
       "region": "Global Tropical and Subtropical Regions",
       "domain": "Global Health and Climate Change"
+    },
+    {
+      "index": 27,
+      "topic": "Disease Mapping and Spatial Epidemiology",
+      "filename": "Course32_disease_mapping_and_spatial_epidemiology.html",
+      "title": "Global Spatial Epidemiology: GeoAI Machine Learning for Environmental Disease Risk Mapping",
+      "date": "2026-09-14T13:52:23.173745",
+      "region": "Global",
+      "domain": "Public Health and Spatial Epidemiology"
     }
   ]
 }
