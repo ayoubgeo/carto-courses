@@ -1,5 +1,5 @@
 {
-  "next_index": 28,
+  "next_index": 29,
   "generated": [
     {
       "index": 0,
@@ -216,6 +216,15 @@
       "date": "2026-09-14T13:52:23.173745",
       "region": "Global",
       "domain": "Public Health and Spatial Epidemiology"
+    },
+    {
+      "index": 28,
+      "topic": "Population Vulnerability Mapping for Public Health",
+      "filename": "Course33_population_vulnerability_mapping_for_pub.html",
+      "title": "Global Population Vulnerability Mapping for Public Health Risk Assessment",
+      "date": "2026-09-21T13:54:08.907046",
+      "region": "Global",
+      "domain": "Public Health and Health Geography"
     }
   ]
 }
