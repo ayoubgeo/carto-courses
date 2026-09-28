@@ -1,5 +1,5 @@
 {
-  "next_index": 29,
+  "next_index": 30,
   "generated": [
     {
       "index": 0,
@@ -225,6 +225,15 @@
       "date": "2026-09-21T13:54:08.907046",
       "region": "Global",
       "domain": "Public Health and Health Geography"
+    },
+    {
+      "index": 29,
+      "topic": "Digital Health and Environmental Exposure Monitoring",
+      "filename": "Course34_digital_health_and_environmental_exposur.html",
+      "title": "Digital Health and Environmental Exposure Monitoring in Global Cities",
+      "date": "2026-09-28T15:16:04.795450",
+      "region": "Global Cities",
+      "domain": "Digital Health and Environmental Health"
     }
   ]
 }

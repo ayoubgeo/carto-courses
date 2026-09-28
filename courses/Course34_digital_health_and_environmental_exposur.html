@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course 34 - Digital Health and Environmental Exposure Monitoring in Global Cities</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#0F4C5C;
+    --accent:#14b8a6;
+    --lime:#99f6e4;
+    --cream:#F8FAF7;
+    --dark:#1A1F1C;
+    --gray:#6B7280;
+    --lg:#E5E7EB;
+    --cbg:#141A1F;
+    --cfg:#E2F0E8;
+    --ok:#10B981;
+    --info:#3B82F6;
+    --warn:#F59E0B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);line-height:1.7;font-size:16px}
+
+  /* HEADER */
+  .hd{background:var(--primary);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden}
+  .hd::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--lime))}
+  .hd::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0,40 Q100,10 200,35 Q300,55 400,20 Q500,0 600,30 Q700,55 800,25 Q900,5 1000,35 Q1100,55 1200,30 L1200,60 L0,60 Z' fill='%23F8FAF7'/%3E%3C/svg%3E") no-repeat bottom;background-size:cover}
+  .hi{max-width:860px;margin:0 auto;position:relative;z-index:1}
+  .hd .tg{display:inline-block;background:rgba(255,255,255,.12);color:var(--lime);font-size:.78rem;font-weight:700;padding:.3rem .9rem;border-radius:4px;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;border:1px solid rgba(255,255,255,.2)}
+  .hd h1{font-family:'Source Serif 4',serif;font-size:2.4rem;color:#fff;font-weight:700;line-height:1.2;margin-bottom:.5rem}
+  .hd .sb{font-size:1.05rem;color:rgba(255,255,255,.75);font-style:italic;margin-bottom:1.2rem}
+  .hd .mt{font-size:.82rem;color:rgba(255,255,255,.45)}
+  .hd .mt span{margin-right:1.5rem;padding-right:1.5rem;border-right:1px solid rgba(255,255,255,.15)}
+  .hd .mt span:last-child{border-right:none}
+
+  /* DATASET STRIP */
+  .db-strip{background:#fff;border-bottom:2px solid var(--lg);padding:.7rem 1.5rem}
+  .db-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:1rem;font-size:.82rem;flex-wrap:wrap}
+  .db-badge{background:rgba(0,0,0,.06);border:1px solid var(--lg);border-radius:6px;padding:.25rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--dark);font-weight:600}
+
+  /* LAYOUT */
+  .mn{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+  /* KEY TERMS BOX */
+  .kt{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .kt h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+
+  /* TABLE OF CONTENTS */
+  .tc{background:#fff;border:1px solid var(--lg);border-radius:10px;padding:1.5rem 2rem;margin-bottom:2.5rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .tc h3{font-size:.73rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:.9rem;font-weight:700}
+  .tc ol{padding-left:1.2rem;column-count:2;column-gap:2rem}
+  .tc li{font-size:.9rem;margin-bottom:.4rem;color:var(--primary);break-inside:avoid}
+
+  /* DATASET CARD */
+  .dc{background:linear-gradient(135deg,#F8FFF8,#F0FDF4);border:1px solid #86EFAC;border-radius:10px;padding:1.3rem 1.5rem;margin:1.2rem 0;display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .dc-item .dl{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);font-weight:700;margin-bottom:.2rem}
+  .dc-item .dv{color:var(--dark);font-weight:500;font-size:.88rem}
+
+  /* SECTIONS */
+  .st{margin-bottom:3rem}
+  .sh{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.1rem}
+  .sn{flex-shrink:0;width:44px;height:44px;background:var(--primary);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+  .sl{font-family:'Source Serif 4',serif;font-size:1.42rem;font-weight:700;color:var(--primary)}
+  .sd{font-size:.77rem;color:var(--accent);font-weight:700;letter-spacing:.5px}
+  .st p{margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st ul,.st ol{margin-left:1.5rem;margin-bottom:1rem;font-size:.97rem;color:#374151}
+  .st li{margin-bottom:.35rem}
+
+  /* CODE BLOCKS */
+  .cb{background:var(--cbg);border-radius:10px;margin:1.2rem 0;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.2)}
+  .cr{background:rgba(255,255,255,.05);padding:.55rem 1rem;font-size:.73rem;color:var(--lime);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  .cb pre{padding:1.1rem 1.3rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.81rem;line-height:1.75;color:var(--cfg);white-space:pre;margin:0}
+  .cp{background:rgba(255,255,255,.08);color:var(--lime);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:.22rem .6rem;font-size:.68rem;font-weight:700;cursor:pointer;transition:all .2s}
+  .cp:hover{background:rgba(255,255,255,.15)}
+  .cp.ok{background:rgba(16,185,129,.2);border-color:var(--ok);color:var(--ok)}
+
+  /* NOTES */
+  .nt{border-radius:8px;padding:1rem 1.2rem;margin:1.2rem 0;font-size:.92rem;display:flex;gap:.9rem;align-items:flex-start}
+  .ni{background:#EFF6FF;border-left:4px solid var(--info);color:#1E3A5F}
+  .np{background:#F0FDF4;border-left:4px solid var(--ok);color:#064E3B}
+  .nw{background:#FFFBEB;border-left:4px solid var(--warn);color:#78350F}
+  .nk{background:#F0FDF4;border-left:4px solid var(--accent);color:var(--primary)}
+  .nt strong{font-weight:700}
+  .nt .ic{flex-shrink:0;font-size:1.25rem;margin-top:.05rem}
+
+  /* PROMPT CARD */
+  .prompt-card{background:#FAFFF5;border:1.5px solid #86EFAC;border-radius:10px;padding:1.2rem 1.4rem;margin:1.3rem 0}
+  .prompt-card .pl{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:700;margin-bottom:.6rem;font-family:'DM Sans',sans-serif}
+  .prompt-card .pt{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#1A2E1F;background:#F0FDF4;border-radius:6px;padding:1rem 1.1rem;white-space:pre-wrap;line-height:1.7;border:1px solid #BBF7D0}
+
+  /* EXERCISES */
+  .xr{background:linear-gradient(135deg,#FEFCE8,#FEF9C3);border:1px solid #FDE047;border-radius:10px;padding:1.2rem 1.5rem;margin:1rem 0}
+  .xr h4{color:#854D0E;font-size:.82rem;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.7rem;font-weight:700}
+  .xr ol{padding-left:1.2rem;font-size:.92rem;color:#713F12}
+  .xr li{margin-bottom:.4rem}
+
+  /* TABLES */
+  .tb{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.87rem;border-radius:8px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  .tb th{background:var(--primary);color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600;font-size:.81rem}
+  .tb td{padding:.55rem 1rem;border-bottom:1px solid var(--lg);background:#fff;vertical-align:top}
+  .tb tr:last-child td{border-bottom:none}
+  .tb tr:hover td{background:#F8FFF8}
+
+  /* DIVIDER */
+  .dv{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--lg),transparent);margin:2.5rem 0}
+
+  /* INLINE CODE */
+  code{font-family:'JetBrains Mono',monospace;font-size:.83em;background:rgba(0,0,0,.06);color:var(--accent);padding:.15em .42em;border-radius:4px}
+
+  /* FOOTER */
+  .ft{text-align:center;padding:2rem;color:var(--gray);font-size:.82rem;border-top:1px solid var(--lg);margin-top:2rem}
+  .ft strong{color:var(--accent)}
+
+  @media(max-width:700px){
+    .hd h1{font-size:1.6rem}
+    .tc ol{column-count:1}
+    .sl{font-size:1.2rem}
+    .dc{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="hi">
+    <div class="tg">Practical Course 34</div>
+    <h1>Digital Health and Environmental Exposure Monitoring in Global Cities</h1>
+    <div class="sb">Quantify urban air pollution, heat stress, and population vulnerability using satellite observations and geospatial AI.</div>
+    <div class="mt">
+      <span>Global Cities</span>
+      <span>~2 hours</span>
+      <span>Advanced</span>
+    </div>
+  </div>
+</div>
+
+<!-- DATASET STRIP -->
+<div class="db-strip">
+  <div class="db-inner">
+    <strong style="font-size:.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:1px;">Dataset:</strong>
+    <span class="db-badge">COPERNICUS/S5P/OFFL/L3_NO2</span>
+    <span style="font-size:.82rem;color:#6B7280;">Sentinel-5P OFFL NO2: Offline Nitrogen Dioxide</span>
+  </div>
+</div>
+
+<div class="mn">
+
+  <!-- KEY TERMS -->
+  <div class="kt">
+    <h3>📖 Key Terms for Beginners</h3>
+    <p style="font-size:.85rem;color:#374151;margin-bottom:1rem;">Before starting, make sure you understand these terms. They appear throughout all code blocks in this course.</p>
+    <table class="tb">
+      <tr><th>Term</th><th>Full Name</th><th>What it means in simple words</th></tr>
+      <tr><td><strong>CEEI</strong></td><td>Composite Environmental Exposure Index</td><td>A integrated spatial score combining air quality metrics and land surface temperature to quantify multi-hazard environmental stress.</td></tr><tr><td><strong>NO2</strong></td><td>Nitrogen Dioxide</td><td>A reactive gas emitted from combustion processes that serves as a major urban air pollutant linked to respiratory health issues.</td></tr><tr><td><strong>LST</strong></td><td>Land Surface Temperature</td><td>The radiative temperature of the Earth surface measured by thermal remote sensing sensors.</td></tr><tr><td><strong>GHSL</strong></td><td>Global Human Settlement Layer</td><td>A spatial data framework produced by the European Commission providing global population distribution and built-up characteristics.</td></tr><tr><td><strong>IoT</strong></td><td>Internet of Things</td><td>A network of physical sensors collecting real-time environmental data that complement satellite remote sensing.</td></tr><tr><td><strong>Spatial Autocorrelation</strong></td><td>Spatial Autocorrelation</td><td>The statistical measure of degree to which spatial features located close together in space share similar values.</td></tr><tr><td><strong>Pop Exposure Burden</strong></td><td>Population Exposure Burden</td><td>The multiplicative product of environmental hazard intensity and population density within a given spatial unit.</td></tr><tr><td><strong>TROPOMI</strong></td><td>TROPOspheric Monitoring Instrument</td><td>The satellite spectrometer aboard Copernicus Sentinel-5P measuring atmospheric trace gases at high spatial resolution.</td></tr><tr><td><strong>Syndromic Surveillance</strong></td><td>Syndromic Surveillance</td><td>The real-time tracking of non-specific health indicators to detect potential disease outbreaks before formal clinical confirmation.</td></tr><tr><td><strong>UHI</strong></td><td>Urban Heat Island</td><td>A phenomenon where urban regions experience significantly higher temperatures than surrounding rural hinterlands.</td></tr><tr><td><strong>MAUP</strong></td><td>Modifiable Areal Unit Problem</td><td>A statistical bias occurring when point data are aggregated into arbitrary spatial boundary units.</td></tr><tr><td><strong>ERA5</strong></td><td>ECMWF Reanalysis v5</td><td>A comprehensive global atmospheric climate reanalysis dataset produced by ECMWF.</td></tr>
+    </table>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="tc">
+    <h3>Contents</h3>
+    <ol><li>1. Introduction to Digital Health and Environmental Exposure</li><li>2. Multi-Source Geospatial Data Infrastructure</li><li>3. Spatial Boundaries and Urban Spatial Units</li><li>4. Processing Atmospheric Sentinel-5P NO2 Data</li><li>5. Processing Thermal Stress via MODIS LST</li><li>6. Harmonizing Population Density and Vulnerability</li><li>7. Constructing Multi-Hazard Composite Exposure Models</li><li>8. Machine Learning and Spatial Exposure Modeling</li><li>9. Validating Environmental Metrics with In-Situ IoT Data</li><li>10. Export, Ethics, and Decision Support Workflows</li></ol>
+  </div>
+
+  <!-- S1: INTRODUCTION -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">1</div>
+      <div><div class="sl">Introduction</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Urban populations across global megacities face compound environmental health risks from elevated atmospheric pollutants and extreme heat stress. Remote sensing, combined with open population grids and IoT monitoring, enables continuous environmental exposure modeling at high spatial fidelity. This course demonstrates how to integrate Sentinel-5P NO2 atmospheric observations, MODIS surface thermal data, and GHSL population counts to compute exposure metrics for digital epidemiology and urban planning.</p>
+    <div class="dc">
+      <div class="dc-item"><div class="dl">GEE Asset ID</div><div class="dv"><code>COPERNICUS/S5P/OFFL/L3_NO2</code></div></div>
+      <div class="dc-item"><div class="dl">Dataset Name</div><div class="dv">Sentinel-5P OFFL NO2: Offline Nitrogen Dioxide</div></div>
+      <div class="dc-item"><div class="dl">Study Area</div><div class="dv">Global Cities</div></div>
+      <div class="dc-item"><div class="dl">AI Tool</div><div class="dv">DeepSeek (free, no API key needed)</div></div>
+    </div>
+    <div class="nt np"><div class="ic">🌍</div><div><strong>What you will build:</strong> By the end of this course you will have a working GEE script that analyzes Digital Health and Environmental Exposure Monitoring in Global Cities, computes statistics, visualizes results on an interactive map, and exports data to Google Drive.</div></div>
+  </div><hr class="dv">
+
+  <!-- S2: SETUP -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">2</div>
+      <div><div class="sl">Setup: GEE + DeepSeek</div><div class="sd">5 min</div></div>
+    </div>
+    <p>You need two browser tabs open side by side throughout this course.</p>
+    <div style="display:flex;flex-direction:column;gap:.6rem;margin:1rem 0">
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">1</div>
+        Open <a href="https://chat.deepseek.com" target="_blank">chat.deepseek.com</a> -- free account, no API key needed
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">2</div>
+        Open <a href="https://code.earthengine.google.com" target="_blank">code.earthengine.google.com</a> in a second tab
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;background:#fff;border:1px solid var(--lg);border-radius:8px;padding:.7rem 1rem;font-size:.9rem">
+        <div style="width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0">3</div>
+        Create a new GEE script named <code>Course34_Digital Health and Environmental Exposure Monitoring in Global Cities</code>
+      </div>
+    </div>
+    <div class="nt ni"><div class="ic">💡</div><div><strong>Workflow:</strong> Write a prompt in DeepSeek describing your task with exact dataset IDs and requirements. Copy the generated GEE JavaScript. Paste into GEE code editor. Click Run. Inspect results. Iterate.</div></div>
+  </div><hr class="dv">
+
+  <!-- S3: DEEPSEEK PROMPT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">3</div>
+      <div><div class="sl">Crafting the DeepSeek Prompt</div><div class="sd">15 min</div></div>
+    </div>
+    <p>The prompt is the core skill of this course. A good prompt includes the exact dataset ID, band names, study area coordinates, dates, preprocessing steps, and desired outputs.</p>
+    <div class="prompt-card">
+      <div class="pl">📋 Main Prompt -- copy and paste this into DeepSeek</div>
+      <div class="pt">Act as an expert GeoAI developer. Write a complete Google Earth Engine JavaScript script for London, UK (or any global metropolitan region). Load Sentinel-5P tropospheric NO2 (COPERNICUS/S5P/OFFL/L3_NO2, band 'tropospheric_NO2_column_number_density') and MODIS 8-day LST (MODIS/061/MOD11A2, band 'LST_Day_1km') for summer 2023 (2023-05-01 to 2023-09-30). Convert LST from Kelvin to Celsius. Load GHSL population count (JRC/GHSL/P2023D/GHS_POP, band 'population_count'). Normalize NO2 and LST to a 0 to 1 scale over the study area, construct an equal-weighted Composite Environmental Exposure Index, multiply it by population count to generate a Population Exposure Burden map, and export the resulting composite raster to Google Drive.</div>
+    </div>
+    <div class="nt ni"><div class="ic">✨</div><div><strong>After pasting the prompt:</strong> Wait 20-30 seconds for DeepSeek to generate the full GEE script. Copy the entire code block it produces. If the output is cut short, type "Continue the code" to get the rest.</div></div>
+  </div><hr class="dv">
+
+  <!-- S4: CODE BLOCK 1 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">4</div>
+      <div><div class="sl">Data Extraction and Preprocessing for Air Pollution and Thermal Stress</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Paste the following code into your GEE code editor and click Run. Read the beginner notes below to understand what each line does.</p>
+    <div class="cb">
+      <div class="cr"><span>Data Extraction and Preprocessing for Air Pollution and Thermal Stress</span><button class="cp">COPY</button></div>
+      <pre>// Define urban study region (London Metropolitan Area)
+var roi = ee.Geometry.Point([-0.1276, 51.5074]).buffer(25000);
+
+// Load Sentinel-5P Tropospheric NO2
+var no2Col = ee.ImageCollection('COPERNICUS/S5P/OFFL/L3_NO2')
+  .select('tropospheric_NO2_column_number_density')
+  .filterBounds(roi)
+  .filterDate('2023-05-01', '2023-09-30');
+
+var meanNO2 = no2Col.mean().clip(roi);
+
+// Load MODIS Land Surface Temperature (LST)
+var lstCol = ee.ImageCollection('MODIS/061/MOD11A2')
+  .select('LST_Day_1km')
+  .filterBounds(roi)
+  .filterDate('2023-05-01', '2023-09-30');
+
+// Convert LST from raw scale factor to Celsius
+var meanLST = lstCol.mean().multiply(0.02).subtract(273.15).clip(roi);
+
+// Visualization parameters
+var no2Vis = {min: 0.00002, max: 0.00015, palette: ['blue', 'cyan', 'green', 'yellow', 'red']};
+var lstVis = {min: 15, max: 35, palette: ['blue', 'limegreen', 'yellow', 'orange', 'red']};
+
+Map.centerObject(roi, 10);
+Map.addLayer(meanNO2, no2Vis, 'Mean NO2 (mol/m2)');
+Map.addLayer(meanLST, lstVis, 'Mean LST (C)');</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This script defines a 25 km radial boundary around central London, loads offline Sentinel-5P NO2 column density, and retrieves MODIS LST data for summer 2023. It scales the raw MODIS thermal digital numbers into degrees Celsius and visualizes atmospheric and thermal exposure gradients.</div></div>
+  </div><hr class="dv">
+
+  <!-- S5: CODE BLOCK 2 -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">5</div>
+      <div><div class="sl">Composite Exposure Index and Population Burden Modeling</div><div class="sd">10 min</div></div>
+    </div>
+    <p>Add this block after the previous code. It continues the analysis with additional processing and visualization.</p>
+    <div class="cb">
+      <div class="cr"><span>Composite Exposure Index and Population Burden Modeling</span><button class="cp">COPY</button></div>
+      <pre>// Load Population Grid from GHSL
+var pop = ee.ImageCollection('JRC/GHSL/P2023D/GHS_POP')
+  .filter(ee.Filter.date('2020-01-01', '2020-12-31'))
+  .first()
+  .select('population_count')
+  .clip(roi);
+
+// Min-Max normalization helper function
+var normalize = function(img, roi) {
+  var stats = img.reduceRegion({
+    reducer: ee.Reducer.minMax(),
+    geometry: roi,
+    scale: 1000,
+    maxPixels: 1e8
+  });
+  var minVal = ee.Number(stats.values().get(0));
+  var maxVal = ee.Number(stats.values().get(1));
+  return img.subtract(minVal).divide(maxVal.subtract(minVal));
+};
+
+var normNO2 = normalize(meanNO2, roi);
+var normLST = normalize(meanLST, roi);
+
+// Calculate Composite Environmental Exposure Index (CEEI)
+var ceei = normNO2.multiply(0.5).add(normLST.multiply(0.5)).rename('CEEI');
+
+// Estimate Population Exposure Weighted Score
+var popBurden = ceei.multiply(pop).rename('Pop_Burden');
+
+// Visualization
+Map.addLayer(ceei, {min: 0, max: 1, palette: ['white', 'yellow', 'orange', 'purple']}, 'Composite Exposure Index');
+Map.addLayer(popBurden, {min: 0, max: 500, palette: ['white', 'pink', 'red', 'maroon']}, 'Population Burden Index');</pre>
+    </div>
+    <div class="nt nk"><div class="ic">🔑</div><div><strong>Beginner note:</strong> This section normalizes the NO2 and LST layers to a standardized 0 to 1 scale, computes an equal-weighted Composite Environmental Exposure Index (CEEI), and combines it with GHSL population count data to map spatial exposure hot spots where environmental hazard intersects high human density.</div></div>
+  </div><hr class="dv">
+
+  <!-- S6: EXPORT -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">6</div>
+      <div><div class="sl">Export Results to Google Drive</div><div class="sd">5 min</div></div>
+    </div>
+    <p>Add this block at the end of your script to export the final map as a GeoTIFF to your Google Drive. After clicking Run, go to the <strong>Tasks</strong> tab in GEE and click <strong>Run</strong> next to each export task.</p>
+    <div class="cb">
+      <div class="cr"><span>Export to Google Drive</span><button class="cp">COPY</button></div>
+      <pre>// Export the Population Burden raster to Google Drive
+Export.image.toDrive({
+  image: popBurden,
+  description: 'London_Population_Exposure_Burden_2023',
+  folder: 'GEE_Digital_Health',
+  scale: 1000,
+  region: roi,
+  maxPixels: 1e8
+});</pre>
+    </div>
+    <div class="nt ni"><div class="ic">🔑</div><div><strong>Beginner note -- Export.image.toDrive():</strong> This function does not export immediately. It creates a task in the GEE Tasks tab that you must manually start by clicking Run. The file will appear in your Google Drive folder (GEE_Courses) as a GeoTIFF that you can open in QGIS or ArcGIS.</div></div>
+  </div><hr class="dv">
+
+  <!-- S7: EXERCISES -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">7</div>
+      <div><div class="sl">Exercises Using DeepSeek Prompts</div><div class="sd">Homework</div></div>
+    </div>
+    <p>Use DeepSeek to extend the script for each exercise below. Write a follow-up prompt describing what you want to add, then copy the generated code and paste it into your GEE script.</p>
+    <div class="xr"><h4>Exercise 1: Regional Exposure Adaptation</h4><ol><li>Change the ROI coordinates to another global city such as Tokyo, New York, or Sao Paulo.</li><li>Adjust the temporal date range to capture winter vs summer season contrast.</li><li>Compare the spatial shifts in atmospheric NO2 concentration versus land surface temperature.</li></ol></div><div class="xr"><h4>Exercise 2: Sensitivity Analysis on Index Weighting</h4><ol><li>Modify the weighting scheme of the Composite Environmental Exposure Index from 50/50 to 70% NO2 and 30% LST.</li><li>Re-calculate the population exposure burden map.</li><li>Document how changing indicator weights impacts high-priority exposure zones.</li></ol></div><div class="xr"><h4>Exercise 3: Microclimate and Green Infrastructure Mitigation Analysis</h4><ol><li>Import ESA WorldCover or Sentinel-2 NDVI to extract urban green space masks.</li><li>Overlay the NDVI map onto the LST layer to measure thermal reduction near urban parks.</li><li>Quantify the mean temperature difference between built surfaces and urban forests.</li></ol></div><div class="xr"><h4>Exercise 4: Spatial Zonal Statistics for Public Health Districts</h4><ol><li>Upload or select an administrative borough polygon layer for your chosen city.</li><li>Use reduceRegions to calculate the mean CEEI score for each administrative boundary.</li><li>Format the output table for external integration with public health morbidity data.</li></ol></div>
+  </div><hr class="dv">
+
+  <!-- S8: PROMPT ENGINEERING TIPS -->
+  <div class="st">
+    <div class="sh">
+      <div class="sn">8</div>
+      <div><div class="sl">Prompt Engineering Tips</div><div class="sd">Reference</div></div>
+    </div>
+    <p>To get the best results from DeepSeek for GEE tasks, always include these elements in your prompts:</p>
+    <table class="tb">
+      <tr><th>Element</th><th>Example</th></tr>
+      <tr><td>Exact dataset ID</td><td><code>COPERNICUS/S5P/OFFL/L3_NO2</code></td></tr>
+      <tr><td>Band names</td><td>"select band 'B4' for red, 'B8' for NIR"</td></tr>
+      <tr><td>Study area</td><td>"rectangle [-6.5, 33.0, -1.5, 36.0] North Morocco"</td></tr>
+      <tr><td>Date range</td><td>"filter from 2020-01-01 to 2023-12-31"</td></tr>
+      <tr><td>Output format</td><td>"print area in hectares, add a legend, export to Drive"</td></tr>
+      <tr><td>Error fixing</td><td>"The code gives error X. Please fix it."</td></tr>
+      <tr><td>Iteration</td><td>"Add a time series chart for each year 2018-2023"</td></tr>
+    </table>
+    <div class="nt np"><div class="ic">🧠</div><div><strong>Best practice:</strong> Start with the main prompt, run the code, then send follow-up prompts to add features one at a time. This gives you cleaner, more reliable code than asking for everything at once.</div></div>
+  </div>
+
+</div><!-- end .mn -->
+
+<div class="ft">
+  <strong>Course 34</strong> - Digital Health and Environmental Exposure Monitoring in Global Cities | GeoAI for Climate Change | Dr. Ayoub Lahlouh | UM6P/CUS | 2025/2026
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cb').forEach(function(b) {
+    var pre = b.querySelector('pre');
+    if (!pre) return;
+    var btns = b.querySelectorAll('.cp');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var t = (pre.textContent || pre.innerText).replace(/^\n/, '');
+        navigator.clipboard.writeText(t).then(function() {
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        }).catch(function() {
+          var a = document.createElement('textarea');
+          a.value = t; a.style.position = 'fixed'; a.style.left = '-9999px';
+          document.body.appendChild(a); a.select();
+          document.execCommand('copy'); document.body.removeChild(a);
+          btn.textContent = 'COPIED!'; btn.classList.add('ok');
+          setTimeout(function() { btn.textContent = 'COPY'; btn.classList.remove('ok'); }, 2000);
+        });
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>
